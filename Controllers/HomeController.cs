@@ -11,17 +11,16 @@ namespace MyMVCProject.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly UserRepository _userRepository;
+        private UserRepository userRepository = new UserRepository();
 
         [HttpGet("/TestUser")]
         public ActionResult TestUser()
         {
             var email = "test@user.com";
-            var user = _userRepository.GetByEmail(email);
+            var user = userRepository.GetByEmail(email);
             var userViewModel = UserViewModelMapper.MapFrom(user);
             return View(userViewModel);
         }
-
 
         [HttpGet("")]
         public IActionResult Index()
