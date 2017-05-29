@@ -1,0 +1,8 @@
+/home/gustavosiciliano/ASP-MV6-seed-project/MyMVCProject/bin/Debug/netcoreapp1.1/MyMVCProject.deps.json
+/home/gustavosiciliano/ASP-MV6-seed-project/MyMVCProject/bin/Debug/netcoreapp1.1/MyMVCProject.runtimeconfig.json
+/home/gustavosiciliano/ASP-MV6-seed-project/MyMVCProject/bin/Debug/netcoreapp1.1/MyMVCProject.runtimeconfig.dev.json
+/home/gustavosiciliano/ASP-MV6-seed-project/MyMVCProject/bin/Debug/netcoreapp1.1/MyMVCProject.dll
+/home/gustavosiciliano/ASP-MV6-seed-project/MyMVCProject/bin/Debug/netcoreapp1.1/MyMVCProject.pdb
+/home/gustavosiciliano/ASP-MV6-seed-project/MyMVCProject/obj/Debug/netcoreapp1.1/MyMVCProject.AssemblyInfo.cs
+/home/gustavosiciliano/ASP-MV6-seed-project/MyMVCProject/obj/Debug/netcoreapp1.1/MyMVCProject.dll
+/home/gustavosiciliano/ASP-MV6-seed-project/MyMVCProject/obj/Debug/netcoreapp1.1/MyMVCProject.pdb
