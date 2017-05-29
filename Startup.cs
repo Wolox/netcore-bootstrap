@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Swashbuckle.AspNetCore.Swagger;
+using MyMVCProject.Models.Database;
 
 namespace MyMVCProject
 {
@@ -35,9 +38,9 @@ namespace MyMVCProject
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
             });
-            /*services.AddDbContext<WebDataContext>(options => {
-                options.UseNpgsql(Configuration["Data:DefaultConnection:ConnectionString"]);
-            });*/
+
+            var connectionString =  Configuration["DbContextSettings:ConnectionString"];
+            services.AddDbContext<DataBaseContext>(opts =>  opts.UseNpgsql(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
