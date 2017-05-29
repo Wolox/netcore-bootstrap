@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace MyMVCProject
 {
@@ -30,6 +31,10 @@ namespace MyMVCProject
         {
             // Add framework services.
             services.AddMvc();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            });
             /*services.AddDbContext<WebDataContext>(options => {
                 options.UseNpgsql(Configuration["Data:DefaultConnection:ConnectionString"]);
             });*/
@@ -53,11 +58,11 @@ namespace MyMVCProject
 
             app.UseStaticFiles();
 
-            app.UseMvc(routes =>
+            app.UseMvc();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
         }
     }

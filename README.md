@@ -11,6 +11,11 @@
 ## clone repo seed
 - (git clone git@github.com:gussiciliano/ASP-MV6-seed-project.git)
 
+## Considerations
+All routes should be declared through annotations (Eg: [Route("Home")]) so that they can be read correctly by Swagger. Also all routes should
+have an annotation to indicate its request type (get, post, etc), otherwise swagger will default them to http get and parameters should have an annotation
+indicating were they are coming from (body, query), otherwise swagger will default them to query parameters
+
 ## For Start new project MVC 6
 1. create MVC project
 - (dotnet new mvc -o MyMVCProject)

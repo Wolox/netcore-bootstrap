@@ -8,11 +8,13 @@ namespace MyMVCProject.Controllers
 {
     public class HomeController : Controller
     {
+        [HttpGet("")]
         public IActionResult Index()
         {
             return View();
         }
 
+        [HttpGet("About")]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -20,6 +22,7 @@ namespace MyMVCProject.Controllers
             return View();
         }
 
+        [HttpGet("Contact")]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
@@ -27,6 +30,7 @@ namespace MyMVCProject.Controllers
             return View();
         }
 
+        [HttpGet("Error")]
         public IActionResult Error()
         {
             return View();
