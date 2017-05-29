@@ -40,7 +40,7 @@ namespace MyMVCProject
             });
 
             var connectionString =  Configuration["DbContextSettings:ConnectionString"];
-            services.AddDbContext<DataBaseContext>(opts =>  opts.UseNpgsql(connectionString));
+            services.AddDbContext<DataBaseContext>(options =>  options.UseNpgsql(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
