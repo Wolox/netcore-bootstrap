@@ -9,9 +9,16 @@ namespace MyMVCProject.Respositories
 {
     public abstract class MasterRepository <T> where T: BaseEntity
     {
+        private DataBaseContext context;
+        
+        public MasterRepository(DataBaseContext context)
+        {
+            this.context = context;
+        }
+
         public T Get(long id)
         {
-            using(var context = new DataBaseContext())
+            using(var context = this.getContext())
             {
                 return context.Set<T>().Find(id);
             }
@@ -19,7 +26,7 @@ namespace MyMVCProject.Respositories
 
         public List<T> GetAll(long id)
         {
-            using(var context = new DataBaseContext())
+            using(var context = this.getContext())
             {
                 return context.Set<T>().ToList();
             }
@@ -27,19 +34,25 @@ namespace MyMVCProject.Respositories
 
         public void Insert(T entity)
         {
-            using(var context = new DataBaseContext())
+            using(var context = this.getContext())
             {
-                if (entity == null) {
+                if (entity == null)
+                {
                     throw new ArgumentNullException("entity");
                 }
-                context.Set<T>().Add(entity);
+                context.Set<T>().Add(GetEntity(entity));
                 context.SaveChanges();
             }
         }
 
+        private static T GetEntity(T entity)
+        {
+            return entity;
+        }
+
         public void Update(T entity)
         {
-            using(var context = new DataBaseContext())
+            using(var context = this.getContext())
             {
                 if (entity == null) {
                     throw new ArgumentNullException("entity");
@@ -50,7 +63,7 @@ namespace MyMVCProject.Respositories
 
         public void Delete(T entity)
         {
-            using(var context = new DataBaseContext())
+            using(var context = this.getContext())
             {
                 if (entity == null) {
                     throw new ArgumentNullException("entity");
@@ -58,6 +71,14 @@ namespace MyMVCProject.Respositories
                 context.Set<T>().Remove(entity);
                 context.SaveChanges();
             }
+        }
+
+        public DataBaseContext getContext() {
+            return this.context;
+        }
+
+        public void setContext(DataBaseContext context) {
+            this.context = context;
         }
     }
 }
