@@ -9,16 +9,16 @@ namespace MyMVCProject.Respositories
 {
     public abstract class MasterRepository <T> where T: BaseEntity
     {
-        private DataBaseContext context;
+        private readonly DataBaseContext _context;
         
         public MasterRepository(DataBaseContext context)
         {
-            this.context = context;
+            this._context = context;
         }
 
         public T Get(long id)
         {
-            using(var context = this.getContext())
+            using(var context = Context)
             {
                 return context.Set<T>().Find(id);
             }
@@ -26,7 +26,7 @@ namespace MyMVCProject.Respositories
 
         public List<T> GetAll(long id)
         {
-            using(var context = this.getContext())
+            using(var context = Context)
             {
                 return context.Set<T>().ToList();
             }
@@ -34,7 +34,7 @@ namespace MyMVCProject.Respositories
 
         public void Insert(T entity)
         {
-            using(var context = this.getContext())
+            using(var context = Context)
             {
                 if (entity == null)
                 {
@@ -52,9 +52,10 @@ namespace MyMVCProject.Respositories
 
         public void Update(T entity)
         {
-            using(var context = this.getContext())
+            using(var context = Context)
             {
-                if (entity == null) {
+                if (entity == null)
+                {
                     throw new ArgumentNullException("entity");
                 }
                 context.SaveChanges();
@@ -63,9 +64,10 @@ namespace MyMVCProject.Respositories
 
         public void Delete(T entity)
         {
-            using(var context = this.getContext())
+            using(var context = Context)
             {
-                if (entity == null) {
+                if (entity == null)
+                {
                     throw new ArgumentNullException("entity");
                 }
                 context.Set<T>().Remove(entity);
@@ -73,12 +75,9 @@ namespace MyMVCProject.Respositories
             }
         }
 
-        public DataBaseContext getContext() {
-            return this.context;
-        }
-
-        public void setContext(DataBaseContext context) {
-            this.context = context;
+        public DataBaseContext Context
+        {
+            get {return _context;}
         }
     }
 }

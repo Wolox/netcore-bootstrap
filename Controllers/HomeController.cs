@@ -11,13 +11,13 @@ namespace MyMVCProject.Controllers
 {
     public class HomeController : Controller
     {
-        private DataBaseContext context;
-        private UserRepository userRepository;
+        private readonly DataBaseContext _context;
+        private readonly UserRepository _userRepository;
 
         public HomeController(DataBaseContext context)
         {
-            this.context = context;
-            this.userRepository = new UserRepository(this.context);
+            this._context = context;
+            this._userRepository = new UserRepository(this._context);
         }
 
         [HttpGet("/TestGetUser")]
@@ -39,7 +39,6 @@ namespace MyMVCProject.Controllers
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 
@@ -47,7 +46,6 @@ namespace MyMVCProject.Controllers
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
-
             return View();
         }
 
@@ -55,6 +53,11 @@ namespace MyMVCProject.Controllers
         public IActionResult Error()
         {
             return View();
+        }
+
+        public UserRepository userRepository
+        {
+            get {return _userRepository;}
         }
     }
 }
