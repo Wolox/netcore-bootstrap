@@ -8,21 +8,31 @@
 3. Download Visual Studio Code
 - https://code.visualstudio.com/Download?wt.mc_id=DotNet_Home
 
+
 ## Clone repo seed and create DataBase
 - git clone git@github.com:gussiciliano/ASP-MV6-seed-project.git
 - sudo -u postgres psql
 - CREATE ROLE "test_asp" LOGIN CREATEDB PASSWORD 'test_asp';
+- \q
+
 
 ## Run project
 1. Restore the packages specified in the project file
 - dotnet restore
-2. Run project
-- dotnet run
+2. In this project there are an User model, this create an user table in BD, if you want create other tables follow next steps:
+- Remove User.cs from Model->DataBasa and his references examples
+- Create your models, if you needed
+- Run 'dotnet ef migrations remove'
+- Run 'dotnet ef migrations add InitialMigration'
 3. Create DataBase and use lunch.json for env vars
 - dotnet ef database update 
+4. Run project
+- dotnet run
+
 
 ## Considerations
 All routes should be declared through annotations (Eg: [Route("Home")]) so that they can be read correctly by Swagger. Also all routes should have an annotation to indicate its request type (get, post, etc), otherwise swagger will default them to http get and parameters should have an annotation indicating were they are coming from (body, query), otherwise swagger will default them to query parameters
+
 
 ## For Start new project MVC 6
 1. create MVC project
