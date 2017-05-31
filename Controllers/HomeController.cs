@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MyMVCProject.Models.Database;
 using MyMVCProject.Respositories;
 using MyMVCProject.Mappers;
@@ -23,10 +19,7 @@ namespace MyMVCProject.Controllers
         [HttpGet("/TestGetUser")]
         public ActionResult TestGetUser()
         {
-            var email = "test@test.com";
-            var user = userRepository.GetByEmail(email);
-            var userViewModel = UserViewModelMapper.MapFrom(user);
-            return View(userViewModel);
+            return View(UserViewModelMapper.MapFrom(userRepository.GetByEmail("test@test.com")));
         }
 
         [HttpGet("")]

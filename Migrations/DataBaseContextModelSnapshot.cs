@@ -39,7 +39,7 @@ namespace MyMVCProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("user");
                 });
         }
     }

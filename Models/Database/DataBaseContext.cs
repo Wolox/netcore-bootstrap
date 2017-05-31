@@ -1,6 +1,4 @@
 #region Using
-
-using System;
 using Microsoft.EntityFrameworkCore;
 
 #endregion
@@ -14,9 +12,8 @@ namespace MyMVCProject.Models.Database
         public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {  
+        {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<User>().ToTable("User");
-        }  
+        }
     }
 }

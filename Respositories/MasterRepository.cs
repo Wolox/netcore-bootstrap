@@ -1,8 +1,6 @@
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using MyMVCProject.Models.Database;
 
 namespace MyMVCProject.Respositories
@@ -10,13 +8,13 @@ namespace MyMVCProject.Respositories
     public abstract class MasterRepository <T> where T: BaseEntity
     {
         private readonly DataBaseContext _context;
-        
+
         public MasterRepository(DataBaseContext context)
         {
             this._context = context;
         }
 
-        public T Get(long id)
+        public T GetById(long id)
         {
             using(var context = Context)
             {
@@ -40,14 +38,9 @@ namespace MyMVCProject.Respositories
                 {
                     throw new ArgumentNullException("entity");
                 }
-                context.Set<T>().Add(GetEntity(entity));
+                context.Set<T>().Add(entity);
                 context.SaveChanges();
             }
-        }
-
-        private static T GetEntity(T entity)
-        {
-            return entity;
         }
 
         public void Update(T entity)
