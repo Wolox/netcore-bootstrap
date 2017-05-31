@@ -47,3 +47,10 @@ All routes should be declared through annotations (Eg: [Route("Home")]) so that 
 - dotnet ef migrations add InitialMigration
 8. Update Data Base
 - dotnet ef database update
+
+
+# For use Json
+- JsonConvert.SerializeObject(Object)
+
+# For code analysis on aspnet (Work in progress)
+http://dotnetthoughts.net/enable-code-analysis-on-aspnet-core-applications/
