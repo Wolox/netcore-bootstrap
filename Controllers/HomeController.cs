@@ -2,24 +2,25 @@
 using MyMVCProject.Models.Database;
 using MyMVCProject.Respositories;
 using MyMVCProject.Mappers;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyMVCProject.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly DataBaseContext _context;
+        private readonly DbContextOptions<DataBaseContext> _options;
         private readonly UserRepository _userRepository;
 
-        public HomeController(DataBaseContext context)
+        public HomeController(DbContextOptions<DataBaseContext> options)
         {
-            this._context = context;
-            this._userRepository = new UserRepository(this._context);
+            this._options = options;
+            this._userRepository = new UserRepository(_options);
         }
 
         [HttpGet("/TestGetUser")]
         public ActionResult TestGetUser()
         {
-            return View(UserViewModelMapper.MapFrom(userRepository.GetByEmail("test@test.com")));
+            return View(UserViewModelMapper.MapFrom(userRepository.GetById(2)));
         }
 
         [HttpGet("")]

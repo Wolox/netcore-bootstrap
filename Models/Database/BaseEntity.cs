@@ -8,8 +8,10 @@ namespace MyMVCProject.Models.Database
         [Column("id")]
         public int Id { get; set; }
 
+
         [Column("createAt")]
         public DateTime CreateAt { get; set; }
+
 
         [Column("updateAt")]
         public DateTime UpdateAt { get; set; }

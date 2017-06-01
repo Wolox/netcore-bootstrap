@@ -39,8 +39,9 @@ namespace MyMVCProject
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
             });
 
-            var connectionString =  Configuration["DbContextSettings:ConnectionString"];
+            var connectionString =  Configuration["DbContextSettings:DbConnectionString"];
             services.AddDbContext<DataBaseContext>(options =>  options.UseNpgsql(connectionString));
+            services.AddScoped<DataBaseContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

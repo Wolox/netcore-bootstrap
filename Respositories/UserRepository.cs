@@ -1,11 +1,12 @@
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using MyMVCProject.Models.Database;
 
 namespace MyMVCProject.Respositories
 {
     public class UserRepository : MasterRepository<User>
     {
-        public UserRepository(DataBaseContext context) : base (context) {}
+        public UserRepository(DbContextOptions<DataBaseContext> options) : base (options) {}
 
         public User GetByEmail(string email)
         {

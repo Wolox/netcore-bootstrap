@@ -1,20 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using MyMVCProject.Models.Database;
 
 namespace MyMVCProject.Respositories
 {
     public abstract class MasterRepository <T> where T: BaseEntity
     {
-        private readonly DataBaseContext _context;
+        private readonly DbContextOptions<DataBaseContext> _options;
 
-        public MasterRepository(DataBaseContext context)
+        public MasterRepository(DbContextOptions<DataBaseContext> options)
         {
-            this._context = context;
+            this._options = options;
         }
 
-        public T GetById(long id)
+        public T GetById(int id)
         {
             using(var context = Context)
             {
@@ -22,7 +23,7 @@ namespace MyMVCProject.Respositories
             }
         }
 
-        public List<T> GetAll(long id)
+        public List<T> GetAll()
         {
             using(var context = Context)
             {
@@ -38,6 +39,8 @@ namespace MyMVCProject.Respositories
                 {
                     throw new ArgumentNullException("entity");
                 }
+                entity.CreateAt = DateTime.Now;
+                entity.UpdateAt = DateTime.Now;
                 context.Set<T>().Add(entity);
                 context.SaveChanges();
             }
@@ -51,6 +54,8 @@ namespace MyMVCProject.Respositories
                 {
                     throw new ArgumentNullException("entity");
                 }
+                entity.UpdateAt = DateTime.Now;
+                context.Set<T>().Update(entity);
                 context.SaveChanges();
             }
         }
@@ -68,9 +73,14 @@ namespace MyMVCProject.Respositories
             }
         }
 
+        public DbContextOptions<DataBaseContext> Options
+        {
+            get {return _options;}
+        }
+
         public DataBaseContext Context
         {
-            get {return _context;}
+            get {return new DataBaseContext(Options);}
         }
     }
 }
