@@ -48,6 +48,8 @@ All routes should be declared through annotations (Eg: [Route("Home")]) so that 
 8. Update Data Base
 - dotnet ef database update
 
+# Use Jobs
+- For use Job we implement Hangfire (https://www.hangfire.io/)
 
 # For use Json
 - JsonConvert.SerializeObject(Object)
