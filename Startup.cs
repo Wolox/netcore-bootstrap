@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Swashbuckle.AspNetCore.Swagger;
 using MyMVCProject.Models.Database;
+using Hangfire;
+using Hangfire.PostgreSql;
+using System;
 
 namespace MyMVCProject
 {
@@ -42,6 +39,7 @@ namespace MyMVCProject
             var connectionString =  Configuration["DbContextSettings:DbConnectionString"];
             services.AddDbContext<DataBaseContext>(options =>  options.UseNpgsql(connectionString));
             services.AddScoped<DataBaseContext>();
+            services.AddHangfire(options => GlobalConfiguration.Configuration.UsePostgreSqlStorage(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,6 +66,12 @@ namespace MyMVCProject
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
+
+            app.UseHangfireDashboard();
+            app.UseHangfireServer(new BackgroundJobServerOptions(), null,
+                    new PostgreSqlStorage(Configuration["DbContextSettings:DbConnectionString"]));
+
+            RecurringJob.AddOrUpdate(() => Console.WriteLine("Hangfire Test Job, Run every minute"), "*/1 * * * *", TimeZoneInfo.Local);
         }
     }
 }
