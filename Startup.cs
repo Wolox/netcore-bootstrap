@@ -21,6 +21,7 @@ namespace MyMVCProject
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+            builder.AddUserSecrets<Startup>();
             Configuration = builder.Build();
         }
 
@@ -36,7 +37,7 @@ namespace MyMVCProject
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
             });
 
-            var connectionString =  Configuration["DbContextSettings:DbConnectionString"];
+            var connectionString = "User " + Configuration["SecretConnectionString"];
             services.AddDbContext<DataBaseContext>(options =>  options.UseNpgsql(connectionString));
             services.AddScoped<DataBaseContext>();
             services.AddHangfire(options => GlobalConfiguration.Configuration.UsePostgreSqlStorage(connectionString));
@@ -69,7 +70,7 @@ namespace MyMVCProject
 
             app.UseHangfireDashboard();
             app.UseHangfireServer(new BackgroundJobServerOptions(), null,
-                    new PostgreSqlStorage(Configuration["DbContextSettings:DbConnectionString"]));
+                    new PostgreSqlStorage("User " + Configuration["SecretConnectionString"]));
 
             RecurringJob.AddOrUpdate(() => Console.WriteLine("Hangfire Test Job, Run every minute"), "*/1 * * * *", TimeZoneInfo.Local);
         }
