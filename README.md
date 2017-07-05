@@ -86,7 +86,7 @@ To create asynchronous jobs implement [Hangfire](https://www.hangfire.io).
 
 ## About
 
-This project is maintained by [Michel Agopian](https://github.com/mishuagopian) along with [Gustavo Siciliano](https://github.com/gussiciliano) and [Ignacio Torres](https://github.com/igna92ts) and it was written by [Wolox](http://www.wolox.com.ar).
+This project is maintained by [Gustavo Siciliano](https://github.com/gussiciliano) along with [Ignacio Torres](https://github.com/igna92ts) and [Michel Agopian](https://github.com/mishuagopian) and it was written by [Wolox](http://www.wolox.com.ar).
 
 ![Wolox](https://raw.githubusercontent.com/Wolox/press-kit/master/logos/logo_banner.png)
 
