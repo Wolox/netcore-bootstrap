@@ -92,7 +92,7 @@ This project is maintained by [Michel Agopian](https://github.com/mishuagopian) 
 
 ## License
 
-**netcore-bootstrap** is available under the MIT [license](LICENSE).
+**netcore-bootstrap** is available under the MIT [license](LICENSE.md).
 
     Copyright (c) 2017 Wolox
 
