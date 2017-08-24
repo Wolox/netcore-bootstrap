@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using MyMVCProject.Models.Database;
 
-namespace MyMVCProject.Respositories
+namespace MyMVCProject.Repositories
 {
     public abstract class MasterRepository <T> where T: BaseEntity
     {

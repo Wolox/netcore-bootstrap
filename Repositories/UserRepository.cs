@@ -2,7 +2,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using MyMVCProject.Models.Database;
 
-namespace MyMVCProject.Respositories
+namespace MyMVCProject.Repositories
 {
     public class UserRepository : MasterRepository<User>
     {
