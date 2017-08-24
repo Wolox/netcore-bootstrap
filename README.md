@@ -36,6 +36,10 @@ Run the following command from rootpath of the project to get the specified pack
 
 Now, to start your app run `dotnet run` in the rootpath of the project. Then access your app at localhost:port. The port should be logged in the console.
 
+#### Starting with wathcher
+
+To enable auto restart run `dotnet watch run`
+
 ## Development
 
 #### Environments & settings
