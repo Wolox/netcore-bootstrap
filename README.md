@@ -38,7 +38,7 @@ Now, to start your app run `dotnet run` in the rootpath of the project. Then acc
 
 #### Starting with wathcher
 
-to enable auto restart run `dotnet watch run`
+To enable auto restart run `dotnet watch run`
 
 ## Development
 
