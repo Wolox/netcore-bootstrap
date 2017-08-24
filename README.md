@@ -42,8 +42,8 @@ Now, to start your app run `dotnet run` in the rootpath of the project. Then acc
 To enable auto restart run `dotnet watch run`
 
 
-### Using SASS
-For use Sass you need to run the following comands:
+### Using SCSS
+For use Scss files you need to run the following comands:
 ```bash
     gulp
 ```
