@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NetCoreBootstrap.Models.Database;
-using NetCoreBootstrap.Respositories;
+using NetCoreBootstrap.Repositories;
 using NetCoreBootstrap.Mappers;
 using Microsoft.EntityFrameworkCore;
 

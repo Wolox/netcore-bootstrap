@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using NetCoreBootstrap.Models.Database;
 
-namespace NetCoreBootstrap.Respositories
+namespace NetCoreBootstrap.Repositories
 {
     public abstract class MasterRepository <T> where T: BaseEntity
     {

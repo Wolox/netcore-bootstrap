@@ -2,7 +2,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using NetCoreBootstrap.Models.Database;
 
-namespace NetCoreBootstrap.Respositories
+namespace NetCoreBootstrap.Repositories
 {
     public class UserRepository : MasterRepository<User>
     {
