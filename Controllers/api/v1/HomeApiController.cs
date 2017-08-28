@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyMVCProject.Controllers.api.v1
+namespace NetCoreBootstrap.Controllers.api.v1
 {
     [Route("api/v1/[controller]")]
     public class HomeApiController : Controller

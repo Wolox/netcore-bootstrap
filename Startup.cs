@@ -5,12 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
-using MyMVCProject.Models.Database;
+using NetCoreBootstrap.Models.Database;
 using Hangfire;
 using Hangfire.PostgreSql;
 using System;
 
-namespace MyMVCProject
+namespace NetCoreBootstrap
 {
     public class Startup
     {
@@ -21,7 +21,6 @@ namespace MyMVCProject
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
-            builder.AddUserSecrets<Startup>();
             Configuration = builder.Build();
         }
 
@@ -36,8 +35,7 @@ namespace MyMVCProject
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
             });
-
-            var connectionString = "User " + Configuration["SecretConnectionString"];
+            var connectionString = Configuration["ConnectionString"];
             services.AddDbContext<DataBaseContext>(options =>  options.UseNpgsql(connectionString));
             services.AddScoped<DataBaseContext>();
             services.AddHangfire(options => GlobalConfiguration.Configuration.UsePostgreSqlStorage(connectionString));
@@ -68,11 +66,9 @@ namespace MyMVCProject
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-            app.UseHangfireDashboard();
-            app.UseHangfireServer(new BackgroundJobServerOptions(), null,
-                    new PostgreSqlStorage("User " + Configuration["SecretConnectionString"]));
-
-            RecurringJob.AddOrUpdate(() => Console.WriteLine("Hangfire Test Job, Run every minute"), "*/1 * * * *", TimeZoneInfo.Local);
+            // Uncomment this if you want use Hangfire
+            // app.UseHangfireDashboard();
+            // app.UseHangfireServer(new BackgroundJobServerOptions(), null, new PostgreSqlStorage(Configuration["ConnectionString"]));
         }
     }
 }

@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using MyMVCProject.Models.Database;
+using NetCoreBootstrap.Models.Database;
 
-namespace MyMVCProject.Migrations
+namespace NetCoreBootstrap.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
     [Migration("20170531190208_InitialMigration")]
@@ -17,7 +17,7 @@ namespace MyMVCProject.Migrations
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "1.1.1");
 
-            modelBuilder.Entity("MyMVCProject.Models.Database.User", b =>
+            modelBuilder.Entity("NetCoreBootstrap.Models.Database.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

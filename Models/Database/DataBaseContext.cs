@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 #endregion
 
-namespace MyMVCProject.Models.Database
+namespace NetCoreBootstrap.Models.Database
 {
     public class DataBaseContext : DbContext
     {

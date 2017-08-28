@@ -9,20 +9,6 @@ Kickoff for [NetCore](https://www.microsoft.com/net/core) applications.
 
 Get the latest version of NetCore following the guide in the [official website](https://www.microsoft.com/net/core).
 
-#### Database configuration & secret keys
-
-Before running the app, make sure you have a postgres db created. Then, you must configure its connection. To do so, we will use `Secret Keys` to avoid pushing our local (or production) database credentials, setting a secret named `SecretConnectionString` with the configuration, as the following:
-
-```bash
-    dotnet restore
-    dotnet user-secrets set SecretConnectionString "ID=YOUR_USER_POSTGRES;Password=YOUR_PASS_POSTGRES;Host=YOUR_HOST;Port=5432;Database=YOUR_DATA_BASE;Pooling=true;"
-```
-
-If you want to see all secrets keys run
-
-```bash
-    dotnet user-secrets list
-```
 
 #### Getting dependencies
 
@@ -61,9 +47,17 @@ If you don't have gulp run these comands:
 
 By default, app will get settings from the file [appsetings.json](). Settings can be overwritten or extended by creating a file named `appsetings.ENV-NAME.json`, where `ENV-NAME` should be set as the value of the `EnvironmentName` environmental variable.
 
+To set the Development enviroment, you should run the following command:
+```bash
+    export ASPNETCORE_ENVIRONMENT=Development
+```
+Then, you should create an apppsettings.Development.json file in order to store your database credentials. The file should look something like [this](https://gist.github.com/gzamudio/424f50d7ff3f1df6c12260b851f722b3)
+
 #### Debugging
 
-When developing a NetCore application users use [Visual Studio](www.visualstudio.com) or [Visual Studio Code](code.visualstudio.com) IDEs, which already have excellent built-in debugging functionalities.
+When developing a NetCore application in Linux or Mac you should use [Visual Studio Code](code.visualstudio.com) IDE, which already has excellent built-in debugging functionalities.
+To be able to debug, your launch.json file should look like [this](https://gist.github.com/gussiciliano/19b188e85d0ba95f04a0545ff12fbefd)
+And make sure that you have this comand ```"command": "dotnet build"``` instead of this ```"command": "dotnet"``` on tasks.json 
 
 #### Code First & Migrations
 
@@ -93,7 +87,42 @@ Routes must be declared through annotations so that Swagger can generate documen
 
 To create asynchronous jobs implement [Hangfire](https://www.hangfire.io).
 
-## Deploy
+## Deploying to Heroku
+
+1. Install Heroku CLI https://devcenter.heroku.com/articles/heroku-cli 
+2. Log in to heroku with the folloing command:
+```bash
+    heroku login
+```    
+3. Create the heroku app with:
+```bash
+    heroku apps:create net-core-deploy-heroku
+```
+4. Set up the repository to point to your app
+```bash
+    heroku git:remote -a net-core-deploy-heroku
+```
+5. Add “Heroku Postgres” plugin from the app dashboard
+6. Set the environment variable (ConnectionString) to create the connection string for your database. The database credentials can be obtained in https://data.heroku.com
+7. Add the dotnetcore buildpack (https://github.com/jincod/dotnetcore-buildpack#v1.0.4) to the api from the dashboard’s settings page
+8. Push your git repository with:
+```bash
+    git push heroku master
+```
+9. Database
+If you’re using Entity Framework, you need to run the migrations using heroku bash. To do so, first run the command
+```bash
+    heroku run bash.
+```
+Then run the following commands:
+```bash
+    dotnet restore
+    dotnet ef database update
+```
+Finally, you need to exit the heroku bash (using ctrl+d) and restart the heroku server so that the changes take place, with the command:
+```bash
+    heroku restart -a net-core-deploy-heroku
+```
 
 ## Contributing
 

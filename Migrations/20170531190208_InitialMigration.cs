@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace MyMVCProject.Migrations
+namespace NetCoreBootstrap.Migrations
 {
     public partial class InitialMigration : Migration
     {

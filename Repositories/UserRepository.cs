@@ -1,8 +1,8 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using MyMVCProject.Models.Database;
+using NetCoreBootstrap.Models.Database;
 
-namespace MyMVCProject.Repositories
+namespace NetCoreBootstrap.Respositories
 {
     public class UserRepository : MasterRepository<User>
     {

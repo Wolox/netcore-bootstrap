@@ -1,7 +1,7 @@
-using MyMVCProject.Models.Database;
-using MyMVCProject.Models.View;
+using NetCoreBootstrap.Models.Database;
+using NetCoreBootstrap.Models.View;
 
-namespace MyMVCProject.Mappers
+namespace NetCoreBootstrap.Mappers
 {
     public static class UserViewModelMapper
     {

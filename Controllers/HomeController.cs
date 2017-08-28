@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyMVCProject.Models.Database;
-using MyMVCProject.Repositories;
-using MyMVCProject.Mappers;
+using NetCoreBootstrap.Models.Database;
+using NetCoreBootstrap.Respositories;
+using NetCoreBootstrap.Mappers;
 using Microsoft.EntityFrameworkCore;
 
-namespace MyMVCProject.Controllers
+namespace NetCoreBootstrap.Controllers
 {
     public class HomeController : Controller
     {
@@ -15,12 +15,6 @@ namespace MyMVCProject.Controllers
         {
             this._options = options;
             this._userRepository = new UserRepository(_options);
-        }
-
-        [HttpGet("/TestGetUser")]
-        public ActionResult TestGetUser()
-        {
-            return View(UserViewModelMapper.MapFrom(userRepository.GetById(2)));
         }
 
         [HttpGet("")]

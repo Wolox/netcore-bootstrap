@@ -1,4 +1,4 @@
-namespace MyMVCProject.Models.View
+namespace NetCoreBootstrap.Models.View
 {
     public class UserViewModel
     {

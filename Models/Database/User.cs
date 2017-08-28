@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MyMVCProject.Models.Database
+namespace NetCoreBootstrap.Models.Database
 {
     [Table("user")]
     public class User : BaseEntity
