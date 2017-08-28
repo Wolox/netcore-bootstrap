@@ -43,15 +43,15 @@ To enable auto restart run `dotnet watch run`
 
 
 ### Using SCSS
-For use Scss files you need to run the following comands:
+To use Scss files you need to run the following comands:
 ```bash
-    gulp
+    ./node_modules/.bin/gulp
 ```
 
 If you don't have gulp run these comands:
 ```bash
-    npm install gulp
-    npm install gulp-sass
+    npm install gulp --save-dev
+    npm install gulp-sass --save-dev
 ```
 
 
