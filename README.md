@@ -36,9 +36,24 @@ Run the following command from rootpath of the project to get the specified pack
 
 Now, to start your app run `dotnet run` in the rootpath of the project. Then access your app at localhost:port. The port should be logged in the console.
 
+
 #### Starting with wathcher
 
 To enable auto restart run `dotnet watch run`
+
+
+### Using SCSS
+To use Scss files you need to run the following comands:
+```bash
+    ./node_modules/.bin/gulp
+```
+
+If you don't have gulp run these comands:
+```bash
+    npm install gulp --save-dev
+    npm install gulp-sass --save-dev
+```
+
 
 ## Development
 

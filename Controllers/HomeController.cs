@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyMVCProject.Models.Database;
-using MyMVCProject.Respositories;
+using MyMVCProject.Repositories;
 using MyMVCProject.Mappers;
 using Microsoft.EntityFrameworkCore;
 
