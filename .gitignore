@@ -1,4 +1,6 @@
 .vscode
 obj
 bin
-node_modules/
+node_modules
+wwwroot/css
+appsettings.Development.json

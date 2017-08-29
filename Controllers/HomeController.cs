@@ -1,26 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyMVCProject.Models.Database;
-using MyMVCProject.Repositories;
-using MyMVCProject.Mappers;
+using NetCoreBootstrap.Models.Database;
+using NetCoreBootstrap.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace MyMVCProject.Controllers
+namespace NetCoreBootstrap.Controllers
 {
     public class HomeController : Controller
     {
         private readonly DbContextOptions<DataBaseContext> _options;
-        private readonly UserRepository _userRepository;
 
         public HomeController(DbContextOptions<DataBaseContext> options)
         {
             this._options = options;
-            this._userRepository = new UserRepository(_options);
-        }
-
-        [HttpGet("/TestGetUser")]
-        public ActionResult TestGetUser()
-        {
-            return View(UserViewModelMapper.MapFrom(userRepository.GetById(2)));
         }
 
         [HttpGet("")]
@@ -47,11 +38,6 @@ namespace MyMVCProject.Controllers
         public IActionResult Error()
         {
             return View();
-        }
-
-        public UserRepository userRepository
-        {
-            get {return _userRepository;}
         }
     }
 }

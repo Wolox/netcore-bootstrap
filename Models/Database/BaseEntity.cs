@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MyMVCProject.Models.Database
+namespace NetCoreBootstrap.Models.Database
 {
     public class BaseEntity
     {

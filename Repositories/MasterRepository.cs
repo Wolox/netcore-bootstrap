@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using MyMVCProject.Models.Database;
+using NetCoreBootstrap.Models.Database;
 
-namespace MyMVCProject.Repositories
+namespace NetCoreBootstrap.Repositories
 {
     public abstract class MasterRepository <T> where T: BaseEntity
     {

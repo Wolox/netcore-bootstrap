@@ -4,19 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyMVCProject.Controllers.api.v1
+namespace NetCoreBootstrap.Controllers.api.v1
 {
     [Route("api/v1/[controller]")]
     public class HomeApiController : Controller
     {
-        // GET api/v1/homeapi
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/v1/homeapi/5
+        // GET api/v1/homeapi/{id}
         [HttpGet("{id}")]
         public string Get(int id)
         {
