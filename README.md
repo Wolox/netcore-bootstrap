@@ -1,13 +1,19 @@
 NetCore Bootstrap
 ===============
 
-Kickoff for [NetCore](https://www.microsoft.com/net/core) applications.
+Info for [NetCore](https://www.microsoft.com/net/core) applications.
 
 ## First steps
 
 #### Installing NetCore
 
 Get the latest version of NetCore following the guide in the [official website](https://www.microsoft.com/net/core).
+
+### [Kickoff] Application Setup
+
+After cloning the bootstrap, run `./Scripts/bootstrap-script.sh AppName` where `AppName` is your application name.
+
+Your app is ready. Happy coding!
 
 
 #### Getting dependencies
