@@ -3,6 +3,14 @@ using NetCoreBootstrap.Models.Database;
 using NetCoreBootstrap.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Localization;
+using System.Globalization;
+using System.IO;
+using Newtonsoft.Json;
+using System.Text;
+using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Http;
+using System;
 
 namespace NetCoreBootstrap.Controllers
 {

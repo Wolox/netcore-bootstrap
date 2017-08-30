@@ -62,19 +62,14 @@ namespace NetCoreBootstrap.JsonLocalizer.StringLocalizer
             }
             
             _logger.LogTrace($"Getting localizer for type {resourceSource}");
+
+            if(string.IsNullOrEmpty(_resourcesRelativePath))
+            {
+                throw new ArgumentNullException(nameof(_resourcesRelativePath));
+            }
             
-            var typeInfo = resourceSource.GetTypeInfo();
-            var assembly = typeInfo.Assembly;
-
-            // Re-root the base name if a resources path is set.
-            var resourceBaseName = string.IsNullOrEmpty(_resourcesRelativePath)
-                ? typeInfo.FullName
-                : _applicationEnvironment.ApplicationName + "." + _resourcesRelativePath +
-                    LocalizerUtil.TrimPrefix(typeInfo.FullName, _applicationEnvironment.ApplicationName + ".");
-            _logger.LogTrace($"Localizer basename: {resourceBaseName}");
-
-            return _localizerCache.GetOrAdd(
-                resourceBaseName, new JsonStringLocalizer(resourceBaseName, _applicationEnvironment.ApplicationName, _logger));
+            var resourceBaseName = _applicationEnvironment.ApplicationName + "." + _resourcesRelativePath;
+            return _localizerCache.GetOrAdd(resourceBaseName, new JsonStringLocalizer(resourceBaseName, _applicationEnvironment.ApplicationName, _logger));
         }
 
         public IStringLocalizer Create(string baseName, string location)
@@ -87,10 +82,7 @@ namespace NetCoreBootstrap.JsonLocalizer.StringLocalizer
             _logger.LogTrace($"Getting localizer for baseName {baseName} and location {location}");
             
             location = location ?? _applicationEnvironment.ApplicationName;
-            
-            // Re-root base name if a resources path is set and strip the cshtml part.
-            var resourceBaseName = location + "." + _resourcesRelativePath + LocalizerUtil.TrimPrefix(baseName, location + ".");
-            
+            var resourceBaseName = location + "." + _resourcesRelativePath;
             var viewExtension = KnownViewExtensions.FirstOrDefault(extension => resourceBaseName.EndsWith(extension));
             if (viewExtension != null)
             {
@@ -98,7 +90,6 @@ namespace NetCoreBootstrap.JsonLocalizer.StringLocalizer
             }
             
             _logger.LogTrace($"Localizer basename: {resourceBaseName}");
-            
             return _localizerCache.GetOrAdd(
                 resourceBaseName, new JsonStringLocalizer(resourceBaseName, _applicationEnvironment.ApplicationName, _logger));
         }

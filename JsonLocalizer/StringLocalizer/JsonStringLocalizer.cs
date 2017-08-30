@@ -21,7 +21,7 @@ namespace NetCoreBootstrap.JsonLocalizer.StringLocalizer
         private readonly string _baseName;
         private readonly string _applicationName;
         private readonly ILogger _logger;
-        private readonly IEnumerable<string> _resourceFileLocations;
+        private readonly string _resourceFileLocation;
 
         public JsonStringLocalizer(string baseName, string applicationName, ILogger logger)
         {
@@ -43,11 +43,8 @@ namespace NetCoreBootstrap.JsonLocalizer.StringLocalizer
             this._logger = logger;
 
             // Get a list of possible resource file locations.
-            _resourceFileLocations = LocalizerUtil.ExpandPaths(baseName, applicationName).ToList();
-            foreach (var resFileLocation in _resourceFileLocations)
-            {
-                logger.LogTrace($"Resource file location base path: {resFileLocation}");
-            }
+            _resourceFileLocation = LocalizerUtil.TrimPrefix(baseName, applicationName).Trim('.');
+            logger.LogTrace($"Resource file location base path: {_resourceFileLocation}");
         }
 
         public virtual LocalizedString this[string name]
@@ -146,27 +143,24 @@ namespace NetCoreBootstrap.JsonLocalizer.StringLocalizer
             }
 
             _logger.LogTrace($"Attempt to get resource object for culture {currentCulture}");
-            var cultureSuffix = "." + currentCulture.Name;
+
+            var cultureSuffix = currentCulture.Name;
             cultureSuffix = cultureSuffix == "." ? "" : cultureSuffix;
 
             var lazyJObjectGetter = new Lazy<JObject>(() =>
             {
                 // First attempt to find a resource file location that exists.
-                string resourcePath = null;
-                foreach (var resourceFileLocation in _resourceFileLocations)
+                string resourcePath = _resourceFileLocation + Path.DirectorySeparatorChar + cultureSuffix + ".json";
+                if (File.Exists(resourcePath))
                 {
-                    resourcePath = resourceFileLocation + cultureSuffix + ".json";
-                    if (File.Exists(resourcePath))
-                    {
-                        _logger.LogInformation($"Resource file location {resourcePath} found");
-                        break;
-                    }
-                    else
-                    {
-                        _logger.LogTrace($"Resource file location {resourcePath} does not exist");
-                        resourcePath = null;
-                    }
+                    _logger.LogInformation($"Resource file location {resourcePath} found");
                 }
+                else
+                {
+                    _logger.LogTrace($"Resource file location {resourcePath} does not exist");
+                    resourcePath = null;
+                }
+                
                 if (resourcePath == null)
                 {
                     _logger.LogTrace($"No resource file found for suffix {cultureSuffix}");

@@ -1,4 +1,6 @@
 {
+    "DescriptionPage": "Your application description page.",
+    "ContactPage": "Your contact page.",
     "HomePage": "Home Page",
     "HowToBuild": "Learn how to build ASP.NET apps that can run anywhere.",
     "LearnMore": "Learn More",
@@ -6,5 +8,7 @@
     "BringInLibraries": "Bring in libraries from NuGet, Bower, and npm, and automate tasks using Grunt or Gulp.",
     "AzureDeploy": "Learn how Microsoft's Azure cloud platform allows you to build, deploy, and scale web apps.",
     "Previous": "Previous",
-    "Next": "Next"
+    "Next": "Next",
+    "About": "About",
+    "Contact": "Contact"
 }

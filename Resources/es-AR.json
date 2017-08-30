@@ -1,0 +1,14 @@
+{
+    "DescriptionPage": "Página de descripción de la aplicación",
+    "ContactPage": "Página de contacto",
+    "HomePage": "Página de inicio",
+    "HowToBuild": "Aprende a crear aplicaciones ASP.NET que se pueden ejecutar en cualquier lugar.",
+    "LearnMore": "Leer más",
+    "FeaturesInVSForModernWebApps": "Hay nuevas y potentes funciones en Visual Studio para crear aplicaciones web modernas.",
+    "BringInLibraries": "Descargue librerías con NuGet, Bower y npm, y automatice las tareas usando Grunt o Gulp.",
+    "AzureDeploy": "Descubra cómo la plataforma de cloud de Azure de Microsoft le permite crear, implementar y escalar aplicaciones web.",
+    "Previous": "Anterior",
+    "Next": "Siguiente",
+    "About": "Acerca de",
+    "Contact": "Contacto"
+}

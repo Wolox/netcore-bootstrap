@@ -33,16 +33,7 @@ namespace NetCoreBootstrap
         {
             // Add framework services.
             services.AddJsonLocalization(options => options.ResourcesPath = "Resources");
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                var supportedCultures = new List<CultureInfo> { new CultureInfo("en"), new CultureInfo("en-US") };
-                options.DefaultRequestCulture = new RequestCulture("en-US");
-                // Formatting numbers, dates, etc.
-                options.SupportedCultures = supportedCultures;
-                // UI strings that we have localized.
-                options.SupportedUICultures = supportedCultures;
-            });
-            
+            CultureInfo.CurrentCulture = new CultureInfo(Configuration["DefaultCulture"]);
             services.AddMvc().AddViewLocalization();
             services.AddSwaggerGen(c =>
             {
