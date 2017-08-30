@@ -2,16 +2,19 @@
 using NetCoreBootstrap.Models.Database;
 using NetCoreBootstrap.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Localization;
 
 namespace NetCoreBootstrap.Controllers
 {
     public class HomeController : Controller
     {
         private readonly DbContextOptions<DataBaseContext> _options;
+        private readonly IHtmlLocalizer<HomeController> _localizer;
 
-        public HomeController(DbContextOptions<DataBaseContext> options)
+        public HomeController(DbContextOptions<DataBaseContext> options, IHtmlLocalizer<HomeController> localizer)
         {
             this._options = options;
+            this._localizer = localizer;
         }
 
         [HttpGet("")]
@@ -23,14 +26,14 @@ namespace NetCoreBootstrap.Controllers
         [HttpGet("About")]
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = Localizer["DescriptionPage"];
             return View();
         }
 
         [HttpGet("Contact")]
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = Localizer["ContactPage"];
             return View();
         }
 
@@ -38,6 +41,11 @@ namespace NetCoreBootstrap.Controllers
         public IActionResult Error()
         {
             return View();
+        }
+
+        public IHtmlLocalizer<HomeController> Localizer
+        {
+            get { return this._localizer; }
         }
     }
 }
