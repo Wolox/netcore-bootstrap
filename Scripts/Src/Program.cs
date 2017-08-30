@@ -40,7 +40,7 @@ namespace bootstrap_script
             BootstrapDir += "/";
             Console.WriteLine("Renaming csproj file");
             File.Move(BootstrapRootDir + BootstrapDir + BootstrapName + ".csproj", BootstrapRootDir + BootstrapDir + AppName + ".csproj");
-            File.Move(Directory.GetCurrentDirectory() + "/appsettings.Development.json", BootstrapRootDir + BootstrapDir +  "appSettings.Development.json");
+            File.Move(BootstrapRootDir + BootstrapDir +  "Scripts/appsettings.Development.json", BootstrapRootDir + BootstrapDir +  "appSettings.Development.json");
             Console.WriteLine("Renaming root directory");
             Directory.Delete(BootstrapRootDir + BootstrapDir + ".git");
             Directory.Move(BootstrapRootDir + BootstrapDir,BootstrapRootDir + AppName);
