@@ -42,7 +42,6 @@ namespace NetCoreBootstrap.JsonLocalizer.StringLocalizer
             this._applicationName = applicationName;
             this._logger = logger;
 
-            // Get a list of possible resource file locations.
             _resourceFileLocation = LocalizerUtil.TrimPrefix(baseName, applicationName).Trim('.');
             logger.LogTrace($"Resource file location base path: {_resourceFileLocation}");
         }
@@ -74,27 +73,6 @@ namespace NetCoreBootstrap.JsonLocalizer.StringLocalizer
                 var value = string.Format(format ?? name, arguments);
                 return new LocalizedString(name, value, resourceNotFound: format == null);
             }
-        }
-
-        public virtual IEnumerable<LocalizedString> GetAllStrings(bool includeAncestorCultures) =>
-            GetAllStrings(includeAncestorCultures, CultureInfo.CurrentUICulture);
-
-        protected IEnumerable<LocalizedString> GetAllStrings(bool includeAncestorCultures, CultureInfo culture)
-        {
-            if (culture == null)
-            {
-                throw new ArgumentNullException(nameof(culture));
-            }
-            throw new NotImplementedException();
-        }
-
-        public IStringLocalizer WithCulture(CultureInfo culture)
-        {
-            if (culture == null)
-            {
-                return new JsonStringLocalizer(_baseName, _applicationName, _logger);
-            }
-            throw new NotImplementedException();
         }
 
         protected string GetLocalizedString(string name, CultureInfo culture)
@@ -195,29 +173,9 @@ namespace NetCoreBootstrap.JsonLocalizer.StringLocalizer
             return resourceObject;
         }
 
-        private string[] GetCultureSuffixes(CultureInfo currentCulture)
-        {
-            // Get culture suffixes (e.g.: { "nl-NL.", "nl.", "" }).
-            string[] cultureSuffixes;
-            if (currentCulture == null)
-            {
-                cultureSuffixes = new[] { "" };
-            }
-            else
-            {
-                if (currentCulture.IsNeutralCulture)
-                {
-                    cultureSuffixes = new[] { currentCulture.Name + ".", "" };
-                }
-                else
-                {
-                    cultureSuffixes = new[] { currentCulture.Name + ".", currentCulture.Parent.Name + ".", "" };
-                }
-            }
-
-            var cultureSuffixesLogString = string.Join(", ", cultureSuffixes);
-            _logger.LogTrace($"Using culture suffixes {cultureSuffixesLogString}");
-            return cultureSuffixes;
-        }
+        #region InterfaceNotImplementedMethods
+        public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures) => throw new NotImplementedException();
+        public IStringLocalizer WithCulture(CultureInfo culture) => throw new NotImplementedException();
+        #endregion
     }
 }

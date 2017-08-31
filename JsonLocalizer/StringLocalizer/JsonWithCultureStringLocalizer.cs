@@ -63,8 +63,5 @@ namespace NetCoreBootstrap.JsonLocalizer.StringLocalizer
                 return new LocalizedString(name, value, resourceNotFound: format == null);
             }
         }
-        
-        public override IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures) =>
-            GetAllStrings(includeParentCultures, _culture); 
     }
 }
