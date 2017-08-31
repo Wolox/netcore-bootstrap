@@ -1,4 +1,4 @@
-NetCore Bootstrap
+NetCoreBootstrap
 ===============
 
 Info for [NetCore](https://www.microsoft.com/net/core) applications.
