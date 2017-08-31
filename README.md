@@ -13,9 +13,7 @@ Get the latest version of NetCore following the guide in the [official website](
 
 After cloning the bootstrap, run `chmod +x ./Scripts/script.sh`
 Then `./Scripts/script.sh AppName` where `AppName` is your application name.
-
 Your app is ready. Happy coding!
-
 
 #### Getting dependencies
 

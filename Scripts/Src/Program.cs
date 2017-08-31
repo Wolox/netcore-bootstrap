@@ -27,10 +27,10 @@ namespace bootstrap_script
                     File.WriteAllText(file, Contents.Replace(BootstrapName, AppName));
                 if (file == "README.md")
                 {
-                    Contents.Replace("### [Kickoff] Application Setup","")
-                            .Replace("After cloning the bootstrap, run `chmod +x ./Scripts/script.sh`","")
-                            .Replace("Then `./Scripts/script.sh AppName` where `AppName` is your application name.","")
-                            .Replace("Your app is ready. Happy coding!","");
+                    Contents = Contents.Replace("### [Kickoff] Application Setup","")
+                                        .Replace("After cloning the bootstrap, run `chmod +x ./Scripts/script.sh`","")
+                                        .Replace("Then `./Scripts/script.sh AppName` where `AppName` is your application name.","")
+                                        .Replace("Your app is ready. Happy coding!","");
                     File.WriteAllText(file, Contents);
                 }
             }   
