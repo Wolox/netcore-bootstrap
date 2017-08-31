@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.IO;
 
 namespace bootstrap_script
@@ -17,25 +17,28 @@ namespace bootstrap_script
                 if (Dir == AppName) break;
             }
             Console.WriteLine("Replacing " + BootstrapName + " to " + AppName + " in " + BootstrapRootDir);
-            foreach (string file in Directory.  EnumerateFiles(BootstrapRootDir, "*", SearchOption.AllDirectories))
+            string Contents = "";
+            foreach (string file in Directory.EnumerateFiles(BootstrapRootDir, "*", SearchOption.AllDirectories))
             {
                 if (file.Contains("bootstrap-script"))
-                    continue; 
-                string Contents = File.ReadAllText(file);
+                    continue;
+                Contents = File.ReadAllText(file);
                 if (Contents.Contains(BootstrapName))
                     File.WriteAllText(file, Contents.Replace(BootstrapName, AppName));
                 if (file == "README.md")
                 {
-                    Contents.Replace("### [Kickoff] Application Setup","");
-                    Contents.Replace("After cloning the bootstrap, run `chmod +x ./netcore-bootstrap/Scripts/script.sh`","");
-                    Contents.Replace("Then `./netcore-bootstrap/Scripts/script.sh AppName` where `AppName` is your application name.","");
-                    Contents.Replace("Your app is ready. Happy coding!","");
+                    Contents.Replace("### [Kickoff] Application Setup","")
+                            .Replace("After cloning the bootstrap, run `chmod +x ./Scripts/script.sh`","")
+                            .Replace("Then `./Scripts/script.sh AppName` where `AppName` is your application name.","")
+                            .Replace("Your app is ready. Happy coding!","");
+                    File.WriteAllText(file, Contents);
                 }
             }   
             Console.WriteLine("Renaming .csproj ...");
             File.Move(BootstrapRootDir + BootstrapName + ".csproj", BootstrapRootDir + AppName + ".csproj");
             Console.WriteLine("Moving appsettings.Development.json ...");
-            File.Move(BootstrapRootDir +  "Scripts/appsettings.Development.json", BootstrapRootDir +  "appSettings.Development.json");
+            File.Move(BootstrapRootDir + "Scripts/appsettings.Development.json", BootstrapRootDir + "appsettings.Development.json");
+            Console.WriteLine(AppName + " is ready! Happy coding!");
             return 1;
         }
     }    
