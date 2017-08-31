@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.IO;
 
 namespace bootstrap_script
@@ -11,15 +11,13 @@ namespace bootstrap_script
             Console.WriteLine("Setting up bootstrap for " + AppName);
             string BootstrapRootDir = "";
             string BootstrapName = "NetCoreBootstrap";
-            string BootstrapDir = "netcore-bootstrap";
             foreach (var Dir in Directory.GetCurrentDirectory().Split('/'))
             {
                 BootstrapRootDir += Dir + "/";
-                if (Dir == BootstrapDir) break;
+                if (Dir == AppName) break;
             }
-            string FullOldBootstrapDir = BootstrapRootDir + BootstrapDir + "/";
-            Console.WriteLine("Replacing " + BootstrapName + " to " + AppName + " in " + FullOldBootstrapDir);
-            foreach (string file in Directory.EnumerateFiles(FullOldBootstrapDir, "*", SearchOption.AllDirectories))
+            Console.WriteLine("Replacing " + BootstrapName + " to " + AppName + " in " + BootstrapRootDir);
+            foreach (string file in Directory.  EnumerateFiles(BootstrapRootDir, "*", SearchOption.AllDirectories))
             {
                 if (file.Contains("bootstrap-script"))
                     continue; 
@@ -34,11 +32,10 @@ namespace bootstrap_script
                     Contents.Replace("Your app is ready. Happy coding!","");
                 }
             }   
-            BootstrapDir += "/";
             Console.WriteLine("Renaming .csproj ...");
-            File.Move(FullOldBootstrapDir + BootstrapName + ".csproj", FullOldBootstrapDir + AppName + ".csproj");
+            File.Move(BootstrapRootDir + BootstrapName + ".csproj", BootstrapRootDir + AppName + ".csproj");
             Console.WriteLine("Moving appsettings.Development.json ...");
-            File.Move(FullOldBootstrapDir +  "Scripts/appsettings.Development.json", FullOldBootstrapDir +  "appSettings.Development.json");
+            File.Move(BootstrapRootDir +  "Scripts/appsettings.Development.json", BootstrapRootDir +  "appSettings.Development.json");
             return 1;
         }
     }    

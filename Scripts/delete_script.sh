@@ -1,1 +1,1 @@
-rm -r "$PWD"
+rm -r "$PWD/Scripts"
