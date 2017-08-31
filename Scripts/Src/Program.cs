@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 
 namespace bootstrap_script
@@ -9,26 +9,23 @@ namespace bootstrap_script
         {
             string AppName = args[0];
             Console.WriteLine("Setting up bootstrap for " + AppName);
-            string BootstrapRootDir="";
-            string BootstrapName = "AppName";
+            string BootstrapRootDir = "";
+            string BootstrapName = "NetCoreBootstrap";
             string BootstrapDir = "netcore-bootstrap";
             foreach (var Dir in Directory.GetCurrentDirectory().Split('/'))
             {
-                if (Dir == BootstrapDir)
-                    break;
-                else 
-                    BootstrapRootDir += Dir + "/";
+                BootstrapRootDir += Dir + "/";
+                if (Dir == BootstrapDir) break;
             }
-            Console.WriteLine("Replacing " + BootstrapName + " to " + AppName + " in " + BootstrapRootDir);
+            string FullOldBootstrapDir = BootstrapRootDir + BootstrapDir + "/";
+            Console.WriteLine("Replacing " + BootstrapName + " to " + AppName + " in " + FullOldBootstrapDir);
             foreach (string file in Directory.EnumerateFiles(BootstrapRootDir, "*", SearchOption.AllDirectories))
             {
-                Console.WriteLine("File " + file);
                 if (file.Contains("bootstrap-script"))
-                    continue;
-                Console.WriteLine("Appling...");
+                    continue; 
                 string Contents = File.ReadAllText(file);
                 if (Contents.Contains(BootstrapName))
-                    File.WriteAllText(file, Contents.Replace(BootstrapName,AppName));
+                    File.WriteAllText(file, Contents.Replace(BootstrapName, AppName));
                 if (file == "README.md")
                 {
                     Contents.Replace("### [Kickoff] Application Setup","");
@@ -39,11 +36,11 @@ namespace bootstrap_script
             }   
             BootstrapDir += "/";
             Console.WriteLine("Renaming csproj file");
-            File.Move(BootstrapRootDir + BootstrapDir + BootstrapName + ".csproj", BootstrapRootDir + BootstrapDir + AppName + ".csproj");
-            File.Move(BootstrapRootDir + BootstrapDir +  "Scripts/appsettings.Development.json", BootstrapRootDir + BootstrapDir +  "appSettings.Development.json");
+            File.Move(FullOldBootstrapDir + BootstrapName + ".csproj", FullOldBootstrapDir + AppName + ".csproj");
+            File.Move(FullOldBootstrapDir +  "Scripts/appsettings.Development.json", FullOldBootstrapDir +  "appSettings.Development.json");
             Console.WriteLine("Renaming root directory");
-            Directory.Delete(BootstrapRootDir + BootstrapDir + ".git");
-            Directory.Move(BootstrapRootDir + BootstrapDir,BootstrapRootDir + AppName);
+            Directory.Delete(FullOldBootstrapDir + ".git");
+            Directory.Move(FullOldBootstrapDir, BootstrapRootDir + AppName);
             return 1;
         }
     }    
