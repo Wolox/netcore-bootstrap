@@ -1,8 +1,6 @@
 using System;
 using System.IO;
 
-
-
 namespace bootstrap_script
 {
     class Program
@@ -12,7 +10,7 @@ namespace bootstrap_script
             string AppName = args[0];
             Console.WriteLine("Setting up bootstrap for " + AppName);
             string BootstrapRootDir="";
-            string BootstrapName = "NetCoreBootstrap";
+            string BootstrapName = "AppName";
             string BootstrapDir = "netcore-bootstrap";
             foreach (var Dir in Directory.GetCurrentDirectory().Split('/'))
             {
@@ -21,14 +19,16 @@ namespace bootstrap_script
                 else 
                     BootstrapRootDir += Dir + "/";
             }
-            Console.WriteLine("Replacing " + BootstrapName + " to " + AppName);
+            Console.WriteLine("Replacing " + BootstrapName + " to " + AppName + " in " + BootstrapRootDir);
             foreach (string file in Directory.EnumerateFiles(BootstrapRootDir, "*", SearchOption.AllDirectories))
             {
+                Console.WriteLine("File " + file);
                 if (file.Contains("bootstrap-script"))
                     continue;
+                Console.WriteLine("Appling...");
                 string Contents = File.ReadAllText(file);
                 if (Contents.Contains(BootstrapName))
-                    File.WriteAllText(file,Contents.Replace(BootstrapName,AppName));
+                    File.WriteAllText(file, Contents.Replace(BootstrapName,AppName));
                 if (file == "README.md")
                 {
                     Contents.Replace("### [Kickoff] Application Setup","");
@@ -46,9 +46,5 @@ namespace bootstrap_script
             Directory.Move(BootstrapRootDir + BootstrapDir,BootstrapRootDir + AppName);
             return 1;
         }
-    }
-
-    
+    }    
 }
-
-
