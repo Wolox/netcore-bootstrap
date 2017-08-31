@@ -35,12 +35,10 @@ namespace bootstrap_script
                 }
             }   
             BootstrapDir += "/";
-            Console.WriteLine("Renaming csproj file");
+            Console.WriteLine("Renaming .csproj ...");
             File.Move(FullOldBootstrapDir + BootstrapName + ".csproj", FullOldBootstrapDir + AppName + ".csproj");
+            Console.WriteLine("Moving appsettings.Development.json ...");
             File.Move(FullOldBootstrapDir +  "Scripts/appsettings.Development.json", FullOldBootstrapDir +  "appSettings.Development.json");
-            Console.WriteLine("Renaming root directory");
-            Directory.Delete(FullOldBootstrapDir + ".git");
-            Directory.Move(FullOldBootstrapDir, BootstrapRootDir + AppName);
             return 1;
         }
     }    
