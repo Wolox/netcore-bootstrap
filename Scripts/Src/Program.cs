@@ -19,7 +19,7 @@ namespace bootstrap_script
             }
             string FullOldBootstrapDir = BootstrapRootDir + BootstrapDir + "/";
             Console.WriteLine("Replacing " + BootstrapName + " to " + AppName + " in " + FullOldBootstrapDir);
-            foreach (string file in Directory.EnumerateFiles(BootstrapRootDir, "*", SearchOption.AllDirectories))
+            foreach (string file in Directory.EnumerateFiles(FullOldBootstrapDir, "*", SearchOption.AllDirectories))
             {
                 if (file.Contains("bootstrap-script"))
                     continue; 
