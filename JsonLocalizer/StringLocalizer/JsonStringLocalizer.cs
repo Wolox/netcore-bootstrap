@@ -23,6 +23,8 @@ namespace NetCoreBootstrap.JsonLocalizer.StringLocalizer
         private readonly ILogger _logger;
         private readonly string _resourceFileLocation;
 
+        private readonly char _jsonSplitter;
+
         public JsonStringLocalizer(string baseName, string applicationName, ILogger logger)
         {
             if (baseName == null)
@@ -41,6 +43,7 @@ namespace NetCoreBootstrap.JsonLocalizer.StringLocalizer
             this._baseName = baseName;
             this._applicationName = applicationName;
             this._logger = logger;
+            this._jsonSplitter = ':';
 
             _resourceFileLocation = LocalizerUtil.TrimPrefix(baseName, applicationName).Trim('.');
             logger.LogTrace($"Resource file location base path: {_resourceFileLocation}");
@@ -95,12 +98,8 @@ namespace NetCoreBootstrap.JsonLocalizer.StringLocalizer
                 }
                 else
                 {
-                    JToken value;
-                    if (resourceObject.TryGetValue(name, out value))
-                    {
-                        var localizedString = value.ToString();
-                        return localizedString;
-                    }
+                    JToken value = TryGetValue(resourceObject, name);
+                    if(value != null) return value.ToString();
                 }
 
                 // Consult parent culture.
@@ -129,31 +128,16 @@ namespace NetCoreBootstrap.JsonLocalizer.StringLocalizer
             {
                 // First attempt to find a resource file location that exists.
                 string resourcePath = _resourceFileLocation + Path.DirectorySeparatorChar + cultureSuffix + ".json";
-                if (File.Exists(resourcePath))
-                {
-                    _logger.LogInformation($"Resource file location {resourcePath} found");
-                }
-                else
-                {
-                    _logger.LogTrace($"Resource file location {resourcePath} does not exist");
-                    resourcePath = null;
-                }
-                
-                if (resourcePath == null)
-                {
-                    _logger.LogTrace($"No resource file found for suffix {cultureSuffix}");
+                if(!ResourceExists(resourcePath, cultureSuffix))
                     return null;
-                }
 
                 // Found a resource file path: attempt to parse it into a JObject.
                 try
                 {
-                    var resourceFileStream =
-                        new FileStream(resourcePath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileOptions.Asynchronous | FileOptions.SequentialScan);
+                    var resourceFileStream = new FileStream(resourcePath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileOptions.Asynchronous | FileOptions.SequentialScan);
                     using (resourceFileStream)
                     {
-                        var resourceReader =
-                            new JsonTextReader(new StreamReader(resourceFileStream, Encoding.UTF8, detectEncodingFromByteOrderMarks: true));
+                        var resourceReader = new JsonTextReader(new StreamReader(resourceFileStream, Encoding.UTF8, detectEncodingFromByteOrderMarks: true));
                         using (resourceReader)
                         {
                             return JObject.Load(resourceReader);
@@ -168,9 +152,32 @@ namespace NetCoreBootstrap.JsonLocalizer.StringLocalizer
 
             }, LazyThreadSafetyMode.ExecutionAndPublication);
 
-            lazyJObjectGetter = _resourceObjectCache.GetOrAdd(cultureSuffix, lazyJObjectGetter);
-            var resourceObject = lazyJObjectGetter.Value;
-            return resourceObject;
+            return _resourceObjectCache.GetOrAdd(cultureSuffix, lazyJObjectGetter).Value;
+        }
+
+        private JToken TryGetValue(JObject resource, string name)
+        {
+            JToken value = null;
+            string[] keys = name.Split(_jsonSplitter);
+            value = resource[keys[0]];            
+            for(var i = 1; i < keys.Length; i++)
+            {
+                value = value[keys[i]];
+            }
+
+            return value;
+        }
+
+        private bool ResourceExists(string path, string cultureSuffix)
+        {
+            if (File.Exists(path))
+            {
+                _logger.LogInformation($"Resource file location {path} found");
+                return true;
+            }
+            _logger.LogTrace($"Resource file location {path} does not exist");
+            _logger.LogTrace($"No resource file found for suffix {cultureSuffix}");
+            return false;
         }
 
         #region InterfaceNotImplementedMethods
