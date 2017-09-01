@@ -11,10 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddJsonLocalization(this IServiceCollection Services)
         {
-            if (Services == null)
-            {
-                throw new ArgumentNullException(nameof(Services));
-            }
+            if(Services == null) throw new ArgumentNullException(nameof(Services));
             return AddJsonLocalization(Services, SetupAction: null);
         }
 
