@@ -9,32 +9,26 @@ namespace Microsoft.Extensions.DependencyInjection
 
     public static class JsonLocalizationServiceCollectionExtensions
     {
-        public static IServiceCollection AddJsonLocalization(this IServiceCollection services)
+        public static IServiceCollection AddJsonLocalization(this IServiceCollection Services)
         {
-            if (services == null)
+            if (Services == null)
             {
-                throw new ArgumentNullException(nameof(services));
+                throw new ArgumentNullException(nameof(Services));
             }
-            return AddJsonLocalization(services, setupAction: null);
+            return AddJsonLocalization(Services, SetupAction: null);
         }
 
-        public static IServiceCollection AddJsonLocalization(this IServiceCollection services, Action<JsonLocalizationOptions> setupAction)
+        public static IServiceCollection AddJsonLocalization(this IServiceCollection Services, Action<JsonLocalizationOptions> SetupAction)
         {
-            if (services == null)
-            {
-                throw new ArgumentNullException(nameof(services));
-            }
-
-            services.TryAdd(new ServiceDescriptor(
-                typeof(IStringLocalizerFactory), typeof(JsonStringLocalizerFactory), ServiceLifetime.Singleton));
-            services.TryAdd(new ServiceDescriptor(
-                typeof(IStringLocalizer), typeof(JsonStringLocalizer), ServiceLifetime.Singleton));
-
-            if (setupAction != null)
-            {
-                services.Configure(setupAction);
-            }
-            return services;
+            if (Services == null) throw new ArgumentNullException(nameof(Services));
+            Services.TryAdd(new ServiceDescriptor(typeof(IStringLocalizerFactory), 
+                                                  typeof(JsonStringLocalizerFactory), 
+                                                  ServiceLifetime.Singleton));
+            Services.TryAdd(new ServiceDescriptor(typeof(IStringLocalizer), 
+                                                  typeof(JsonStringLocalizer), 
+                                                  ServiceLifetime.Singleton));
+            if (SetupAction != null) Services.Configure(SetupAction);
+            return Services;
         }
     }
 }

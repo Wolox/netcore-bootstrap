@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace NetCoreBootstrap.JsonLocalizer.StringLocalizer
 {
@@ -11,11 +8,7 @@ namespace NetCoreBootstrap.JsonLocalizer.StringLocalizer
         {
             if (name == null) throw new ArgumentNullException(nameof(name));
             if (prefix == null) throw new ArgumentNullException(nameof(prefix));
-
-            if (name.StartsWith(prefix, StringComparison.Ordinal))
-            {
-                return name.Substring(prefix.Length);
-            }
+            if (name.StartsWith(prefix, StringComparison.Ordinal)) return name.Substring(prefix.Length);
             return name;
         }
     }
