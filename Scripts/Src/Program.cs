@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace BootstrapScript
 {
@@ -18,9 +19,9 @@ namespace BootstrapScript
             }
             Console.WriteLine("Replacing " + bootstrapName + " to " + appName + " in " + bootstrapRootDir);
             string contents = "";
-            foreach (string file in Directory.EnumerateFiles(bootstrapRootDir, "*", SearchOption.AllDirectories))
+            var files = from string file in Directory.EnumerateFiles(bootstrapRootDir, "*", SearchOption.AllDirectories) where !file.Contains("bootstrap-script") select file;
+            foreach (string file in files)
             {
-                if (file.Contains("bootstrap-script")) continue;
                 contents = File.ReadAllText(file);
                 if (contents.Contains(bootstrapName))
                 {
@@ -36,9 +37,9 @@ namespace BootstrapScript
                 }
             }   
             Console.WriteLine("Renaming .csproj ...");
-            File.Move(bootstrapRootDir + bootstrapName + ".csproj", bootstrapRootDir + appName + ".csproj");
+            File.Move($@"{bootstrapRootDir}{bootstrapName}.csproj", $@"{bootstrapRootDir}{appName}.csproj");
             Console.WriteLine("Moving appsettings.Development.json ...");
-            File.Move(bootstrapRootDir + "Scripts/appsettings.Development.json", bootstrapRootDir + "appsettings.Development.json");
+            File.Move($@"{bootstrapRootDir}Scripts/appsettings.Development.json", $@"{bootstrapRootDir}appsettings.Development.json");
             Console.WriteLine(appName + " is ready! Happy coding!");
             return 1;
         }
