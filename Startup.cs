@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using LocalizationCultureCore;
 
 namespace NetCoreBootstrap
 {
