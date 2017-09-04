@@ -9,6 +9,10 @@ using NetCoreBootstrap.Models.Database;
 using Hangfire;
 using Hangfire.PostgreSql;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using LocalizationCultureCore;
 
 namespace NetCoreBootstrap
 {
@@ -23,14 +27,15 @@ namespace NetCoreBootstrap
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
-
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddJsonLocalization(options => options.ResourcesPath = "Resources");
+            CultureInfo.CurrentCulture = new CultureInfo(Configuration["DefaultCulture"]);
+            services.AddMvc().AddViewLocalization();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });

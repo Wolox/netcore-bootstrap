@@ -5,6 +5,7 @@
   <ItemGroup>
     <PackageReference Include="Hangfire" Version="1.6.12" />
     <PackageReference Include="Hangfire.PostgreSql" Version="1.4.7.1" />
+    <PackageReference Include="LocalizationCultureCore" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.2" />
