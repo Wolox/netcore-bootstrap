@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using LocalizationCultureCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace NetCoreBootstrap
 {
@@ -42,6 +44,14 @@ namespace NetCoreBootstrap
             });
             var connectionString = Configuration["ConnectionString"];
             services.AddDbContext<DataBaseContext>(options =>  options.UseNpgsql(connectionString));
+            services.AddIdentity<User, IdentityRole>(options => 
+                        {
+                            options.Cookies.ApplicationCookie.LoginPath = "/Account/Login";
+                            options.Cookies.ApplicationCookie.AccessDeniedPath = "/Account/AccessDenied";
+                        })
+                    .AddEntityFrameworkStores<DataBaseContext>()
+                    .AddDefaultTokenProviders();
+
             services.AddScoped<DataBaseContext>();
             services.AddHangfire(options => GlobalConfiguration.Configuration.UsePostgreSqlStorage(connectionString));
         }
@@ -63,17 +73,16 @@ namespace NetCoreBootstrap
             }
 
             app.UseStaticFiles();
-
+            app.UseIdentity();
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-
             // Uncomment this if you want use Hangfire
             // app.UseHangfireDashboard();
-            // app.UseHangfireServer(new BackgroundJobServerOptions(), null, new PostgreSqlStorage(Configuration["ConnectionString"]));
+            // app.UseHangfireServer(new BackgroundJobServerOptions()f, null, new PostgreSqlStorage(Configuration["ConnectionString"]));
         }
     }
 }
