@@ -6,6 +6,7 @@ using NetCoreBootstrap.Models.Views;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace NetCoreBootstrap.Controllers
 {
@@ -50,12 +51,8 @@ namespace NetCoreBootstrap.Controllers
             if(ModelState.IsValid)
             {
                 var result = await SignInManager.PasswordSignInAsync(loginViewModel.UserName, loginViewModel.Password, loginViewModel.RememberMe, false);
-                if(result.Succeeded)
-                {
-                    return RedirectToAction("Users", "UserManagement");
-                }
+                if(result.Succeeded) return RedirectToAction("Users", "UserManagement");
                 ModelState.AddModelError("", "Invalid login attempt.");
-                return View(loginViewModel);
             }
             return View(loginViewModel);
         }

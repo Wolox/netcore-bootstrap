@@ -27,44 +27,32 @@ namespace NetCoreBootstrap.Controllers
         }
 
         [HttpGet("Users")]
-        public IActionResult Users()
-        {
-            var viewModel = new UserManagementUsersViewModel { Users = UserRepository.GetAllUsers() };
-            return View(viewModel);
-        }
+        public IActionResult Users() => View(new UserManagementViewModel { Users = UserRepository.GetAllUsers() });
 
         [HttpGet("Roles")]
-        public IActionResult Roles()
-        {
-            var viewModel = new UserManagementRolesViewModel { Roles = UserRepository.GetAllRoles() };
-            return View(viewModel);
-        }
+        public IActionResult Roles() => View(new UserManagementViewModel { Roles = UserRepository.GetAllRoles() });
 
         [HttpGet("AddRole")]
         public async Task<IActionResult> AddRole(string userId)
         {
             var user = await UserRepository.GetUserById(userId);
-            var viewModel = new UserManagementAddRoleViewModel { UserId = user.Id, Email = user.Email, Roles = UserRepository.GetRoles() };
-            return View(viewModel);
+            return View(new UserManagementViewModel { UserId = user.Id, Email = user.Email, RolesListItem = UserRepository.GetRoles() });
         }
 
         [HttpPost("AddRole")]
-        public async Task<IActionResult> AddRole(UserManagementAddRoleViewModel viewModel)
+        public async Task<IActionResult> AddRole(UserManagementViewModel viewModel)
         {
             var user = await UserRepository.GetUserById(viewModel.UserId);
             if(ModelState.IsValid)
             {
                 var result = await UserRepository.AddRoleToUser(user, viewModel.NewRole);
-                if(result.Succeeded)
-                {
-                    return RedirectToAction("Users");
-                }
+                if(result.Succeeded) return RedirectToAction("Users");
                 foreach(var error in result.Errors)
                 {
                     ModelState.AddModelError(error.Code, error.Description);
                 }
             }
-            viewModel.Roles = UserRepository.GetRoles();
+            viewModel.RolesListItem = UserRepository.GetRoles();
             viewModel.Email = user.Email;
             return View(viewModel);
         }
@@ -73,7 +61,7 @@ namespace NetCoreBootstrap.Controllers
         public IActionResult CreateRole() => View();
 
         [HttpPost("NewRole")]
-        public async Task<IActionResult> CreateRole(UserManagementCreateRoleViewModel viewModel)
+        public async Task<IActionResult> CreateRole(UserManagementViewModel viewModel)
         {
             if(ModelState.IsValid)
             {

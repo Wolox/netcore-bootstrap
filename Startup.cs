@@ -44,11 +44,10 @@ namespace NetCoreBootstrap
             });
             var connectionString = Configuration["ConnectionString"];
             services.AddDbContext<DataBaseContext>(options =>  options.UseNpgsql(connectionString));
-            services.AddIdentity<User, IdentityRole>(options => 
-                        {
-                            options.Cookies.ApplicationCookie.LoginPath = "/Account/Login";
-                            options.Cookies.ApplicationCookie.AccessDeniedPath = "/Account/AccessDenied";
-                        })
+            services.AddIdentity<User, IdentityRole>(options => {
+                                                                    options.Cookies.ApplicationCookie.LoginPath = "/Account/Login";
+                                                                    options.Cookies.ApplicationCookie.AccessDeniedPath = "/Account/AccessDenied";
+                                                                })
                     .AddEntityFrameworkStores<DataBaseContext>()
                     .AddDefaultTokenProviders();
 
@@ -82,7 +81,7 @@ namespace NetCoreBootstrap
             });
             // Uncomment this if you want use Hangfire
             // app.UseHangfireDashboard();
-            // app.UseHangfireServer(new BackgroundJobServerOptions()f, null, new PostgreSqlStorage(Configuration["ConnectionString"]));
+            // app.UseHangfireServer(new BackgroundJobServerOptions(), null, new PostgreSqlStorage(Configuration["ConnectionString"]));
         }
     }
 }
