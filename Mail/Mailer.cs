@@ -11,9 +11,10 @@ namespace NetCoreBootstrap.Mail
     public class Mailer
     {
         private readonly SmtpClient _smtpClient;
-        private string _host, _username, _password, _name, _email, _jsonFilePath;
-        private int _hostPort;
-        private char _jsonSplitter = ':';
+        private string host, username, password, name, email;
+        private int hostPort;
+        private readonly string _jsonFilePath;
+        private readonly char _jsonSplitter = ':';
         
         public Mailer()
         {
@@ -26,8 +27,7 @@ namespace NetCoreBootstrap.Mail
         {
             var message = new MimeMessage { Subject = subject, Body = new TextPart (type) { Text = body } };
             message.From.Add(new MailboxAddress(Name, Email));
-			message.To.Add(new MailboxAddress(toName, toAddress));
-
+            message.To.Add(new MailboxAddress(toName, toAddress));
             using(var client = Client)
             {
                 try
@@ -59,12 +59,12 @@ namespace NetCoreBootstrap.Mail
                     {
                         var resource = JObject.Load(resourceReader);
                         if(resource == null) throw new ArgumentNullException();
-                        _host = TryGetValue(resource, "Mailer:Host").ToString();
-                        _hostPort = Convert.ToInt32(TryGetValue(resource, "Mailer:Port").ToString());
-                        _username = TryGetValue(resource, "Mailer:Username").ToString();
-                        _password = TryGetValue(resource, "Mailer:Password").ToString();
-                        _name = TryGetValue(resource, "Mailer:Name").ToString();
-                        _email = TryGetValue(resource, "Mailer:Email").ToString();
+                        host = TryGetValue(resource, "Mailer:Host").ToString();
+                        hostPort = Convert.ToInt32(TryGetValue(resource, "Mailer:Port").ToString());
+                        username = TryGetValue(resource, "Mailer:Username").ToString();
+                        password = TryGetValue(resource, "Mailer:Password").ToString();
+                        name = TryGetValue(resource, "Mailer:Name").ToString();
+                        email = TryGetValue(resource, "Mailer:Email").ToString();
                     }
                 }
             }
@@ -88,12 +88,12 @@ namespace NetCoreBootstrap.Mail
 
         public string Host 
         {
-            get { return _host; }
+            get { return host; }
         }
 
         public int HostPort
         {
-            get { return _hostPort; }
+            get { return hostPort; }
         }
 
         public SmtpClient Client
@@ -103,22 +103,22 @@ namespace NetCoreBootstrap.Mail
 
         public string Username 
         { 
-            get { return _username; }
+            get { return username; }
         }
 
         public string Password 
         { 
-            get { return _password; }
+            get { return password; }
         }
 
         public string Name 
         {
-            get { return _name; }
+            get { return name; }
         }
 
         public string Email 
         { 
-            get { return _email; } 
+            get { return email; } 
         }
     }
 }
