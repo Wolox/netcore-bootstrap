@@ -88,6 +88,13 @@ Routes must be declared through annotations so that Swagger can generate documen
 
 > *See how HTTP verbs are also declared for endpoints.*
 
+#### Scaffolding
+In order to do scaffolding, it is necessary to have created both the model we want to scaffold and have ran the migrations. Once that's ready, you can to run the following command:
+```bash
+    dotnet aspnet-codegenerator controller -name ControllerName -m ModelName -dc DataBaseContext  --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries
+```
+This will generate the controler for that model, along with Create, Edit, Delete and Details methods and their respective views.
+
 #### Async Jobs
 
 To create asynchronous jobs implement [Hangfire](https://www.hangfire.io).
