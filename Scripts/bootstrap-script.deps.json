@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v1.1": {
-      "bootstrap-script/1.0.0": {
+      "bootstrapscript/1.0.0": {
         "runtime": {
           "bootstrap-script.dll": {}
         }
@@ -14,7 +14,7 @@
     }
   },
   "libraries": {
-    "bootstrap-script/1.0.0": {
+    "bootstrapscript/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
