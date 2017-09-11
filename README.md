@@ -11,10 +11,8 @@ Get the latest version of NetCore following the guide in the [official website](
 
 ### [Kickoff] Application Setup
 
-After cloning the bootstrap, run `chmod +x ./Scripts/script.sh`
-Then `./Scripts/script.sh AppName` where `AppName` is your application name.
-If you don't need authentication run `./Scripts/script.sh AppName delete-auth`
-Your app is ready. Happy coding!
+After cloning the bootstrap, follow the [kickoff guide](https://github.com/Wolox/tech-guides/blob/master/net-core/docs/kickoff/README.md#kickoff).
+And happy coding!
 
 #### Getting dependencies
 

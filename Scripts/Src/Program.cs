@@ -6,11 +6,15 @@ namespace BootstrapScript
 {
     class Program
     {
+
         static int Main(string[] args)
         {
             string appName = args[0];
             string deleteAuth = "";
-            if(args.Length > 1) deleteAuth = args[1];
+            if(args.Length > 1)
+            {
+                deleteAuth = args[1];
+            }
             if(!String.IsNullOrEmpty(deleteAuth) && deleteAuth != DeleteAuthenticationParamValue())
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
@@ -40,11 +44,9 @@ namespace BootstrapScript
                     contents = contents.Replace(bootstrapName, appName);
                     if (file.Contains("/README.md"))
                     {
-                        contents = contents.Replace($@"### [Kickoff] Application Setup{endOfLine}","")
-                                            .Replace($@"After cloning the bootstrap, run `chmod +x ./Scripts/script.sh`{endOfLine}","")
-                                            .Replace($@"Then `./Scripts/script.sh AppName` where `AppName` is your application name.{endOfLine}","")
-                                            .Replace($@"If you don't need authentication run `./Scripts/script.sh AppName delete-auth`{endOfLine}","")
-                                            .Replace($@"Your app is ready. Happy coding!{endOfLine}","");
+                        contents = contents.Replace($@"### [Kickoff] Application Setup{endOfLine}{endOfLine}","")
+                                            .Replace($@"After cloning the bootstrap, follow the [kickoff guide](https://github.com/Wolox/tech-guides/blob/master/net-core/docs/kickoff/README.md#kickoff).{endOfLine}","")
+                                            .Replace($@"And happy coding!{endOfLine}","");
                     }
                     if(deleteAuth == DeleteAuthenticationParamValue())
                     {
@@ -104,6 +106,5 @@ namespace BootstrapScript
         {
             return "delete-auth";
         }
-    }    
+    }
 }
-
