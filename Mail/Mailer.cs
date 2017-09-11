@@ -19,13 +19,15 @@ namespace NetCoreBootstrap.Mail
         public Mailer()
         {
             _smtpClient = new SmtpClient();
-            _jsonFilePath = "appsettings.Development.json";
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            if(environment == "Production") _jsonFilePath = "appsettings.json";
+            else _jsonFilePath = $"appsettings.{environment}.json";
             SetAccountConfiguration();
         }
 
         public void Send(string toName, string toAddress, string subject, string body, string type = "plain")
         {
-            var message = new MimeMessage { Subject = subject, Body = new TextPart (type) { Text = body } };
+            var message = new MimeMessage { Subject = subject, Body = new TextPart(type) { Text = body }};
             message.From.Add(new MailboxAddress(Name, Email));
             message.To.Add(new MailboxAddress(toName, toAddress));
             using(var client = Client)
@@ -50,7 +52,7 @@ namespace NetCoreBootstrap.Mail
         {
             try
             {
-                var resourceFileStream = new FileStream(_jsonFilePath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, 
+                var resourceFileStream = new FileStream(JsonFilePath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, 
                                                         FileOptions.Asynchronous | FileOptions.SequentialScan);
                 using (resourceFileStream)
                 {
@@ -77,13 +79,23 @@ namespace NetCoreBootstrap.Mail
         private JToken TryGetValue(JObject resource, string name)
         {
             JToken jTokenValue = null;
-            string[] keys = name.Split(_jsonSplitter);
+            string[] keys = name.Split(JsonSplitter);
             jTokenValue = resource[keys[0]];            
             for(var i = 1; i < keys.Length; i++)
             {
                 jTokenValue = jTokenValue[keys[i]];
             }
             return jTokenValue;
+        }
+
+        public string JsonFilePath
+        {
+            get { return _jsonFilePath; }
+        }
+
+        public char JsonSplitter
+        {
+            get { return _jsonSplitter; }
         }
 
         public string Host 
