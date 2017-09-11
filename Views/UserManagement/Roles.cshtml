@@ -1,0 +1,18 @@
+@model NetCoreBootstrap.Models.Views.UserManagementViewModel
+
+<h3>Roles</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in Model.Roles)
+        {
+            <tr>
+                <td>@Html.DisplayFor(model => role.Name)</td>
+            </tr>
+        }
+    </tbody>
+</table>

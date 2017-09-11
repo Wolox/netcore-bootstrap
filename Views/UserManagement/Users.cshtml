@@ -1,0 +1,27 @@
+@using NetCoreBootstrap.Models.Database
+@using Microsoft.AspNetCore.Identity
+@model NetCoreBootstrap.Models.Views.UserManagementViewModel
+@inject UserManager<User> userManager
+
+<h3>Users</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>@Html.DisplayFor(model => user.UserName)</td>
+                <td>@Html.DisplayFor(model => user.Email)</td>
+                <td>@String.Join(",", await userManager.GetRolesAsync(user))</td>
+                <td>@Html.ActionLink("Add Role", "AddRole", "UserManagement", new { userId = user.Id })</td>
+            </tr>
+        }
+    </tbody>
+</table>

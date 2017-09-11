@@ -104,5 +104,6 @@ namespace BootstrapScript
         {
             return "delete-auth";
         }
-    }
+    }    
 }
+

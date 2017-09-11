@@ -1,0 +1,14 @@
+@model NetCoreBootstrap.Models.Views.UserManagementViewModel
+
+<h3>Add role to @Html.DisplayFor(model => model.Email)</h3>
+<div asp-validation-summary="All"></div>
+@using (Html.BeginForm("AddRole", "UserManagement", FormMethod.Post))
+{
+    @Html.HiddenFor(model => model.UserId)
+    <div class='form-group'>
+        @Html.DropDownListFor(model => model.NewRole, Model.RolesListItem, "Select a role")
+    </div>
+    <div class='form-group'>
+        <input type='submit' value='Add role'/>
+    </div>
+}
