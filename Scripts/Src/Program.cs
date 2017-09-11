@@ -10,10 +10,7 @@ namespace BootstrapScript
         {
             string appName = args[0];
             string deleteAuth = "";
-            if(args.Length > 1)
-            {
-                deleteAuth = args[1];
-            }
+            if(args.Length > 1) deleteAuth = args[1];
             if(!String.IsNullOrEmpty(deleteAuth) && deleteAuth != DeleteAuthenticationParamValue())
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
@@ -54,6 +51,7 @@ namespace BootstrapScript
                         if(file.Contains("/Startup.cs"))
                         {
                             Console.WriteLine("Updating Startup.cs ...");
+                            // We use spaces to delete indentation
                             contents = contents.Replace($@"using Microsoft.AspNetCore.Identity.EntityFrameworkCore;{endOfLine}", "")
                                                 .Replace($@"using Microsoft.AspNetCore.Identity;{endOfLine}", "")
                                                 .Replace($@"app.UseIdentity();{endOfLine}            ", "");
@@ -73,6 +71,7 @@ namespace BootstrapScript
                 else if(file.Contains($@"{bootstrapRootDir}{bootstrapName}.csproj"))
                 {
                     Console.WriteLine("Updating csproj file ...");
+                    // We use spaces to delete indentation
                     File.WriteAllText(file, contents.Replace($"<PackageReference Include=\"Microsoft.AspNetCore.Identity.EntityFrameworkCore\" Version=\"1.1.1\" />{endOfLine}    ", ""));
                 }
             }   
