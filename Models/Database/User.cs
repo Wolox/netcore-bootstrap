@@ -4,8 +4,5 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace NetCoreBootstrap.Models.Database
 {
-    public class User : IdentityUser
-    {
-        
-    }
+    public class User : IdentityUser {}
 }
