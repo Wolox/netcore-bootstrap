@@ -7,14 +7,11 @@ namespace BootstrapScript
     class Program
     {
 
-        static int Main(string[] args)
+        static int RemoveThisMain(string[] args)
         {
             string appName = args[0];
             string deleteAuth = "";
-            if(args.Length > 1)
-            {
-                deleteAuth = args[1];
-            }
+            if(args.Length > 1) deleteAuth = args[1];
             if(!String.IsNullOrEmpty(deleteAuth) && deleteAuth != DeleteAuthenticationParamValue())
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
