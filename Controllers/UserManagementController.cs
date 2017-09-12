@@ -72,6 +72,38 @@ namespace NetCoreBootstrap.Controllers
             return View(viewModel);
         }
 
+        [HttpGet("DeleteRole")]
+        public async Task<IActionResult> DeleteRole(string roleId)
+        {
+            var result = await UserRepository.DeleteRole(roleId);
+            if(result) ViewData["Message"] = "The role was successfully deleted.";
+            else ViewData["Message"] = "The role could not be deleted.";
+            return View("./Views/UserManagement/Roles.cshtml", new UserManagementViewModel { Roles = UserRepository.GetAllRoles() });
+        }
+
+        [HttpGet("EditRole")]
+        public async Task<IActionResult> EditRole(string roleId)
+        {
+            var role = await UserRepository.GetRoleById(roleId);
+            var roleViewModel = new UserManagementViewModel { RoleId = role.Id, Name = role.Name };
+            return View(roleViewModel);
+        }
+
+        [HttpPost("EditRole")]
+        public async Task<IActionResult> EditRole(UserManagementViewModel viewModel)
+        {
+            var result = await UserRepository.UpdateRole(viewModel.RoleId, viewModel.Name);
+            if(result) ViewData["Message"] = "The role was successfully updated.";
+            else ViewData["Message"] = "The role could not be updated.";
+            return View("./Views/UserManagement/Roles.cshtml", new UserManagementViewModel { Roles = UserRepository.GetAllRoles() });
+        }
+
+        [HttpGet("RoleManager")]
+        public IActionResult RoleManager()
+        {
+            throw new NotImplementedException();
+        }
+
         public DbContextOptions<DataBaseContext> Options
         {
             get { return _options; }

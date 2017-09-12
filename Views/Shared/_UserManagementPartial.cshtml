@@ -1,0 +1,10 @@
+@using NetCoreBootstrap.Models.Database
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+	<li><a asp-area="" asp-controller="UserManagement" asp-action="Users">Users</a></li>
+    <li><a asp-area="" asp-controller="UserManagement" asp-action="Roles">Roles</a></li>
+    <li><a asp-area="" asp-controller="UserManagement" asp-action="RoleManager">Role Manager</a></li>
+}

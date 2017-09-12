@@ -1,10 +1,13 @@
 @model NetCoreBootstrap.Models.Views.UserManagementViewModel
 
 <h3>Roles</h3>
+@Html.ActionLink("New Role", "CreateRole", "UserManagement")
+<span>@ViewData["Message"]</span>
 <table>
     <thead>
         <tr>
             <th>Name</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -12,6 +15,10 @@
         {
             <tr>
                 <td>@Html.DisplayFor(model => role.Name)</td>
+                <td>
+                    @Html.ActionLink("Edit Role", "EditRole", "UserManagement", new { roleId = role.Id }) | 
+                    @Html.ActionLink("Delete Role", "DeleteRole", "UserManagement", new { roleId = role.Id })
+                </td>
             </tr>
         }
     </tbody>
