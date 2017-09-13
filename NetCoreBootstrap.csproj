@@ -25,8 +25,5 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1"/>
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0"/>
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="1.0.1"/>
-    <Watch Include="**\*.js" Exclude="node_modules\**\*;**\*.js.map;obj\**\*;bin\**\*"/>
-    <Watch Include="**\*.css" Exclude="node_modules\**\*;**\*.min.css;obj\**\*;bin\**\*"/>
-    <Watch Include="**\*.cshtml" Exclude="obj\**\*;bin\**\*"/>
   </ItemGroup>
 </Project>
