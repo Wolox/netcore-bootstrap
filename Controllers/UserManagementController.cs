@@ -101,7 +101,46 @@ namespace NetCoreBootstrap.Controllers
         [HttpGet("RoleManager")]
         public IActionResult RoleManager()
         {
-            throw new NotImplementedException();
+            var viewModel = new RoleManagerViewModel { UsersListItem = UserRepository.GetUsersListItem(), Roles = new Dictionary<string, bool>() };
+            return View(viewModel);
+        }
+
+        [HttpGet("ViewRoles")]
+        public async Task<IActionResult> ViewRoles(string userId)
+        {
+            var viewModel = new RoleManagerViewModel { Roles = new Dictionary<string, bool>() };
+            var user = await UserRepository.GetUserById(userId);
+            var userRoles = await UserRepository.GetRoles(user);
+            bool userHasRole = false;
+            foreach(var role in UserRepository.GetAllRoles())
+            {
+                userHasRole = false;
+                if(userRoles.Contains(role.ToString())) userHasRole = true;
+                viewModel.Roles[role.ToString()] = userHasRole;
+            }
+            viewModel.SelectedUserId = userId;
+            return PartialView("_UserRoles", viewModel);
+        }
+
+        [HttpPost("AddRolesToUser")]
+        public async Task<IActionResult> AddRolesToUser(RoleManagerViewModel viewModel)
+        {
+            var user = await UserRepository.GetUserById(viewModel.SelectedUserId);
+            var userRoles = await UserRepository.GetRoles(user);
+            bool isCurrentRole = false;
+            foreach(var role in viewModel.Roles)
+            {
+                isCurrentRole = userRoles.Contains(role.Key);
+                if(isCurrentRole)
+                {
+                    if(!role.Value) await UserRepository.RemoveRoleFromUser(user, role.Key);
+                }
+                else
+                {
+                    if(role.Value) await UserRepository.AddRoleToUser(user, role.Key);
+                }
+            }
+            return RedirectToAction("RoleManager");
         }
 
         public DbContextOptions<DataBaseContext> Options

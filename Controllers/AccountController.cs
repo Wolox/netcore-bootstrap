@@ -95,6 +95,13 @@ namespace NetCoreBootstrap.Controllers
             {
                 return RedirectToAction("Login");
             }
+            
+            var user = await UserManager.FindByEmailAsync(info.Principal.FindFirstValue(ClaimTypes.Email));
+            if(user != null && !user.IsExternal)
+            {
+                // Already exists a local user with the external login mail.
+                throw new Exception($"This email {user.Email} is already registered.");
+            }
 
             // Sign in the user with this external login provider if the user already has a login.
             var result = await SignInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
@@ -106,8 +113,6 @@ namespace NetCoreBootstrap.Controllers
             else
             {
                 // If the user does not have an account, then ask the user to create an account.
-                ViewData["ReturnUrl"] = returnUrl;
-                ViewData["LoginProvider"] = info.LoginProvider;
                 if(await ConfirmExternalLogin(new UserManagementViewModel { Email = info.Principal.FindFirstValue(ClaimTypes.Email)}))
                 {
                     return RedirectToAction("Users", "UserManagement");

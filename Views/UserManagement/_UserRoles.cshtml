@@ -1,0 +1,19 @@
+@model NetCoreBootstrap.Models.Views.RoleManagerViewModel
+
+@if(Model.Roles.Count > 0)
+{
+	@using (Html.BeginForm("AddRolesToUser", "UserManagement", FormMethod.Post))
+	{  
+		@foreach(var role in Model.Roles)
+		{
+			<div>
+				@Html.CheckBoxFor(model => model.Roles[role.Key], new {})
+				@Html.LabelFor(model => model.Roles[role.Key])
+			</div>
+		}
+		@Html.HiddenFor(model => model.SelectedUserId)
+		<div class='form-group'>
+        	<input type='submit' value='Save changes'/>
+    	</div>
+	}
+}

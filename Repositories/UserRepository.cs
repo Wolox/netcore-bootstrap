@@ -64,6 +64,11 @@ namespace NetCoreBootstrap.Repositories
             return await UserManager.AddToRoleAsync(user, role);
         }
 
+        public async Task<IdentityResult> RemoveRoleFromUser(User user, string role)
+        {
+            return await UserManager.RemoveFromRoleAsync(user, role);
+        }
+
         public async Task<IdentityResult> CreateRole(string role)
         {
             return await RoleManager.CreateAsync(new IdentityRole(role));
@@ -107,6 +112,22 @@ namespace NetCoreBootstrap.Repositories
             {
                 throw new Exception(e.Message);
             }
+		}
+
+        public async Task<IEnumerable<string>> GetRoles(User user)
+		{
+			var roles = await UserManager.GetRolesAsync(user);
+            return roles;
+		}
+
+        public List<SelectListItem> GetUsersListItem()
+		{
+			var users = new List<SelectListItem>();
+            foreach(var user in UserManager.Users.OrderBy(u => u.Email).ToList())
+            {
+                users.Add(new SelectListItem { Text = user.Email, Value = user.Id });
+            }
+            return users;
 		}
         
         public UserManager<User> UserManager

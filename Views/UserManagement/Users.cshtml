@@ -10,7 +10,6 @@
             <th>Username</th>
             <th>Email</th>
             <th>Roles</th>
-            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -20,9 +19,6 @@
                 <td>@Html.DisplayFor(model => user.UserName)</td>
                 <td>@Html.DisplayFor(model => user.Email)</td>
                 <td>@String.Join(",", await userManager.GetRolesAsync(user))</td>
-                <td>
-                    @Html.ActionLink("Add Role", "AddRole", "UserManagement", new { userId = user.Id })
-                </td>
             </tr>
         }
     </tbody>

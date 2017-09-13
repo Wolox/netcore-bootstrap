@@ -1,0 +1,22 @@
+@model NetCoreBootstrap.Models.Views.RoleManagerViewModel
+
+<h3>Role manager</h3>
+
+<div>
+	<h4>Users</h4>
+	@Html.ListBox("UserList", Model.UsersListItem, new { @class = "user-list" })
+</div>
+
+<div class='user-roles'>
+	<h4>Roles</h4>
+	@{ Html.RenderPartial("_UserRoles", Model); }
+</div>
+
+<script type='text/javascript'>
+$(function() 
+{
+	$(".user-list").on('change', function(){
+		$(".user-roles").load('http://localhost:5000/UserManagement/ViewRoles?userId=' + $(this).val());
+	});
+});
+</script>
