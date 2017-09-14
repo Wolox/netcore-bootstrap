@@ -110,15 +110,9 @@ namespace NetCoreBootstrap.Controllers
                 return RedirectToAction("Users", "UserManagement");
             }
             else if(result.IsLockedOut || result.IsNotAllowed || result.RequiresTwoFactor) throw new Exception(result.ToString());
-            else
-            {
-                // If the user does not have an account, then ask the user to create an account.
-                if(await ConfirmExternalLogin(new UserManagementViewModel { Email = info.Principal.FindFirstValue(ClaimTypes.Email)}))
-                {
-                    return RedirectToAction("Users", "UserManagement");
-                }
-                else return RedirectToAction("Login");
-            }
+            else if(await ConfirmExternalLogin(new UserManagementViewModel { Email = info.Principal.FindFirstValue(ClaimTypes.Email)}))
+                return RedirectToAction("Users", "UserManagement");
+            else return RedirectToAction("Login");
         }
 
         private async Task<bool> ConfirmExternalLogin(UserManagementViewModel viewModel)
