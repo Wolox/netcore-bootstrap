@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.IO;
 using System.Linq;
 
@@ -6,7 +6,6 @@ namespace BootstrapScript
 {
     class Program
     {
-
         static int RemoveThisMain(string[] args)
         {
             string appName = args[0];
@@ -57,6 +56,9 @@ namespace BootstrapScript
                             startIndex = contents.IndexOf("services.AddIdentity");
                             endIndex = contents.IndexOf("services.", startIndex + 1);
                             contents = contents.Remove(startIndex, (endIndex - startIndex));
+                            startIndex = contents.IndexOf("app.UseGoogleAuthentication");
+                            endIndex = contents.IndexOf("app.", startIndex + 1);
+                            contents = contents.Remove(startIndex, (endIndex - startIndex));
                         }
                         else if(file.Contains("/Models/Database/DataBaseContext.cs"))
                         {
@@ -64,14 +66,23 @@ namespace BootstrapScript
                             contents = contents.Replace("IdentityDbContext<User>", "DbContext")
                                                 .Replace($@"using Microsoft.AspNetCore.Identity.EntityFrameworkCore;{endOfLine}", "");
                         }
+                        else if(file.Contains("/Views/Shared/_Layout.cshtml"))
+                        {
+                            // We use spaces to delete indentation
+                            Console.WriteLine("Updating _Layout.cshtml ...");
+                            contents = contents.Replace($"    @await Html.PartialAsync(\"_UserManagementPartial\"){endOfLine}                ", "")
+                                                .Replace($"    @await Html.PartialAsync(\"_LoginPartial\"){endOfLine}            ", "");
+                        }
                     }
                     File.WriteAllText(file, contents);
                 }
-                else if(file.Contains($@"{bootstrapRootDir}{bootstrapName}.csproj"))
+                else if(file.Contains($@"{bootstrapRootDir}{bootstrapName}.csproj") && deleteAuth == DeleteAuthenticationParamValue())
                 {
                     Console.WriteLine("Updating csproj file ...");
                     // We use spaces to delete indentation
-                    File.WriteAllText(file, contents.Replace($"<PackageReference Include=\"Microsoft.AspNetCore.Identity.EntityFrameworkCore\" Version=\"1.1.1\" />{endOfLine}    ", ""));
+                    contents = contents.Replace($"<PackageReference Include=\"Microsoft.AspNetCore.Identity.EntityFrameworkCore\" Version=\"1.1.1\"/>{endOfLine}    ", "")
+                                        .Replace($"<PackageReference Include=\"Microsoft.AspNetCore.Authentication.Google\" Version=\"1.1.2\"/>{endOfLine}    ", "");
+                    File.WriteAllText(file, contents);
                 }
             }   
             Console.WriteLine("Renaming .csproj ...");
@@ -97,6 +108,8 @@ namespace BootstrapScript
             File.Move($@"{bootstrapRootDir}Controllers/UserManagementController.cs", $@"{bootstrapRootDir}Scripts/ControllersUserManagementController.cs");
             File.Move($@"{bootstrapRootDir}Models/Database/User.cs", $@"{bootstrapRootDir}Scripts/ModelsDatabaseUser.cs");
             File.Move($@"{bootstrapRootDir}Repositories/UserRepository.cs", $@"{bootstrapRootDir}Scripts/UserRepository.cs");
+            File.Move($@"{bootstrapRootDir}Views/Shared/_LoginPartial.cshtml", $@"{bootstrapRootDir}Scripts/_LoginPartial.cshtml");
+            File.Move($@"{bootstrapRootDir}Views/Shared/_UserManagementPartial.cshtml", $@"{bootstrapRootDir}Scripts/_UserManagementPartial.cshtml");
         }
 
         private static string DeleteAuthenticationParamValue()
