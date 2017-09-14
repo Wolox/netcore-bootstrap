@@ -1,0 +1,13 @@
+@using NetCoreBootstrap.Models.Database
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization;
+@inject SignInManager<User> SignInManager
+@inject IViewLocalizer Localizer
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li><a asp-area="" asp-controller="UserManagement" asp-action="Users">@Localizer["Users"]</a></li>
+    <li><a asp-area="" asp-controller="UserManagement" asp-action="Roles">@Localizer["Roles"]</a></li>
+    <li><a asp-area="" asp-controller="UserManagement" asp-action="RoleManager">@Localizer["RoleManager"]</a></li>
+}

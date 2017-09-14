@@ -1,0 +1,16 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization;
+@model NetCoreBootstrap.Models.Views.RoleManagerViewModel
+@inject IViewLocalizer Localizer
+
+<h3>@Localizer["RoleManager"]</h3>
+
+<div>
+	<h4>@Localizer["Users"]</h4>
+	@Html.ListBox("UserList", Model.UsersListItem, new { @class = "user-list" })
+</div>
+
+<div class='user-roles'>
+	<h4>@Localizer["RoleManager"]</h4>
+	@{ Html.RenderPartial("_UserRoles", Model); }
+</div>

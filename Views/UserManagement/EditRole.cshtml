@@ -3,11 +3,12 @@
 @model NetCoreBootstrap.Models.Views.UserManagementViewModel
 @inject IViewLocalizer Localizer
 
-<h3>@Localizer["CreateRole"]</h3>
-@using (Html.BeginForm("CreateRole", "UserManagement", FormMethod.Post))
+<h3>@Localizer["EditRole"]</h3>
+@using (Html.BeginForm("EditRole", "UserManagement", FormMethod.Post))
 {  
+	@Html.HiddenFor(model => model.RoleId)
     @Html.Partial("_EditRoleForm", Model);
     <div class='form-group'>
-        <input type='submit' value='@Localizer["CreateRole"]'/>
+        <input type='submit' value='@Localizer["SaveChanges"]'/>
     </div>
 }

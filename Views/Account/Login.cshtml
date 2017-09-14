@@ -1,5 +1,8 @@
+@using Microsoft.AspNetCore.Identity;
 @using NetCoreBootstrap.Models.Views
+@using NetCoreBootstrap.Models.Database
 @model LoginViewModel
+@inject SignInManager<User> SignInManager
 
 @using (Html.BeginForm("Login", "Account", FormMethod.Post))
 {
@@ -22,4 +25,14 @@
     <div>
         <input type="submit" value="Login"/>
     </div>
+}
+@{
+    var loginProviders = SignInManager.GetExternalAuthenticationSchemes().ToList();
+    @using (Html.BeginForm("ExternalLogin", "Account", FormMethod.Post))
+    {
+        foreach (var provider in loginProviders)
+        {
+            <button type="submit" class="btn btn-default" name="provider" value="@provider.AuthenticationScheme" title="Log in using your @provider.DisplayName account">@provider.AuthenticationScheme</button>
+        }
+    }
 }

@@ -64,10 +64,71 @@ namespace NetCoreBootstrap.Repositories
             return await UserManager.AddToRoleAsync(user, role);
         }
 
+        public async Task<IdentityResult> RemoveRoleFromUser(User user, string role)
+        {
+            return await UserManager.RemoveFromRoleAsync(user, role);
+        }
+
         public async Task<IdentityResult> CreateRole(string role)
         {
             return await RoleManager.CreateAsync(new IdentityRole(role));
         }
+
+        public async Task<bool> DeleteRole(string roleId)
+		{
+			var role = await RoleManager.FindByIdAsync(roleId);
+            try 
+            {
+                await RoleManager.DeleteAsync(role);
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            return true;
+		}
+
+        public async Task<bool> UpdateRole(string roleId, string name)
+		{
+			try
+            {
+                var role = await GetRoleById(roleId);
+                role.Name = name;
+                return (await RoleManager.UpdateAsync(role)).Succeeded;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+		}
+
+        public async Task<IdentityRole> GetRoleById(string roleId)
+		{
+			try
+            {
+                return await RoleManager.FindByIdAsync(roleId);
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+		}
+
+        public async Task<IEnumerable<string>> GetRoles(User user)
+		{
+			var roles = await UserManager.GetRolesAsync(user);
+            return roles;
+		}
+
+        public List<SelectListItem> GetUsersListItem()
+		{
+			var users = new List<SelectListItem>();
+            foreach(var user in UserManager.Users.OrderBy(u => u.Email).ToList())
+            {
+                users.Add(new SelectListItem { Text = user.Email, Value = user.Id });
+            }
+            return users;
+		}
         
         public UserManager<User> UserManager
         {
@@ -83,5 +144,5 @@ namespace NetCoreBootstrap.Repositories
         {
             get { return new DataBaseContext(_options); }
         }
-    }
+	}
 }

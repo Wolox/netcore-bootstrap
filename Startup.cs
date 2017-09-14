@@ -47,6 +47,7 @@ namespace NetCoreBootstrap
             services.AddIdentity<User, IdentityRole>(options => {
                                                                     options.Cookies.ApplicationCookie.LoginPath = "/Account/Login";
                                                                     options.Cookies.ApplicationCookie.AccessDeniedPath = "/Account/AccessDenied";
+                                                                    options.User.RequireUniqueEmail = true;
                                                                 })
                     .AddEntityFrameworkStores<DataBaseContext>()
                     .AddDefaultTokenProviders();
@@ -73,6 +74,11 @@ namespace NetCoreBootstrap
 
             app.UseStaticFiles();
             app.UseIdentity();
+            app.UseGoogleAuthentication(new GoogleOptions()
+            {
+                ClientId = Configuration["GoogleAuth:ClientId"],
+                ClientSecret = Configuration["GoogleAuth:ClientSecret"]
+            });
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
