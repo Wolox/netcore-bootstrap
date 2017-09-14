@@ -1,4 +1,7 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization;
 @model NetCoreBootstrap.Models.Views.RoleManagerViewModel
+@inject IViewLocalizer Localizer
 
 @if(Model.Roles.Count > 0)
 {
@@ -13,7 +16,7 @@
 		}
 		@Html.HiddenFor(model => model.SelectedUserId)
 		<div class='form-group'>
-        	<input type='submit' value='Save changes'/>
-    	</div>
+			<input type='submit' value='@Localizer["SaveChanges"]'/>
+		</div>
 	}
 }

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using NetCoreBootstrap.Repositories;
+using Microsoft.AspNetCore.Mvc.Localization;
 
 namespace NetCoreBootstrap.Controllers
 {
@@ -18,12 +19,17 @@ namespace NetCoreBootstrap.Controllers
     public class UserManagementController : Controller
     {
         private readonly DbContextOptions<DataBaseContext> _options;
-        private readonly UserRepository _userRepository;
+		private readonly IHtmlLocalizer<UserManagementController> _localizer;
+		private readonly UserRepository _userRepository;
 
-        public UserManagementController(DbContextOptions<DataBaseContext> options, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public UserManagementController(DbContextOptions<DataBaseContext> options, 
+                                        UserManager<User> userManager, 
+                                        RoleManager<IdentityRole> roleManager, 
+                                        IHtmlLocalizer<UserManagementController> localizer)
         {
             this._options = options;
-            this._userRepository = new UserRepository(this._options, userManager, roleManager);
+			this._localizer = localizer;
+			this._userRepository = new UserRepository(this._options, userManager, roleManager);
         }
 
         [HttpGet("Users")]
@@ -76,8 +82,8 @@ namespace NetCoreBootstrap.Controllers
         public async Task<IActionResult> DeleteRole(string roleId)
         {
             var result = await UserRepository.DeleteRole(roleId);
-            if(result) ViewData["Message"] = "The role was successfully deleted.";
-            else ViewData["Message"] = "The role could not be deleted.";
+            if(result) ViewData["Message"] = Localizer["RoleDeleted"];
+            else ViewData["Message"] = Localizer["RoleNotDeleted"];
             return View("./Views/UserManagement/Roles.cshtml", new UserManagementViewModel { Roles = UserRepository.GetAllRoles() });
         }
 
@@ -93,16 +99,15 @@ namespace NetCoreBootstrap.Controllers
         public async Task<IActionResult> EditRole(UserManagementViewModel viewModel)
         {
             var result = await UserRepository.UpdateRole(viewModel.RoleId, viewModel.Name);
-            if(result) ViewData["Message"] = "The role was successfully updated.";
-            else ViewData["Message"] = "The role could not be updated.";
+            if(result) ViewData["Message"] = Localizer["RoleUpdated"];
+            else ViewData["Message"] = Localizer["RoleNotUpdated"];
             return View("./Views/UserManagement/Roles.cshtml", new UserManagementViewModel { Roles = UserRepository.GetAllRoles() });
         }
 
         [HttpGet("RoleManager")]
         public IActionResult RoleManager()
         {
-            var viewModel = new RoleManagerViewModel { UsersListItem = UserRepository.GetUsersListItem(), Roles = new Dictionary<string, bool>() };
-            return View(viewModel);
+            return View(new RoleManagerViewModel { UsersListItem = UserRepository.GetUsersListItem(), Roles = new Dictionary<string, bool>() });
         }
 
         [HttpGet("ViewRoles")]
@@ -135,10 +140,7 @@ namespace NetCoreBootstrap.Controllers
                 {
                     if(!role.Value) await UserRepository.RemoveRoleFromUser(user, role.Key);
                 }
-                else
-                {
-                    if(role.Value) await UserRepository.AddRoleToUser(user, role.Key);
-                }
+                else if(role.Value) await UserRepository.AddRoleToUser(user, role.Key);
             }
             return RedirectToAction("RoleManager");
         }
@@ -151,6 +153,11 @@ namespace NetCoreBootstrap.Controllers
         public UserRepository UserRepository
         {
             get { return _userRepository; }
+        }
+
+        public IHtmlLocalizer<UserManagementController> Localizer
+        {
+            get { return _localizer; }
         }
     }
 }

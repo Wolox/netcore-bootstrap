@@ -1,10 +1,13 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization;
 @model NetCoreBootstrap.Models.Views.UserManagementViewModel
+@inject IViewLocalizer Localizer
 
-<h3>Create role</h3>
+<h3>@Localizer["CreateRole"]</h3>
 @using (Html.BeginForm("CreateRole", "UserManagement", FormMethod.Post))
 {  
     @Html.Partial("_EditRoleForm", Model);
     <div class='form-group'>
-        <input type='submit' value='Create role'/>
+        <input type='submit' value='@Localizer["CreateRole"]'/>
     </div>
 }

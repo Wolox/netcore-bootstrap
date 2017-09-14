@@ -1,7 +1,10 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization;
 @model NetCoreBootstrap.Models.Views.UserManagementViewModel
+@inject IViewLocalizer Localizer
 
-<h3>Profile</h3>
-<h4>Change password</h4>
+<h3>@Localizer["Profile"]</h3>
+<h4>@Localizer["ChangePassword"]</h4>
 @using (Html.BeginForm("EditUser", "Account", FormMethod.Post))
 {
     <div asp-validation-summary="All"></div>
@@ -11,20 +14,17 @@
         @Html.EditorFor(model => model.Password)
         @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger"})
     </div>
-
     <div class='form-group'>
         @Html.LabelFor(model => model.NewPassword)
         @Html.EditorFor(model => model.NewPassword)
         @Html.ValidationMessageFor(model => model.NewPassword, "", new { @class = "text-danger"})
     </div>
-
     <div class='form-group'>
         @Html.LabelFor(model => model.ConfirmNewPassword)
         @Html.EditorFor(model => model.ConfirmNewPassword)
         @Html.ValidationMessageFor(model => model.ConfirmNewPassword, "", new { @class = "text-danger"})
     </div>
-
     <div class='form-group'>
-        <input type='submit' value='Save changes'/>
+        <input type='submit' value='@Localizer["SaveChanges"]'/>
     </div>
 }

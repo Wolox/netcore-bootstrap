@@ -1,13 +1,22 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization;
 @model NetCoreBootstrap.Models.Views.UserManagementViewModel
+@inject IViewLocalizer Localizer
 
-<h3>Roles</h3>
-@Html.ActionLink("New Role", "CreateRole", "UserManagement")
+@{
+    var newRoleLabel = @Localizer["NewRole"].Value;
+    var editRoleLabel = @Localizer["EditRole"].Value;
+    var deleteRoleLabel = @Localizer["DeleteRole"].Value;
+}
+
+<h3>@Localizer["Roles"]</h3>
+@Html.ActionLink(newRoleLabel, "CreateRole", "UserManagement")
 <span>@ViewData["Message"]</span>
 <table>
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Actions</th>
+            <th>@Localizer["Name"]</th>
+            <th>@Localizer["Actions"]</th>
         </tr>
     </thead>
     <tbody>
@@ -16,8 +25,8 @@
             <tr>
                 <td>@Html.DisplayFor(model => role.Name)</td>
                 <td>
-                    @Html.ActionLink("Edit Role", "EditRole", "UserManagement", new { roleId = role.Id }) | 
-                    @Html.ActionLink("Delete Role", "DeleteRole", "UserManagement", new { roleId = role.Id })
+                    @Html.ActionLink(editRoleLabel, "EditRole", "UserManagement", new { roleId = role.Id }) | 
+                    @Html.ActionLink(deleteRoleLabel, "DeleteRole", "UserManagement", new { roleId = role.Id })
                 </td>
             </tr>
         }

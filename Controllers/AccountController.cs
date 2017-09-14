@@ -13,7 +13,7 @@ using System;
 using Microsoft.Extensions.Options;
 
 namespace NetCoreBootstrap.Controllers
-{    
+{
     [Route("[controller]")]
     public class AccountController : Controller
     {
@@ -21,7 +21,7 @@ namespace NetCoreBootstrap.Controllers
         private readonly SignInManager<User> _signInManager;
 		private readonly IOptions<IdentityCookieOptions> _identityCookieOptions;
 
-		public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IOptions<IdentityCookieOptions> identityCookieOptions)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IOptions<IdentityCookieOptions> identityCookieOptions)
         {
             _userManager = userManager;
             _signInManager = signInManager;
