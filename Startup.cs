@@ -47,7 +47,10 @@ namespace NetCoreBootstrap
             services.ConfigureApplicationCookie(options => {
                                                                 options.LoginPath = "/Account/Login";
                                                                 options.AccessDeniedPath = "/Account/AccessDenied";
-                                                                //options.User.RequireUniqueEmail = true;
+                                                            });
+            services.AddAuthentication().AddGoogle(googleOptions => {
+                                                                googleOptions.ClientId = Configuration["GoogleAuth:ClientId"];
+                                                                googleOptions.ClientSecret = Configuration["GoogleAuth:ClientSecret"];
                                                             });
             services.AddScoped<DataBaseContext>();
             services.AddHangfire(options => GlobalConfiguration.Configuration.UsePostgreSqlStorage(connectionString));
@@ -71,11 +74,6 @@ namespace NetCoreBootstrap
 
             app.UseStaticFiles();
             app.UseAuthentication();
-            /*app.UseGoogleAuthentication(new GoogleOptions()
-            {
-                ClientId = Configuration["GoogleAuth:ClientId"],
-                ClientSecret = Configuration["GoogleAuth:ClientSecret"]
-            });*/
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c =>

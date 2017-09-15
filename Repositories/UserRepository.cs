@@ -28,7 +28,7 @@ namespace NetCoreBootstrap.Repositories
             var user = await UserManager.FindByIdAsync(id);
             using(var context = Context)
             {
-                //context.Entry(user).Collection(u => u.Roles).Load();
+                context.Entry(user).Collection(u => u.Roles).Load();
                 return user;
             }
         }
@@ -37,7 +37,7 @@ namespace NetCoreBootstrap.Repositories
         {
             using(var context = Context)
             {
-                return null;//context.Users.OrderBy(u => u.Email).Include(u => u.Roles).ToList();
+                return context.Users.OrderBy(u => u.Email).Include(u => u.Roles).ToList();
             }
         }
 
@@ -45,7 +45,7 @@ namespace NetCoreBootstrap.Repositories
         {
             using(var context = Context)
             {
-                return null;//ontext.Roles.OrderBy(r => r.Name).Include(r => r.Users).ToList();
+                return context.Roles.OrderBy(r => r.Name).ToList();
             }
         }
 

@@ -11,6 +11,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication;
 
 namespace NetCoreBootstrap.Controllers
 {
@@ -19,13 +20,11 @@ namespace NetCoreBootstrap.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-		//private readonly IOptions<IdentityCookieOptions> _identityCookieOptions;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)//, IOptions<IdentityCookieOptions> identityCookieOptions)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            //_identityCookieOptions = identityCookieOptions;
         }
 
         [AllowAnonymous]
@@ -52,10 +51,9 @@ namespace NetCoreBootstrap.Controllers
 
         [AllowAnonymous]
         [HttpGet("Login")]
-        //public async Task<IActionResult> Login()
-        public IActionResult Login()
+        public async Task<IActionResult> Login()
         {
-            //await HttpContext.Authentication.SignOutAsync(IdentityCookieOptions.Value.ExternalCookieAuthenticationScheme);
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
             return View();
         }
 
@@ -175,10 +173,5 @@ namespace NetCoreBootstrap.Controllers
         {
             get { return _userManager; }
         }
-
-        /*public IOptions<IdentityCookieOptions> IdentityCookieOptions
-        {
-            get { return _identityCookieOptions; }
-        }*/
     }
 }
