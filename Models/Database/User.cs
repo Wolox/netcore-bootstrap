@@ -9,7 +9,6 @@ namespace NetCoreBootstrap.Models.Database
     public class User : IdentityUser 
     {
         public bool IsExternal { get; set; }
-
-        public ICollection<IdentityUserRole<int>> Roles { get; set; }
+        public ICollection<IdentityRole> Roles { get; set; }
     }
 }
