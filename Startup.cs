@@ -41,8 +41,8 @@ namespace NetCoreBootstrap
             });
             var connectionString = Configuration["ConnectionString"];
             services.AddDbContext<DataBaseContext>(options =>  options.UseNpgsql(connectionString));
-            services.AddIdentity<User, IdentityRole>()
-                    .AddEntityFrameworkStores<DataBaseContext>()
+            services.AddIdentity<User, Role>()
+                    .AddEntityFrameworkStores<DataBaseContext>() //ApplicationDbContext
                     .AddDefaultTokenProviders();
             services.ConfigureApplicationCookie(options => {
                                                                 options.LoginPath = "/Account/Login";
