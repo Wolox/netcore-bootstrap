@@ -37,31 +37,31 @@ namespace NetCoreBootstrap
             services.AddMvc().AddViewLocalization();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "NetCoreBootstrap API", Version = "v1" });
             });
             var connectionString = Configuration["ConnectionString"];
             services.AddDbContext<DataBaseContext>(options =>  options.UseNpgsql(connectionString));
             services.AddIdentity<User, IdentityRole>()
-                    .AddEntityFrameworkStores<DataBaseContext>() //ApplicationDbContext
+                    .AddEntityFrameworkStores<DataBaseContext>()
                     .AddDefaultTokenProviders();
             services.ConfigureApplicationCookie(options => {
                                                                 options.LoginPath = "/Account/Login";
                                                                 options.AccessDeniedPath = "/Account/AccessDenied";
                                                             });
             services.AddAuthentication().AddGoogle(googleOptions => {
-                                                                googleOptions.ClientId = Configuration["GoogleAuth:ClientId"];
-                                                                googleOptions.ClientSecret = Configuration["GoogleAuth:ClientSecret"];
-                                                            });
+                                                                        googleOptions.ClientId = Configuration["GoogleAuth:ClientId"];
+                                                                        googleOptions.ClientSecret = Configuration["GoogleAuth:ClientSecret"];
+                                                                    });
             services.AddScoped<DataBaseContext>();
-            services.AddHangfire(options => GlobalConfiguration.Configuration.UsePostgreSqlStorage(connectionString));
+            // Uncomment this if you want use Hangfire
+            //services.AddHangfire(options => GlobalConfiguration.Configuration.UsePostgreSqlStorage(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)//, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            //loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            //loggerFactory.AddDebug();
-
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -71,14 +71,13 @@ namespace NetCoreBootstrap
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "NetCoreBootstrap API V1");
             });
             // Uncomment this if you want use Hangfire
             // app.UseHangfireDashboard();
