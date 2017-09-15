@@ -54,7 +54,10 @@ namespace NetCoreBootstrap.Controllers
         public async Task<IActionResult> Login()
         {
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-            return View();
+            var loginProviders = await SignInManager.GetExternalAuthenticationSchemesAsync();
+            LoginViewModel loginViewModel = new LoginViewModel();
+            loginViewModel.loginProviders = loginProviders.ToList();
+            return View(loginViewModel);
         }
 
         [AllowAnonymous]
@@ -67,6 +70,8 @@ namespace NetCoreBootstrap.Controllers
                 if(result.Succeeded) return RedirectToAction("Users", "UserManagement");
                 ModelState.AddModelError("", "Invalid login attempt.");
             }
+            var loginProviders = await SignInManager.GetExternalAuthenticationSchemesAsync();
+            loginViewModel.loginProviders = loginProviders.ToList();
             return View(loginViewModel);
         }
 

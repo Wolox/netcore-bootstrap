@@ -37,7 +37,7 @@ namespace NetCoreBootstrap.Repositories
         {
             using(var context = Context)
             {
-                return context.Users.OrderBy(u => u.Email).Include(u => u.Roles).ToList();
+                return context.Users.OrderBy(u => u.Email).ToList();
             }
         }
 
