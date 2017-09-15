@@ -19,13 +19,13 @@ namespace NetCoreBootstrap.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-		private readonly IOptions<IdentityCookieOptions> _identityCookieOptions;
+		//private readonly IOptions<IdentityCookieOptions> _identityCookieOptions;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IOptions<IdentityCookieOptions> identityCookieOptions)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)//, IOptions<IdentityCookieOptions> identityCookieOptions)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _identityCookieOptions = identityCookieOptions;
+            //_identityCookieOptions = identityCookieOptions;
         }
 
         [AllowAnonymous]
@@ -52,9 +52,10 @@ namespace NetCoreBootstrap.Controllers
 
         [AllowAnonymous]
         [HttpGet("Login")]
-        public async Task<IActionResult> Login()
+        //public async Task<IActionResult> Login()
+        public IActionResult Login()
         {
-            await HttpContext.Authentication.SignOutAsync(IdentityCookieOptions.Value.ExternalCookieAuthenticationScheme);
+            //await HttpContext.Authentication.SignOutAsync(IdentityCookieOptions.Value.ExternalCookieAuthenticationScheme);
             return View();
         }
 
@@ -175,9 +176,9 @@ namespace NetCoreBootstrap.Controllers
             get { return _userManager; }
         }
 
-        public IOptions<IdentityCookieOptions> IdentityCookieOptions
+        /*public IOptions<IdentityCookieOptions> IdentityCookieOptions
         {
             get { return _identityCookieOptions; }
-        }
+        }*/
     }
 }

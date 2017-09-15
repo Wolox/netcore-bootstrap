@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NetCoreBootstrap.Models.Database;
+using Microsoft.AspNetCore.Identity;
 
 namespace NetCoreBootstrap.Models.Views
 {
@@ -23,7 +24,7 @@ namespace NetCoreBootstrap.Models.Views
 
         [MinLength(6), MaxLength(40), DataType(DataType.Password), Display(Name = "New password")]
         public string NewPassword { get; set; }
-     
+
         [MinLength(6), MaxLength(40), DataType(DataType.Password), Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The password doesn't match the confirmation password")]
         public string ConfirmNewPassword { get; set; }
