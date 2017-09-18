@@ -39,9 +39,21 @@ namespace NetCoreBootstrap.Repositories
             }
         }
 
-        public List<User> GetAllUsers()
+        public async Task<List<User>> GetAllUsers()
         {
-            return UserManager.Users.ToList();
+            using(var context = Context)
+            {
+                var users = context.Users;
+                foreach(var user in users)
+                {
+                    context.Entry(user).Collection(u => u.UserRoles).Load();
+                    for(var i = 0; i < user.UserRoles.Count; i++)
+                    {
+                       user.UserRoles.ElementAt(i).Role = await GetRoleById(user.UserRoles.ElementAt(i).RoleId);
+                    }
+                }
+                return users.ToList();
+            }
         }
 
         public List<Role> GetAllRoles()
