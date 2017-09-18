@@ -26,14 +26,14 @@ namespace NetCoreBootstrap.Repositories
         public async Task<User> GetUserById(string id)
         {
             var user = await UserManager.FindByIdAsync(id);
-            user.UserRoles = new List<UserRoles>();
+            user.Roles = new List<UserRoles>();
             using(var context = Context)
             {
                 var roles = from role in context.UserRoles where role.UserId.Equals(user.Id) select role;
                 foreach(var role in roles)
                 {
                     var userRole = new UserRoles { UserId = user.Id, RoleId = role.RoleId };
-                    user.UserRoles.Add(userRole);
+                    user.Roles.Add(userRole);
                 }
                 return user;
             }
@@ -43,16 +43,15 @@ namespace NetCoreBootstrap.Repositories
         {
             using(var context = Context)
             {
-                var users = context.Users;
+                var users = context.Users.Include(u => u.Roles).ToList();
                 foreach(var user in users)
                 {
-                    context.Entry(user).Collection(u => u.UserRoles).Load();
-                    for(var i = 0; i < user.UserRoles.Count; i++)
+                    foreach(var role in user.Roles)
                     {
-                       user.UserRoles.ElementAt(i).Role = await GetRoleById(user.UserRoles.ElementAt(i).RoleId);
+                        role.Role = await GetRoleById(role.RoleId);
                     }
                 }
-                return users.ToList();
+                return users;
             }
         }
 

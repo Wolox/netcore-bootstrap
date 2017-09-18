@@ -1,6 +1,6 @@
 namespace NetCoreBootstrap.Models.Database
 {
-    public class UserRoles
+    public class UserRoles : BaseEntity
     {
         public string UserId { get; set; }
         public string RoleId { get; set; }
