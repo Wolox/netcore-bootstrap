@@ -11,6 +11,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication;
 
 namespace NetCoreBootstrap.Controllers
 {
@@ -19,13 +20,11 @@ namespace NetCoreBootstrap.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-		private readonly IOptions<IdentityCookieOptions> _identityCookieOptions;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IOptions<IdentityCookieOptions> identityCookieOptions)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _identityCookieOptions = identityCookieOptions;
         }
 
         [AllowAnonymous]
@@ -54,8 +53,11 @@ namespace NetCoreBootstrap.Controllers
         [HttpGet("Login")]
         public async Task<IActionResult> Login()
         {
-            await HttpContext.Authentication.SignOutAsync(IdentityCookieOptions.Value.ExternalCookieAuthenticationScheme);
-            return View();
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+            var loginProviders = await SignInManager.GetExternalAuthenticationSchemesAsync();
+            LoginViewModel loginViewModel = new LoginViewModel();
+            loginViewModel.loginProviders = loginProviders.ToList();
+            return View(loginViewModel);
         }
 
         [AllowAnonymous]
@@ -68,6 +70,8 @@ namespace NetCoreBootstrap.Controllers
                 if(result.Succeeded) return RedirectToAction("Users", "UserManagement");
                 ModelState.AddModelError("", "Invalid login attempt.");
             }
+            var loginProviders = await SignInManager.GetExternalAuthenticationSchemesAsync();
+            loginViewModel.loginProviders = loginProviders.ToList();
             return View(loginViewModel);
         }
 
@@ -173,11 +177,6 @@ namespace NetCoreBootstrap.Controllers
         public UserManager<User> UserManager
         {
             get { return _userManager; }
-        }
-
-        public IOptions<IdentityCookieOptions> IdentityCookieOptions
-        {
-            get { return _identityCookieOptions; }
         }
     }
 }

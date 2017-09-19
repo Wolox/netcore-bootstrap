@@ -24,7 +24,7 @@ namespace NetCoreBootstrap.Controllers
 
         public UserManagementController(DbContextOptions<DataBaseContext> options, 
                                         UserManager<User> userManager, 
-                                        RoleManager<IdentityRole> roleManager, 
+                                        RoleManager<Role> roleManager, 
                                         IHtmlLocalizer<UserManagementController> localizer)
         {
             this._options = options;
@@ -33,7 +33,10 @@ namespace NetCoreBootstrap.Controllers
         }
 
         [HttpGet("Users")]
-        public IActionResult Users() => View(new UserManagementViewModel { Users = UserRepository.GetAllUsers() });
+        public IActionResult Users(){
+            List<User> users = UserRepository.GetAllUsers();
+            return View(new UserManagementViewModel { Users = users });
+        }
 
         [HttpGet("Roles")]
         public IActionResult Roles() => View(new UserManagementViewModel { Roles = UserRepository.GetAllRoles() });

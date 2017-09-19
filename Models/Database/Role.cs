@@ -1,14 +1,14 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
 namespace NetCoreBootstrap.Models.Database
 {
-    public class User : IdentityUser 
+    public class Role : IdentityRole
     {
-        public bool IsExternal { get; set; }
+        public Role() : base() {}
+        
+        public Role(string role) : base(role) {}
+
         public virtual ICollection<UserRoles> UserRoles { get; set; }
     }
 }

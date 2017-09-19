@@ -2,13 +2,11 @@
 @using System.Globalization;
 @model NetCoreBootstrap.Models.Views.UserManagementViewModel
 @inject IViewLocalizer Localizer
-
 @{
     var newRoleLabel = @Localizer["NewRole"].Value;
     var editRoleLabel = @Localizer["EditRole"].Value;
     var deleteRoleLabel = @Localizer["DeleteRole"].Value;
 }
-
 <h3>@Localizer["Roles"]</h3>
 @Html.ActionLink(newRoleLabel, "CreateRole", "UserManagement")
 <span>@ViewData["Message"]</span>

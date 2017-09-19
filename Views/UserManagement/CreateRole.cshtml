@@ -2,7 +2,6 @@
 @using System.Globalization;
 @model NetCoreBootstrap.Models.Views.UserManagementViewModel
 @inject IViewLocalizer Localizer
-
 <h3>@Localizer["CreateRole"]</h3>
 @using (Html.BeginForm("CreateRole", "UserManagement", FormMethod.Post))
 {  
