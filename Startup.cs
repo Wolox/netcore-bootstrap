@@ -28,8 +28,10 @@ namespace NetCoreBootstrap
 
         public IConfiguration Configuration { get; }
 
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add framework services.
             services.AddJsonLocalization(options => options.ResourcesPath = "Resources");
             CultureInfo.CurrentCulture = new CultureInfo(Configuration["DefaultCulture"]);
             services.AddMvc().AddViewLocalization();
@@ -40,7 +42,7 @@ namespace NetCoreBootstrap
             var connectionString = Configuration["ConnectionString"];
             services.AddDbContext<DataBaseContext>(options =>  options.UseNpgsql(connectionString));
             services.AddIdentity<User, Role>()
-                    .AddEntityFrameworkStores<DataBaseContext>()
+                    .AddEntityFrameworkStores<DataBaseContext>() //ApplicationDbContext
                     .AddDefaultTokenProviders();
             services.ConfigureApplicationCookie(options => {
                                                                 options.LoginPath = "/Account/Login";
@@ -55,6 +57,7 @@ namespace NetCoreBootstrap
             //services.AddHangfire(options => GlobalConfiguration.Configuration.UsePostgreSqlStorage(connectionString));
         }
 
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));

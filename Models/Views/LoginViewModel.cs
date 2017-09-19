@@ -15,6 +15,6 @@ namespace NetCoreBootstrap.Models.Views
         [Display(Name = "Remember me")]
         public bool RememberMe { get; set; }
 
-        public IEnumerable<AuthenticationScheme> LoginProviders { get; set; }
+        public IEnumerable<AuthenticationScheme> loginProviders { get; set; }
     }
 }

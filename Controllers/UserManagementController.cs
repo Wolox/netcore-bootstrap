@@ -34,7 +34,8 @@ namespace NetCoreBootstrap.Controllers
 
         [HttpGet("Users")]
         public IActionResult Users(){
-            return View(new UserManagementViewModel { Users = UserRepository.GetAllUsers() });
+            List<User> users = UserRepository.GetAllUsers();
+            return View(new UserManagementViewModel { Users = users });
         }
 
         [HttpGet("Roles")]

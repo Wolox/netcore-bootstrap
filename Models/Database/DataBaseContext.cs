@@ -14,11 +14,14 @@ namespace NetCoreBootstrap.Models.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<UserRoles>().HasKey(c => new { c.UserId, c.RoleId });
+            
             modelBuilder.Entity<UserRoles>()
                         .HasOne(bc => bc.User)
                         .WithMany(b => b.UserRoles)
                         .HasForeignKey(bc => bc.UserId);
+
             modelBuilder.Entity<UserRoles>()
                         .HasOne(bc => bc.Role)
                         .WithMany(c => c.UserRoles)

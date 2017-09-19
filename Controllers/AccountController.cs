@@ -56,7 +56,7 @@ namespace NetCoreBootstrap.Controllers
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
             var loginProviders = await SignInManager.GetExternalAuthenticationSchemesAsync();
             LoginViewModel loginViewModel = new LoginViewModel();
-            loginViewModel.LoginProviders = loginProviders.ToList();
+            loginViewModel.loginProviders = loginProviders.ToList();
             return View(loginViewModel);
         }
 
@@ -71,7 +71,7 @@ namespace NetCoreBootstrap.Controllers
                 ModelState.AddModelError("", "Invalid login attempt.");
             }
             var loginProviders = await SignInManager.GetExternalAuthenticationSchemesAsync();
-            loginViewModel.LoginProviders = loginProviders.ToList();
+            loginViewModel.loginProviders = loginProviders.ToList();
             return View(loginViewModel);
         }
 
