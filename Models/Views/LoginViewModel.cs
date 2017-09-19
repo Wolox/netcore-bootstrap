@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authentication;
 
 namespace NetCoreBootstrap.Models.Views
 {
@@ -12,5 +14,7 @@ namespace NetCoreBootstrap.Models.Views
 
         [Display(Name = "Remember me")]
         public bool RememberMe { get; set; }
+
+        public ICollection<AuthenticationScheme> LoginProviders { get; set; }
     }
 }

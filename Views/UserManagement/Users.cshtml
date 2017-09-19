@@ -1,7 +1,6 @@
 @using NetCoreBootstrap.Models.Database
 @using Microsoft.AspNetCore.Identity
 @model NetCoreBootstrap.Models.Views.UserManagementViewModel
-@inject UserManager<User> userManager
 
 <h3>Users</h3>
 <table>
@@ -18,7 +17,14 @@
             <tr>
                 <td>@Html.DisplayFor(model => user.UserName)</td>
                 <td>@Html.DisplayFor(model => user.Email)</td>
-                <td>@String.Join(",", await userManager.GetRolesAsync(user))</td>
+                @{
+                    var roleList = new List<string>();
+                    foreach(var role in user.Roles)
+                    {
+                        roleList.Add(Model.RoleMap[role.RoleId]);
+                    }
+                }
+                <td>@String.Join(",", roleList)</td>
             </tr>
         }
     </tbody>

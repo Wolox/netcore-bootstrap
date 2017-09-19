@@ -1,7 +1,7 @@
 @model NetCoreBootstrap.Models.Views.UserManagementViewModel
 
 <div class='form-group'>
-    @Html.DisplayFor(model => model.Name)
+    @Html.LabelFor(model => model.Name)
     @Html.EditorFor(model => model.Name)
 	@Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger"})
 </div>

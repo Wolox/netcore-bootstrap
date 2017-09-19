@@ -24,7 +24,7 @@ namespace NetCoreBootstrap.Controllers
 
         public UserManagementController(DbContextOptions<DataBaseContext> options, 
                                         UserManager<User> userManager, 
-                                        RoleManager<IdentityRole> roleManager, 
+                                        RoleManager<Role> roleManager, 
                                         IHtmlLocalizer<UserManagementController> localizer)
         {
             this._options = options;
@@ -33,35 +33,13 @@ namespace NetCoreBootstrap.Controllers
         }
 
         [HttpGet("Users")]
-        public IActionResult Users() => View(new UserManagementViewModel { Users = UserRepository.GetAllUsers() });
+        public IActionResult Users()
+        {
+            return View(new UserManagementViewModel { Users = UserRepository.GetAllUsers(), RoleMap = UserRepository.GetRoleMap() });
+        }
 
         [HttpGet("Roles")]
         public IActionResult Roles() => View(new UserManagementViewModel { Roles = UserRepository.GetAllRoles() });
-
-        [HttpGet("AddRole")]
-        public async Task<IActionResult> AddRole(string userId)
-        {
-            var user = await UserRepository.GetUserById(userId);
-            return View(new UserManagementViewModel { UserId = user.Id, Email = user.Email, RolesListItem = UserRepository.GetRoles() });
-        }
-
-        [HttpPost("AddRole")]
-        public async Task<IActionResult> AddRole(UserManagementViewModel viewModel)
-        {
-            var user = await UserRepository.GetUserById(viewModel.UserId);
-            if(ModelState.IsValid)
-            {
-                var result = await UserRepository.AddRoleToUser(user, viewModel.NewRole);
-                if(result.Succeeded) return RedirectToAction("Users");
-                foreach(var error in result.Errors)
-                {
-                    ModelState.AddModelError(error.Code, error.Description);
-                }
-            }
-            viewModel.RolesListItem = UserRepository.GetRoles();
-            viewModel.Email = user.Email;
-            return View(viewModel);
-        }
 
         [HttpGet("NewRole")]
         public IActionResult CreateRole() => View();
@@ -115,12 +93,11 @@ namespace NetCoreBootstrap.Controllers
         {
             var viewModel = new RoleManagerViewModel { Roles = new Dictionary<string, bool>() };
             var user = await UserRepository.GetUserById(userId);
-            var userRoles = await UserRepository.GetRoles(user);
             bool userHasRole = false;
             foreach(var role in UserRepository.GetAllRoles())
             {
                 userHasRole = false;
-                if(userRoles.Contains(role.ToString())) userHasRole = true;
+                if(await UserRepository.IsUserInRole(user, role.ToString())) userHasRole = true;
                 viewModel.Roles[role.ToString()] = userHasRole;
             }
             viewModel.SelectedUserId = userId;
@@ -131,12 +108,9 @@ namespace NetCoreBootstrap.Controllers
         public async Task<IActionResult> AddRolesToUser(RoleManagerViewModel viewModel)
         {
             var user = await UserRepository.GetUserById(viewModel.SelectedUserId);
-            var userRoles = await UserRepository.GetRoles(user);
-            bool isCurrentRole = false;
             foreach(var role in viewModel.Roles)
             {
-                isCurrentRole = userRoles.Contains(role.Key);
-                if(isCurrentRole)
+                if(await UserRepository.IsUserInRole(user, role.Key))
                 {
                     if(!role.Value) await UserRepository.RemoveRoleFromUser(user, role.Key);
                 }
