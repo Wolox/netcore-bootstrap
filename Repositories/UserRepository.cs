@@ -44,7 +44,7 @@ namespace NetCoreBootstrap.Repositories
         }
 
         public async Task<IdentityResult> AddRoleToUser(User user, string role)
-        {          
+        {
             return await UserManager.AddToRoleAsync(user, role);
         }
 

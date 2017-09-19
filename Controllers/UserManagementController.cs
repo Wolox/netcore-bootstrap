@@ -93,12 +93,9 @@ namespace NetCoreBootstrap.Controllers
         {
             var viewModel = new RoleManagerViewModel { Roles = new Dictionary<string, bool>() };
             var user = await UserRepository.GetUserById(userId);
-            bool userHasRole = false;
             foreach(var role in UserRepository.GetAllRoles())
             {
-                userHasRole = false;
-                if(await UserRepository.IsUserInRole(user, role.ToString())) userHasRole = true;
-                viewModel.Roles[role.ToString()] = userHasRole;
+                viewModel.Roles[role.ToString()] = await UserRepository.IsUserInRole(user, role.ToString());
             }
             viewModel.SelectedUserId = userId;
             return PartialView("_UserRoles", viewModel);
@@ -110,9 +107,9 @@ namespace NetCoreBootstrap.Controllers
             var user = await UserRepository.GetUserById(viewModel.SelectedUserId);
             foreach(var role in viewModel.Roles)
             {
-                if(await UserRepository.IsUserInRole(user, role.Key))
+                if(await UserRepository.IsUserInRole(user, role.Key) && !role.Value)
                 {
-                    if(!role.Value) await UserRepository.RemoveRoleFromUser(user, role.Key);
+                    await UserRepository.RemoveRoleFromUser(user, role.Key);
                 }
                 else if(role.Value) await UserRepository.AddRoleToUser(user, role.Key);
             }
