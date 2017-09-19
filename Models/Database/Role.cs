@@ -9,6 +9,6 @@ namespace NetCoreBootstrap.Models.Database
         
         public Role(string role) : base(role) {}
 
-        public List<UserRoles> Users { get; set; }
+        public virtual ICollection<UserRoles> UserRoles { get; set; }
     }
 }

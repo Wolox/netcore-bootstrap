@@ -141,10 +141,7 @@ namespace NetCoreBootstrap.Controllers
                 isCurrentRole = userRoles.Contains(role.Key);
                 if(isCurrentRole)
                 {
-                    if(!role.Value)
-                    {
-                        await UserRepository.RemoveRoleFromUser(user, role.Key);
-                    }
+                    if(!role.Value) await UserRepository.RemoveRoleFromUser(user, role.Key);
                 }
                 else if(role.Value) await UserRepository.AddRoleToUser(user, role.Key);
             }

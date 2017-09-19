@@ -187,25 +187,13 @@ namespace NetCoreBootstrap.Migrations
 
             modelBuilder.Entity("NetCoreBootstrap.Models.Database.UserRoles", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id");
-
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnName("createAt");
+                    b.Property<string>("UserId");
 
                     b.Property<string>("RoleId");
 
-                    b.Property<DateTime>("UpdateAt")
-                        .HasColumnName("updateAt");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
+                    b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("UserRoles");
                 });
@@ -268,12 +256,14 @@ namespace NetCoreBootstrap.Migrations
             modelBuilder.Entity("NetCoreBootstrap.Models.Database.UserRoles", b =>
                 {
                     b.HasOne("NetCoreBootstrap.Models.Database.Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId");
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("NetCoreBootstrap.Models.Database.User", "User")
-                        .WithMany("Roles")
-                        .HasForeignKey("UserId");
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

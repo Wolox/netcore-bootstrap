@@ -19,7 +19,7 @@
                 <td>@Html.DisplayFor(model => user.Email)</td>
                 @{
                     List<string> roles = new List<string>();
-                    foreach(var role in user.Roles)
+                    foreach(var role in user.UserRoles)
                     {
                         roles.Add(role.Role.Name);
                     }
