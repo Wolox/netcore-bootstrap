@@ -14,9 +14,9 @@ namespace NetCoreBootstrap.Repositories
     {
         private readonly DbContextOptions<DataBaseContext> _options;
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<Role> _roleManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserRepository(DbContextOptions<DataBaseContext> options, UserManager<User> userManager, RoleManager<Role> roleManager)
+        public UserRepository(DbContextOptions<DataBaseContext> options, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             this._options = options;
             this._userManager = userManager;
@@ -40,10 +40,22 @@ namespace NetCoreBootstrap.Repositories
 
         public List<User> GetAllUsersWithRoles()
         {
-            return UserManager.Users.Include(u => u.Roles).ToList();
+            using(var context = Context)
+            {
+                return (from user in context.Users
+                        select new User {
+                            Id = user.Id,
+                            Email = user.Email,
+                            UserName = user.UserName,
+                            Roles = (from role in context.Roles 
+                                        join userRole in context.UserRoles on role.Id equals userRole.RoleId
+                                        where userRole.UserId == user.Id
+                                        select role).ToList()
+                        }).Distinct().ToList();
+            }
         }
 
-        public List<Role> GetAllRoles()
+        public List<IdentityRole> GetAllRoles()
         {
             return RoleManager.Roles.ToList();
         }
@@ -70,12 +82,12 @@ namespace NetCoreBootstrap.Repositories
 
         public async Task<IdentityResult> CreateRole(string role)
         {
-            return await RoleManager.CreateAsync(new Role(role));
+            return await RoleManager.CreateAsync(new IdentityRole(role));
         }
 
         public async Task<bool> DeleteRole(string roleId)
-		{
-			var role = await RoleManager.FindByIdAsync(roleId);
+        {
+            var role = await RoleManager.FindByIdAsync(roleId);
             try 
             {
                 await RoleManager.DeleteAsync(role);
@@ -85,11 +97,11 @@ namespace NetCoreBootstrap.Repositories
                 return false;
             }
             return true;
-		}
+        }
 
         public async Task<bool> UpdateRole(string roleId, string name)
-		{
-			try
+        {
+            try
             {
                 var role = await GetRoleById(roleId);
                 role.Name = name;
@@ -99,11 +111,11 @@ namespace NetCoreBootstrap.Repositories
             {
                 return false;
             }
-		}
+        }
 
-        public async Task<Role> GetRoleById(string roleId)
-		{
-			try
+        public async Task<IdentityRole> GetRoleById(string roleId)
+        {
+            try
             {
                 return await RoleManager.FindByIdAsync(roleId);
             }
@@ -111,30 +123,29 @@ namespace NetCoreBootstrap.Repositories
             {
                 throw new Exception(e.Message);
             }
-		}
+        }
 
         public async Task<IEnumerable<string>> GetRoles(User user)
-		{
-			var roles = await UserManager.GetRolesAsync(user);
-            return roles;
+        {
+            return await UserManager.GetRolesAsync(user);
 		}
 
         public List<SelectListItem> GetUsersListItem()
-		{
-			var users = new List<SelectListItem>();
+        {
+            var users = new List<SelectListItem>();
             foreach(var user in UserManager.Users.OrderBy(u => u.Email).ToList())
             {
                 users.Add(new SelectListItem { Text = user.Email, Value = user.Id });
             }
             return users;
-		}
+        }
         
         public UserManager<User> UserManager
         {
             get { return _userManager; }
         }
 
-        public RoleManager<Role> RoleManager
+        public RoleManager<IdentityRole> RoleManager
         {
             get { return _roleManager; }
         }

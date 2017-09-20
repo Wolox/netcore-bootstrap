@@ -17,7 +17,7 @@ namespace NetCoreBootstrap.Models.Views
         public string NewRole { get; set; }
         public List<SelectListItem> RolesListItem { get; set; }
         public List<User> Users { get; set; }
-        public List<Role> Roles { get; set; }
+        public List<IdentityRole> Roles { get; set; }
 
         [Display(Name = "Current Password"), DataType(DataType.Password)]
         public string Password { get; set; }
