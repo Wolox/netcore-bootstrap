@@ -28,6 +28,5 @@ namespace NetCoreBootstrap.Models.Views
         [MinLength(6), MaxLength(40), DataType(DataType.Password), Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The password doesn't match the confirmation password")]
         public string ConfirmNewPassword { get; set; }
-        public Dictionary<string, string> RoleMap { get; set; }
     }
 }

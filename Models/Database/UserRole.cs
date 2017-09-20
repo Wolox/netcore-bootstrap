@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Identity;
 
 namespace NetCoreBootstrap.Models.Database
 {
-    public class User : IdentityUser 
+    public class UserRole : IdentityUserRole<string>
     {
-        public bool IsExternal { get; set; }
-        public virtual ICollection<UserRole> Roles { get; set; }
+        public UserRole() : base(){}
+
+        public virtual Role Role { get; set; }
+        public virtual User User { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace NetCoreBootstrap.Migrations
 {
-    public partial class CreateDatabase : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -117,7 +117,10 @@ namespace NetCoreBootstrap.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "text", nullable: false),
-                    RoleId = table.Column<string>(type: "text", nullable: false)
+                    RoleId = table.Column<string>(type: "text", nullable: false),
+                    Discriminator = table.Column<string>(type: "text", nullable: false),
+                    RoleId2 = table.Column<string>(type: "text", nullable: true),
+                    UserId2 = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -129,11 +132,23 @@ namespace NetCoreBootstrap.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId2",
+                        column: x => x.RoleId2,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId2",
+                        column: x => x.UserId2,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -181,6 +196,16 @@ namespace NetCoreBootstrap.Migrations
                 name: "IX_AspNetUserRoles_RoleId",
                 table: "AspNetUserRoles",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_RoleId2",
+                table: "AspNetUserRoles",
+                column: "RoleId2");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_UserId2",
+                table: "AspNetUserRoles",
+                column: "UserId2");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",

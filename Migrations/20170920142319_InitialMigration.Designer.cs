@@ -12,8 +12,8 @@ using System;
 namespace NetCoreBootstrap.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20170919153110_CreateDatabase")]
-    partial class CreateDatabase
+    [Migration("20170920142319_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -112,11 +112,16 @@ namespace NetCoreBootstrap.Migrations
 
                     b.Property<string>("RoleId");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserRole<string>");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -196,6 +201,23 @@ namespace NetCoreBootstrap.Migrations
                     b.HasDiscriminator().HasValue("Role");
                 });
 
+            modelBuilder.Entity("NetCoreBootstrap.Models.Database.UserRole", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<string>");
+
+                    b.Property<string>("RoleId2");
+
+                    b.Property<string>("UserId2");
+
+                    b.HasIndex("RoleId2");
+
+                    b.HasIndex("UserId2");
+
+                    b.ToTable("UserRole");
+
+                    b.HasDiscriminator().HasValue("UserRole");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -226,16 +248,6 @@ namespace NetCoreBootstrap.Migrations
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("NetCoreBootstrap.Models.Database.Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("NetCoreBootstrap.Models.Database.User")
-                        .WithMany("Roles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -244,6 +256,27 @@ namespace NetCoreBootstrap.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("NetCoreBootstrap.Models.Database.UserRole", b =>
+                {
+                    b.HasOne("NetCoreBootstrap.Models.Database.Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NetCoreBootstrap.Models.Database.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId2");
+
+                    b.HasOne("NetCoreBootstrap.Models.Database.User")
+                        .WithMany("Roles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NetCoreBootstrap.Models.Database.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId2");
                 });
 #pragma warning restore 612, 618
         }

@@ -35,7 +35,16 @@ namespace NetCoreBootstrap.Controllers
         [HttpGet("Users")]
         public IActionResult Users()
         {
-            return View(new UserManagementViewModel { Users = UserRepository.GetAllUsers(), RoleMap = UserRepository.GetRoleMap() });
+            var users = UserRepository.GetAllUsersWithRoles();
+            var roleList = new List<string>();
+            foreach(var user in users)
+            {
+                foreach(var role in user.Roles)
+                {
+                    //roleList.Add(role.Role.Name);
+                }
+            }
+            return View(new UserManagementViewModel { Users = users });
         }
 
         [HttpGet("Roles")]

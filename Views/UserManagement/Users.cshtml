@@ -19,9 +19,10 @@
                 <td>@Html.DisplayFor(model => user.Email)</td>
                 @{
                     var roleList = new List<string>();
+                    roleList.Add(user.Roles.ToList().Count + "");
                     foreach(var role in user.Roles)
                     {
-                        roleList.Add(Model.RoleMap[role.RoleId]);
+                        
                     }
                 }
                 <td>@String.Join(",", roleList)</td>

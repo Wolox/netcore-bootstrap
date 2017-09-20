@@ -8,6 +8,6 @@ namespace NetCoreBootstrap.Models.Database
         public Role() : base() {}
         public Role(string roleName) : base(roleName) {}
 
-        public virtual ICollection<IdentityUserRole<string>> Users { get; set; }
+        public virtual ICollection<UserRole> Users { get; set; }
     }
 }

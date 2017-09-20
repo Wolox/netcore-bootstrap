@@ -38,6 +38,11 @@ namespace NetCoreBootstrap.Repositories
             return UserManager.Users.Include(u => u.Roles).ToList();
         }
 
+        public List<User> GetAllUsersWithRoles()
+        {
+            return UserManager.Users.Include(u => u.Roles).ToList();
+        }
+
         public List<Role> GetAllRoles()
         {
             return RoleManager.Roles.ToList();
