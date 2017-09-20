@@ -14,7 +14,7 @@ namespace NetCoreBootstrap.Models.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<IdentityUserRole<string>>().HasKey(c => new { c.UserId, c.RoleId });
+            /*modelBuilder.Entity<IdentityUserRole<string>>().HasKey(c => new { c.UserId, c.RoleId });
             modelBuilder.Entity<User>()
                         .HasMany(e => e.Roles)
                         .WithOne()
@@ -26,7 +26,7 @@ namespace NetCoreBootstrap.Models.Database
                         .WithOne()
                         .HasForeignKey(e => e.RoleId)
                         .IsRequired()
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade);*/
         }
     }
 }

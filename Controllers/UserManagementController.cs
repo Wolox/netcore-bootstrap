@@ -24,7 +24,7 @@ namespace NetCoreBootstrap.Controllers
 
         public UserManagementController(DbContextOptions<DataBaseContext> options, 
                                         UserManager<User> userManager, 
-                                        RoleManager<Role> roleManager, 
+                                        RoleManager<IdentityRole> roleManager, 
                                         IHtmlLocalizer<UserManagementController> localizer)
         {
             this._options = options;

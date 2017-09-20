@@ -14,9 +14,9 @@ namespace NetCoreBootstrap.Repositories
     {
         private readonly DbContextOptions<DataBaseContext> _options;
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<Role> _roleManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserRepository(DbContextOptions<DataBaseContext> options, UserManager<User> userManager, RoleManager<Role> roleManager)
+        public UserRepository(DbContextOptions<DataBaseContext> options, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             this._options = options;
             this._userManager = userManager;
@@ -43,7 +43,7 @@ namespace NetCoreBootstrap.Repositories
             return UserManager.Users.Include(u => u.Roles).ToList();
         }
 
-        public List<Role> GetAllRoles()
+        public List<IdentityRole> GetAllRoles()
         {
             return RoleManager.Roles.ToList();
         }
@@ -70,7 +70,7 @@ namespace NetCoreBootstrap.Repositories
 
         public async Task<IdentityResult> CreateRole(string role)
         {
-            return await RoleManager.CreateAsync(new Role(role));
+            return await RoleManager.CreateAsync(new IdentityRole(role));
         }
 
         public async Task<bool> DeleteRole(string roleId)
@@ -101,7 +101,7 @@ namespace NetCoreBootstrap.Repositories
             }
 		}
 
-        public async Task<Role> GetRoleById(string roleId)
+        public async Task<IdentityRole> GetRoleById(string roleId)
 		{
 			try
             {
@@ -134,7 +134,7 @@ namespace NetCoreBootstrap.Repositories
             get { return _userManager; }
         }
 
-        public RoleManager<Role> RoleManager
+        public RoleManager<IdentityRole> RoleManager
         {
             get { return _roleManager; }
         }
