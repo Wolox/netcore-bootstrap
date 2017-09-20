@@ -17,15 +17,7 @@
             <tr>
                 <td>@Html.DisplayFor(model => user.UserName)</td>
                 <td>@Html.DisplayFor(model => user.Email)</td>
-                @{
-                    var roleList = new List<string>();
-                    roleList.Add(user.Roles.ToList().Count + "");
-                    foreach(var role in user.Roles)
-                    {
-                        
-                    }
-                }
-                <td>@String.Join(",", roleList)</td>
+                <td>@String.Join(",", user.Roles.Select(role => role.Name))</td>
             </tr>
         }
     </tbody>

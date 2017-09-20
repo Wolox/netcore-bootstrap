@@ -40,7 +40,19 @@ namespace NetCoreBootstrap.Repositories
 
         public List<User> GetAllUsersWithRoles()
         {
-            return UserManager.Users.Include(u => u.Roles).ToList();
+            using(var context = Context)
+            {
+                return (from user in context.Users
+                        select new User {
+                            Id = user.Id,
+                            Email = user.Email,
+                            UserName = user.UserName,
+                            Roles = (from role in context.Roles 
+                                        join userRole in context.UserRoles on role.Id equals userRole.RoleId
+                                        where userRole.UserId == user.Id
+                                        select role).ToList()
+                        }).Distinct().ToList();
+            }
         }
 
         public List<IdentityRole> GetAllRoles()
