@@ -25,43 +25,54 @@ namespace NetCoreBootstrap.Repositories
 
         public async Task<User> GetUserById(string id)
         {
-            var user = await UserManager.FindByIdAsync(id);
-            using(var context = Context)
-            {
-                context.Entry(user).Collection(u => u.Roles).Load();
-                return user;
-            }
+            return await UserManager.FindByIdAsync(id);
+        }
+
+        public async Task<bool> IsUserInRole(User user, string role)
+        {
+            return await UserManager.IsInRoleAsync(user, role);
         }
 
         public List<User> GetAllUsers()
         {
+            return UserManager.Users.Include(u => u.Roles).ToList();
+        }
+
+        public List<User> GetAllUsersWithRoles()
+        {
             using(var context = Context)
             {
-                return context.Users.OrderBy(u => u.Email).Include(u => u.Roles).ToList();
+                return (from user in context.Users
+                        select new User {
+                            Id = user.Id,
+                            Email = user.Email,
+                            UserName = user.UserName,
+                            Roles = (from role in context.Roles 
+                                        join userRole in context.UserRoles on role.Id equals userRole.RoleId
+                                        where userRole.UserId == user.Id
+                                        select role).ToList()
+                        }).Distinct().ToList();
             }
         }
 
         public List<IdentityRole> GetAllRoles()
         {
-            using(var context = Context)
-            {
-                return context.Roles.OrderBy(r => r.Name).Include(r => r.Users).ToList();
-            }
-        }
-
-        public List<SelectListItem> GetRoles()
-        {
-            var roles = new List<SelectListItem>();
-            foreach(var role in RoleManager.Roles.OrderBy(r => r.Name).ToList())
-            {
-                roles.Add(new SelectListItem { Text = role.Name, Value = role.Name });
-            }
-            return roles;
+            return RoleManager.Roles.ToList();
         }
 
         public async Task<IdentityResult> AddRoleToUser(User user, string role)
         {
             return await UserManager.AddToRoleAsync(user, role);
+        }
+
+        public Dictionary<string, string> GetRoleMap()
+        {
+            var map = new Dictionary<string, string>();
+            foreach(var role in GetAllRoles())
+            {
+                map[role.Id] = role.Name;
+            }
+            return map;
         }
 
         public async Task<IdentityResult> RemoveRoleFromUser(User user, string role)
@@ -75,8 +86,8 @@ namespace NetCoreBootstrap.Repositories
         }
 
         public async Task<bool> DeleteRole(string roleId)
-		{
-			var role = await RoleManager.FindByIdAsync(roleId);
+        {
+            var role = await RoleManager.FindByIdAsync(roleId);
             try 
             {
                 await RoleManager.DeleteAsync(role);
@@ -86,11 +97,11 @@ namespace NetCoreBootstrap.Repositories
                 return false;
             }
             return true;
-		}
+        }
 
         public async Task<bool> UpdateRole(string roleId, string name)
-		{
-			try
+        {
+            try
             {
                 var role = await GetRoleById(roleId);
                 role.Name = name;
@@ -100,11 +111,11 @@ namespace NetCoreBootstrap.Repositories
             {
                 return false;
             }
-		}
+        }
 
         public async Task<IdentityRole> GetRoleById(string roleId)
-		{
-			try
+        {
+            try
             {
                 return await RoleManager.FindByIdAsync(roleId);
             }
@@ -112,23 +123,22 @@ namespace NetCoreBootstrap.Repositories
             {
                 throw new Exception(e.Message);
             }
-		}
+        }
 
         public async Task<IEnumerable<string>> GetRoles(User user)
-		{
-			var roles = await UserManager.GetRolesAsync(user);
-            return roles;
+        {
+            return await UserManager.GetRolesAsync(user);
 		}
 
         public List<SelectListItem> GetUsersListItem()
-		{
-			var users = new List<SelectListItem>();
+        {
+            var users = new List<SelectListItem>();
             foreach(var user in UserManager.Users.OrderBy(u => u.Email).ToList())
             {
                 users.Add(new SelectListItem { Text = user.Email, Value = user.Id });
             }
             return users;
-		}
+        }
         
         public UserManager<User> UserManager
         {
