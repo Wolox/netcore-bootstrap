@@ -86,8 +86,8 @@ namespace NetCoreBootstrap.Repositories
         }
 
         public async Task<bool> DeleteRole(string roleId)
-		{
-			var role = await RoleManager.FindByIdAsync(roleId);
+        {
+            var role = await RoleManager.FindByIdAsync(roleId);
             try 
             {
                 await RoleManager.DeleteAsync(role);
@@ -97,11 +97,11 @@ namespace NetCoreBootstrap.Repositories
                 return false;
             }
             return true;
-		}
+        }
 
         public async Task<bool> UpdateRole(string roleId, string name)
-		{
-			try
+        {
+            try
             {
                 var role = await GetRoleById(roleId);
                 role.Name = name;
@@ -111,11 +111,11 @@ namespace NetCoreBootstrap.Repositories
             {
                 return false;
             }
-		}
+        }
 
         public async Task<IdentityRole> GetRoleById(string roleId)
-		{
-			try
+        {
+            try
             {
                 return await RoleManager.FindByIdAsync(roleId);
             }
@@ -123,23 +123,22 @@ namespace NetCoreBootstrap.Repositories
             {
                 throw new Exception(e.Message);
             }
-		}
+        }
 
         public async Task<IEnumerable<string>> GetRoles(User user)
-		{
-			var roles = await UserManager.GetRolesAsync(user);
-            return roles;
+        {
+            return await UserManager.GetRolesAsync(user);
 		}
 
         public List<SelectListItem> GetUsersListItem()
-		{
-			var users = new List<SelectListItem>();
+        {
+            var users = new List<SelectListItem>();
             foreach(var user in UserManager.Users.OrderBy(u => u.Email).ToList())
             {
                 users.Add(new SelectListItem { Text = user.Email, Value = user.Id });
             }
             return users;
-		}
+        }
         
         public UserManager<User> UserManager
         {
