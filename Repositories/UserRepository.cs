@@ -35,7 +35,7 @@ namespace NetCoreBootstrap.Repositories
 
         public List<User> GetAllUsers()
         {
-            return UserManager.Users.Include(u => u.Roles).ToList();
+            return UserManager.Users.ToList();
         }
 
         public List<User> GetAllUsersWithRoles()
@@ -90,13 +90,12 @@ namespace NetCoreBootstrap.Repositories
             var role = await RoleManager.FindByIdAsync(roleId);
             try 
             {
-                await RoleManager.DeleteAsync(role);
+                return (await RoleManager.DeleteAsync(role)).Succeeded;
             }
             catch(Exception)
             {
                 return false;
             }
-            return true;
         }
 
         public async Task<bool> UpdateRole(string roleId, string name)
@@ -132,12 +131,7 @@ namespace NetCoreBootstrap.Repositories
 
         public List<SelectListItem> GetUsersListItem()
         {
-            var users = new List<SelectListItem>();
-            foreach(var user in UserManager.Users.OrderBy(u => u.Email).ToList())
-            {
-                users.Add(new SelectListItem { Text = user.Email, Value = user.Id });
-            }
-            return users;
+            return (from user in UserManager.Users.OrderBy(u => u.Email) select new SelectListItem { Text = user.Email, Value = user.Id }).ToList();
         }
         
         public UserManager<User> UserManager
