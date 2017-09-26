@@ -57,6 +57,7 @@ namespace BootstrapScript
                             startIndex = contents.IndexOf("//Begin for Identity");
                             endIndex = contents.IndexOf("//Final for Identity", startIndex + 1);
                             contents = contents.Remove(startIndex, (endIndex - startIndex));
+                            contents = contents.Replace($"//Final for Identity;{endOfLine}", "");
                         }
                         else if(file.Contains("/Models/Database/DataBaseContext.cs"))
                         {
