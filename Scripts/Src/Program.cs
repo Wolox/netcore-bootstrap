@@ -52,19 +52,18 @@ namespace BootstrapScript
                             // We use spaces to delete indentation
                             contents = contents.Replace($@"using Microsoft.AspNetCore.Identity.EntityFrameworkCore;{endOfLine}", "")
                                                 .Replace($@"using Microsoft.AspNetCore.Identity;{endOfLine}", "")
-                                                .Replace($@"app.UseIdentity();{endOfLine}            ", "");
-                            startIndex = contents.IndexOf("services.AddIdentity");
-                            endIndex = contents.IndexOf("services.", startIndex + 1);
-                            contents = contents.Remove(startIndex, (endIndex - startIndex));
-                            startIndex = contents.IndexOf("app.UseGoogleAuthentication");
-                            endIndex = contents.IndexOf("app.", startIndex + 1);
+                                                .Replace($@"using Microsoft.AspNetCore.Authentication.Google;{endOfLine}", "")
+                                                .Replace($@"app.UseAuthentication();{endOfLine}            ", "");
+                            startIndex = contents.IndexOf("//Begin for Identity");
+                            endIndex = contents.IndexOf("//Final for Identity", startIndex + 1);
                             contents = contents.Remove(startIndex, (endIndex - startIndex));
                         }
                         else if(file.Contains("/Models/Database/DataBaseContext.cs"))
                         {
                             Console.WriteLine("Updating DataBaseContext.cs ...");
                             contents = contents.Replace("IdentityDbContext<User>", "DbContext")
-                                                .Replace($@"using Microsoft.AspNetCore.Identity.EntityFrameworkCore;{endOfLine}", "");
+                                                .Replace($@"using Microsoft.AspNetCore.Identity.EntityFrameworkCore;{endOfLine}", "")
+                                                .Replace($@"using Microsoft.AspNetCore.Identity;{endOfLine}", "");
                         }
                         else if(file.Contains("/Views/Shared/_Layout.cshtml"))
                         {

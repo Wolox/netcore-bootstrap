@@ -41,6 +41,7 @@ namespace NetCoreBootstrap
             });
             var connectionString = Configuration["ConnectionString"];
             services.AddDbContext<DataBaseContext>(options => options.UseNpgsql(connectionString));
+            //Begin for Identity
             services.AddIdentity<User, IdentityRole>()
                     .AddEntityFrameworkStores<DataBaseContext>()
                     .AddDefaultTokenProviders();
@@ -52,8 +53,10 @@ namespace NetCoreBootstrap
                                                                 googleOptions.ClientId = Configuration["GoogleAuth:ClientId"];
                                                                 googleOptions.ClientSecret = Configuration["GoogleAuth:ClientSecret"];
                                                             });
+            //Final for Identity
             services.AddScoped<DataBaseContext>();
-            services.AddHangfire(options => GlobalConfiguration.Configuration.UsePostgreSqlStorage(connectionString));
+            // Uncomment this if you want use Hangfire
+            //services.AddHangfire(options => GlobalConfiguration.Configuration.UsePostgreSqlStorage(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
