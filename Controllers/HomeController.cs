@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using NetCoreBootstrap.Models.Database;
 
 namespace NetCoreBootstrap.Controllers
@@ -9,11 +10,13 @@ namespace NetCoreBootstrap.Controllers
     {
         private readonly DbContextOptions<DataBaseContext> _options;
         private readonly IHtmlLocalizer<HomeController> _localizer;
+        private readonly ILogger<HomeController> _log;
 
-        public HomeController(DbContextOptions<DataBaseContext> options, IHtmlLocalizer<HomeController> localizer)
+        public HomeController(DbContextOptions<DataBaseContext> options, IHtmlLocalizer<HomeController> localizer, ILogger<HomeController> log)
         {
             this._options = options;
             this._localizer = localizer;
+            this._log = log;
         }
 
         [HttpGet("")]
@@ -45,6 +48,11 @@ namespace NetCoreBootstrap.Controllers
         public IHtmlLocalizer<HomeController> Localizer
         {
             get { return this._localizer; }
+        }
+
+        public ILogger<HomeController> Log
+        {
+            get { return this._log; }
         }
     }
 }
