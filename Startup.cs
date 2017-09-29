@@ -60,7 +60,7 @@ namespace NetCoreBootstrap
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -71,6 +71,7 @@ namespace NetCoreBootstrap
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            loggerFactory.AddFile("Logs/NetCoreBootstrapLogs-{Date}.txt", LogLevel.Error);
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvc();
