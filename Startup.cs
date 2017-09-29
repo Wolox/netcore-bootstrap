@@ -71,7 +71,7 @@ namespace NetCoreBootstrap
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            loggerFactory.AddFile("Logs/NetCoreBootstrapLogs-{Date}.txt", LogLevel.Warning);
+            loggerFactory.AddFile("Logs/NetCoreBootstrapLogs-{Date}.txt", LogLevel.Error);
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvc();
