@@ -39,8 +39,8 @@ namespace NetCoreBootstrap.Repositories
                 {
                     throw new ArgumentNullException("entity");
                 }
-                entity.CreateAt = DateTime.Now;
-                entity.UpdateAt = DateTime.Now;
+                entity.CreatedAt = DateTime.Now;
+                entity.UpdatedAt = DateTime.Now;
                 context.Set<T>().Add(entity);
                 context.SaveChanges();
             }
@@ -54,7 +54,7 @@ namespace NetCoreBootstrap.Repositories
                 {
                     throw new ArgumentNullException("entity");
                 }
-                entity.UpdateAt = DateTime.Now;
+                entity.UpdatedAt = DateTime.Now;
                 context.Set<T>().Update(entity);
                 context.SaveChanges();
             }
