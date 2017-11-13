@@ -100,39 +100,37 @@ To create asynchronous jobs implement [Hangfire](https://www.hangfire.io).
 
 ## Deploying to Heroku
 
-1. Install Heroku CLI https://devcenter.heroku.com/articles/heroku-cli 
-2. Log in to heroku with the folloing command:
+1. Install Heroku CLI https://devcenter.heroku.com/articles/heroku-cli
+2. Install Docker https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-docker-ce-1 
+3. Publish your app
+```bash
+    dotnet publish -c Release
+```
+4. Copy the DockerFile to your publish directory
+Your publish directory should be:
+```bash
+    ./bin/release/netcoreapp2.0/publish
+```
+5. Build the Docker Image
+```bash
+    docker build -t <image-name> ./bin/release/netcoreapp2.0/publish
+```
+6. Log in to heroku with the folloing command:
 ```bash
     heroku login
+    heroku container:login
 ```    
-3. Create the heroku app with:
+7. Create the heroku app with:
 ```bash
     heroku apps:create net-core-deploy-heroku
 ```
-4. Set up the repository to point to your app
+8. Tag the heroku target image
 ```bash
-    heroku git:remote -a net-core-deploy-heroku
+    docker tag <image-name> registry.heroku.com/<heroku-app-name>/web
 ```
-5. Add “Heroku Postgres” plugin from the app dashboard
-6. Set the environment variable (ConnectionString) to create the connection string for your database. The database credentials can be obtained in https://data.heroku.com
-7. Add the dotnetcore buildpack (https://github.com/jincod/dotnetcore-buildpack#v1.0.4) to the api from the dashboard’s settings page
-8. Push your git repository with:
+9. Push the docker image to heroku
 ```bash
-    git push heroku master
-```
-9. Database
-If you’re using Entity Framework, you need to run the migrations using heroku bash. To do so, first run the command
-```bash
-    heroku run bash.
-```
-Then run the following commands:
-```bash
-    dotnet restore
-    dotnet ef database update
-```
-Finally, you need to exit the heroku bash (using ctrl+d) and restart the heroku server so that the changes take place, with the command:
-```bash
-    heroku restart -a net-core-deploy-heroku
+    docker push registry.heroku.com/<heroku-app-name>/web
 ```
 
 ## Contributing
