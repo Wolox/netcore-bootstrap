@@ -108,7 +108,7 @@ To create asynchronous jobs implement [Hangfire](https://www.hangfire.io).
 ```
 4. Copy the DockerFile to your publish directory
 
-Your publish directory should be:
+    Your publish directory should be:
 ```bash
     ./bin/release/netcoreapp2.0/publish
 ```
