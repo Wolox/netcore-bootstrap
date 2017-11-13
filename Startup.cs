@@ -80,6 +80,11 @@ namespace NetCoreBootstrap
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "NetCoreBootstrap API V1");
             });
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<DataBaseContext>();
+                context.Database.Migrate();
+            }
             // Uncomment this if you want use Hangfire
             // app.UseHangfireDashboard();
             // app.UseHangfireServer(new BackgroundJobServerOptions(), null, new PostgreSqlStorage(Configuration["ConnectionString"]));
