@@ -49,7 +49,7 @@ If you don't have gulp run these comands:
 
 #### Environments & settings
 
-By default, app will get settings from the file [appsetings.json](). Settings can be overwritten or extended by creating a file named `appsetings.ENV-NAME.json`, where `ENV-NAME` should be set as the value of the `EnvironmentName` environmental variable.
+By default, app will get settings from the file [appsetings.json](https://github.com/Wolox/netcore-bootstrap/blob/master/appsettings.json). Settings can be overwritten or extended by creating a file named `appsetings.ENV-NAME.json`, where `ENV-NAME` should be set as the value of the `EnvironmentName` environmental variable.
 
 To set the Development enviroment, you should run the following command:
 ```bash
@@ -59,7 +59,7 @@ Then, you should create an apppsettings.Development.json file in order to store 
 
 #### Debugging
 
-When developing a NetCore application in Linux or Mac you should use [Visual Studio Code](code.visualstudio.com) IDE, which already has excellent built-in debugging functionalities.
+When developing a NetCore application in Linux or Mac you should use [Visual Studio Code](https://code.visualstudio.com/) IDE, which already has excellent built-in debugging functionalities.
 To be able to debug, your launch.json file should look like [this](https://gist.github.com/gussiciliano/19b188e85d0ba95f04a0545ff12fbefd)
 And make sure that you have this comand ```"command": "dotnet build"``` instead of this ```"command": "dotnet"``` on tasks.json 
 
@@ -144,7 +144,7 @@ To create asynchronous jobs implement [Hangfire](https://www.hangfire.io).
 
 ## About
 
-This project is maintained by [Gustavo Siciliano](https://github.com/gussiciliano) along with [Ignacio Torres](https://github.com/igna92ts) and [Michel Agopian](https://github.com/mishuagopian) and it was written by [Wolox](http://www.wolox.com.ar).
+This project is maintained by [Gustavo Siciliano](https://github.com/gussiciliano) along with [Gonzalo Zamudio](https://github.com/gzamudio) and [Marcos Trucco](https://github.com/truccomarcos) and it was written by [Wolox](http://www.wolox.com.ar).
 
 ![Wolox](https://raw.githubusercontent.com/Wolox/press-kit/master/logos/logo_banner.png)
 
