@@ -108,7 +108,7 @@ In order to add authentication in our application, we use Identity. For this, we
     dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore --version 2.0.0
 ```
 
-Now we have to configure it. First, we have to create a User model that inherits from IdentityUser, for example:
+After installing it, we need to configure it. First, we have to create a User model that inherits from IdentityUser, for example:
 
 ```bash
     public class ApplicationUser : IdentityUser 
@@ -116,7 +116,7 @@ Now we have to configure it. First, we have to create a User model that inherits
         public virtual ICollection<IdentityRole> Roles { get; set; }
     }
 ```
-Then, in ```ConfigureServices``` method on ```Startup.cs```, we have to add:
+Then, in ```ConfigureServices``` method on ```Startup.cs```, we need to add:
 
 ```bash
     services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -133,7 +133,7 @@ services.ConfigureApplicationCookie(options => {
     });
 ```
 
-And in ```Configure``` method:
+Finally, in ```Configure``` method:
 ```bash
     app.UseAuthentication();
 ```
@@ -141,9 +141,6 @@ And in ```Configure``` method:
 #### External login
 
 We can also configure external logins with Google, Facebook. OpenId and more. 
-
-## Google
-
 For example, to add Google Authentication, we have to add de package:
 
 ```bash
