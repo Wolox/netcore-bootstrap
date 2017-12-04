@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using NetCoreBootstrap.Mail;
 using NetCoreBootstrap.Models.Database;
 
 namespace NetCoreBootstrap.Controllers
@@ -29,7 +28,6 @@ namespace NetCoreBootstrap.Controllers
         [HttpGet("About")]
         public IActionResult About()
         {
-            Mailer.Send("truccomarcos@gmail.com","subject","body");
             ViewData["Message"] = Localizer["DescriptionPage"];
             return View();
         }

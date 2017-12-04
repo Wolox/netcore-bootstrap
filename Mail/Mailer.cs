@@ -34,35 +34,14 @@ namespace NetCoreBootstrap.Mail
             client.Send(mailMessage);
         }
 
-        public static void SetAccountConfiguration()
+        public static void SetAccountConfiguration(IConfiguration configuration)
         {
-            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            if(environment == "Production") jsonFilePath = "appsettings.json";
-            else jsonFilePath = $"appsettings.{environment}.json";
-            try
-            {
-                var resourceFileStream = new FileStream(JsonFilePath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, 
-                                                        FileOptions.Asynchronous | FileOptions.SequentialScan);
-                using (resourceFileStream)
-                {
-                    var resourceReader = new JsonTextReader(new StreamReader(resourceFileStream, Encoding.UTF8, detectEncodingFromByteOrderMarks: true));
-                    using (resourceReader)
-                    {
-                        var resource = JObject.Load(resourceReader);
-                        if(resource == null) throw new ArgumentNullException();
-                        host = TryGetValue(resource, "Mailer:Host").ToString();
-                        hostPort = Convert.ToInt32(TryGetValue(resource, "Mailer:Port").ToString());
-                        username = TryGetValue(resource, "Mailer:Username").ToString();
-                        password = TryGetValue(resource, "Mailer:Password").ToString();
-                        name = TryGetValue(resource, "Mailer:Name").ToString();
-                        email = TryGetValue(resource, "Mailer:Email").ToString();
-                    }
-                }
-            }
-            catch(Exception e)
-            {
-                throw new Exception(message: e.Message);
-            }
+            host = configuration["Mailer:Host"];
+            hostPort = Convert.ToInt32(configuration["Mailer:Port"]);
+            username = configuration["Mailer:Username"];
+            password = configuration["Mailer:Password"];
+            name = configuration["Mailer:Name"];
+            email =configuration["Mailer:Email"];
         }
 
         private static JToken TryGetValue(JObject resource, string name)

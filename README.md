@@ -193,10 +193,13 @@ To set up the mailer, it is only necessary to add the authentication information
         "Name":EMAIL_NAME
     }
 ```
-To send an email, you just need to instance a new Mailer object and call the Send method:
+The mailer should be set up in the Startup.cs file. In order to use it, you should uncomment this line:
 ```bash
-    Mailer mailer = new Mailer();
-    mailer.Send(toAddress, subject, body);
+    Mailer.SetAccountConfiguration(Configuration);
+```
+To send an email, you just need to call the static class:
+```bash
+    Mailer.Send(toAddress, subject, body);
 ```
 
 ## Deploying to Heroku
