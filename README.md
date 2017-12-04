@@ -98,6 +98,91 @@ This will generate the controler for that model, along with Create, Edit, Delete
 
 To create asynchronous jobs implement [Hangfire](https://www.hangfire.io).
 
+## Authentication
+
+#### Identity
+
+In order to add authentication in our application, we use Identity. For this, we must add the Identity Package:
+
+```bash
+    dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore --version 2.0.0
+```
+
+Now we have to configure it. First, we have to create a User model that inherits from IdentityUser, for example:
+
+```bash
+    public class ApplicationUser : IdentityUser 
+    {        
+        public virtual ICollection<IdentityRole> Roles { get; set; }
+    }
+```
+Then, in ```ConfigureServices``` method on ```Startup.cs```, we have to add:
+
+```bash
+    services.AddIdentity<ApplicationUser, IdentityRole>()
+        .AddEntityFrameworkStores<ApplicationDbContext>()
+        .AddDefaultTokenProviders();
+```
+
+Also in this method you can set de login and access denied path:
+
+```bash
+services.ConfigureApplicationCookie(options => {
+        options.LoginPath = "/Account/Login";
+        options.AccessDeniedPath = "/Account/AccessDenied";
+    });
+```
+
+And in ```Configure``` method:
+```bash
+    app.UseAuthentication();
+```
+
+#### External login
+
+We can also configure external logins with Google, Facebook. OpenId and more. 
+
+## Google
+
+For example, to add Google Authentication, we have to add de package:
+
+```bash
+    dotnet add package Microsoft.AspNetCore.Authentication.Google --version 2.0.0
+```
+
+Then, we have to edit again the ```ConfigureServices``` method to add:
+
+```bash
+services.AddAuthentication().AddGoogle(googleOptions => {
+    googleOptions.ClientId = Configuration["GoogleAuth:ClientId"];
+    googleOptions.ClientSecret = Configuration["GoogleAuth:ClientSecret"];
+});
+```
+
+This will set the ClientId and ClientSecret, which should be taken from the 'appsettings.{Environment}.json'. An example of this file:
+```bash
+{
+  "Logging": {
+    "IncludeScopes": false,
+    "LogLevel": {
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+  },
+  "GoogleAuth": {
+		"ClientId": "...",
+		"ProjectId": "...", 
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+		"TokenUri": "https://accounts.google.com/o/oauth2/token",
+        "AuthProviderX509CertUrl": "https://www.googleapis.com/oauth2/v1/certs",
+		"ClientSecret": "...",
+		"RedirectUris": ["http://localhost:5000/signin-google"]
+  },
+  "ConnectionString" : "..."
+}
+```
+
 ## Deploying to Heroku
 
 1. Install Heroku CLI https://devcenter.heroku.com/articles/heroku-cli
