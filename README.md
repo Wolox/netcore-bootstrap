@@ -199,7 +199,6 @@ To send an email, you just need to instance a new Mailer object and call the Sen
     mailer.Send(toAddress, subject, body);
 ```
 
-
 ## Deploying to Heroku
 
 1. Install Heroku CLI https://devcenter.heroku.com/articles/heroku-cli
