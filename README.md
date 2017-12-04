@@ -181,7 +181,7 @@ This will set the ClientId and ClientSecret, which should be taken from the 'app
 ```
 #### Mailer.
 
-To set up the mailer, it is only necessary to add the authentication information into the environment variables. If you choose to do so via the appsetings.Development.json file, the mailer config section should look something like this:
+To set up the mailer, it is only necessary to add the authentication information into the environment variables. To do this via the appsetings.Development.json file, the mailer config section should look something like this:
 ```bash
     "Mailer":
     {
