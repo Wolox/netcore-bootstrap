@@ -124,7 +124,7 @@ Then, in ```ConfigureServices``` method on ```Startup.cs```, we need to add:
         .AddDefaultTokenProviders();
 ```
 
-Also in this method you can set de login and access denied path:
+Also in this method you can set the login and access denied path:
 
 ```bash
 services.ConfigureApplicationCookie(options => {
@@ -141,7 +141,7 @@ Finally, in ```Configure``` method:
 #### External login
 
 We can also configure external logins with Google, Facebook. OpenId and more. 
-For example, to add Google Authentication, we have to add de package:
+For example, to add Google Authentication, we have to add the package:
 
 ```bash
     dotnet add package Microsoft.AspNetCore.Authentication.Google --version 2.0.0
