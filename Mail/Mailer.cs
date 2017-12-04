@@ -1,8 +1,8 @@
 using System;
 using System.IO;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
-using MailKit.Net.Smtp;
-using MimeKit;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -10,42 +10,35 @@ namespace NetCoreBootstrap.Mail
 {
     public class Mailer
     {
-        private readonly SmtpClient _smtpClient;
-        private string host, username, password, name, email;
-        private int hostPort;
+        private string _host, _username, _password, _name, _email;
+        private int _hostPort;
         private readonly string _jsonFilePath;
         private readonly char _jsonSplitter = ':';
         
         public Mailer()
         {
-            _smtpClient = new SmtpClient();
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             if(environment == "Production") _jsonFilePath = "appsettings.json";
             else _jsonFilePath = $"appsettings.{environment}.json";
             SetAccountConfiguration();
         }
 
-        public void Send(string toName, string toAddress, string subject, string body, string type = "plain")
+        public void Send(string toAddress, string subject, string body)
         {
-            var message = new MimeMessage { Subject = subject, Body = new TextPart(type) { Text = body }};
-            message.From.Add(new MailboxAddress(Name, Email));
-            message.To.Add(new MailboxAddress(toName, toAddress));
-            using(var client = Client)
+            SmtpClient client = new SmtpClient(Host,HostPort)
             {
-                try
-                {
-                    client.Connect(Host, HostPort);
-                    client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    if(String.IsNullOrEmpty(Username) || String.IsNullOrEmpty(Password)) throw new ArgumentNullException();
-                    client.Authenticate(Username, Password);
-                    client.Send(message);
-                    client.Disconnect(true);
-                }
-                catch(Exception e)
-                {
-                    throw new Exception(message: e.Message);
-                }
-            }
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(Username, Password),
+                EnableSsl = true
+            };    
+            MailMessage mailMessage = new MailMessage()
+            {
+                From = new MailAddress(Email,Name),
+                Body = body,
+                Subject = subject
+            };
+            mailMessage.To.Add(toAddress);
+            client.Send(mailMessage);
         }
 
         private void SetAccountConfiguration()
@@ -61,12 +54,12 @@ namespace NetCoreBootstrap.Mail
                     {
                         var resource = JObject.Load(resourceReader);
                         if(resource == null) throw new ArgumentNullException();
-                        host = TryGetValue(resource, "Mailer:Host").ToString();
-                        hostPort = Convert.ToInt32(TryGetValue(resource, "Mailer:Port").ToString());
-                        username = TryGetValue(resource, "Mailer:Username").ToString();
-                        password = TryGetValue(resource, "Mailer:Password").ToString();
-                        name = TryGetValue(resource, "Mailer:Name").ToString();
-                        email = TryGetValue(resource, "Mailer:Email").ToString();
+                        _host = TryGetValue(resource, "Mailer:Host").ToString();
+                        _hostPort = Convert.ToInt32(TryGetValue(resource, "Mailer:Port").ToString());
+                        _username = TryGetValue(resource, "Mailer:Username").ToString();
+                        _password = TryGetValue(resource, "Mailer:Password").ToString();
+                        _name = TryGetValue(resource, "Mailer:Name").ToString();
+                        _email = TryGetValue(resource, "Mailer:Email").ToString();
                     }
                 }
             }
@@ -100,37 +93,32 @@ namespace NetCoreBootstrap.Mail
 
         public string Host 
         {
-            get { return host; }
+            get { return _host; }
         }
 
         public int HostPort
         {
-            get { return hostPort; }
-        }
-
-        public SmtpClient Client
-        {
-            get { return _smtpClient; }
+            get { return _hostPort; }
         }
 
         public string Username 
         { 
-            get { return username; }
+            get { return _username; }
         }
 
         public string Password 
         { 
-            get { return password; }
+            get { return _password; }
         }
 
         public string Name 
         {
-            get { return name; }
+            get { return _name; }
         }
 
         public string Email 
         { 
-            get { return email; } 
+            get { return _email; } 
         }
     }
 }
