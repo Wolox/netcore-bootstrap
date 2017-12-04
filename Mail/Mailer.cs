@@ -3,27 +3,20 @@ using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetCoreBootstrap.Mail
 {
-    public class Mailer
+    public static class Mailer
     {
-        private string _host, _username, _password, _name, _email;
-        private int _hostPort;
-        private readonly string _jsonFilePath;
-        private readonly char _jsonSplitter = ':';
-        
-        public Mailer()
-        {
-            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            if(environment == "Production") _jsonFilePath = "appsettings.json";
-            else _jsonFilePath = $"appsettings.{environment}.json";
-            SetAccountConfiguration();
-        }
+        private static string host, username, password, name, email;
+        private static int hostPort;
+        private static string jsonFilePath;
+        private readonly static char _jsonSplitter = ':';
 
-        public void Send(string toAddress, string subject, string body)
+        public static void Send(string toAddress, string subject, string body)
         {
             SmtpClient client = new SmtpClient(Host,HostPort)
             {
@@ -41,8 +34,11 @@ namespace NetCoreBootstrap.Mail
             client.Send(mailMessage);
         }
 
-        private void SetAccountConfiguration()
+        public static void SetAccountConfiguration()
         {
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            if(environment == "Production") jsonFilePath = "appsettings.json";
+            else jsonFilePath = $"appsettings.{environment}.json";
             try
             {
                 var resourceFileStream = new FileStream(JsonFilePath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, 
@@ -54,12 +50,12 @@ namespace NetCoreBootstrap.Mail
                     {
                         var resource = JObject.Load(resourceReader);
                         if(resource == null) throw new ArgumentNullException();
-                        _host = TryGetValue(resource, "Mailer:Host").ToString();
-                        _hostPort = Convert.ToInt32(TryGetValue(resource, "Mailer:Port").ToString());
-                        _username = TryGetValue(resource, "Mailer:Username").ToString();
-                        _password = TryGetValue(resource, "Mailer:Password").ToString();
-                        _name = TryGetValue(resource, "Mailer:Name").ToString();
-                        _email = TryGetValue(resource, "Mailer:Email").ToString();
+                        host = TryGetValue(resource, "Mailer:Host").ToString();
+                        hostPort = Convert.ToInt32(TryGetValue(resource, "Mailer:Port").ToString());
+                        username = TryGetValue(resource, "Mailer:Username").ToString();
+                        password = TryGetValue(resource, "Mailer:Password").ToString();
+                        name = TryGetValue(resource, "Mailer:Name").ToString();
+                        email = TryGetValue(resource, "Mailer:Email").ToString();
                     }
                 }
             }
@@ -69,7 +65,7 @@ namespace NetCoreBootstrap.Mail
             }
         }
 
-        private JToken TryGetValue(JObject resource, string name)
+        private static JToken TryGetValue(JObject resource, string name)
         {
             JToken jTokenValue = null;
             string[] keys = name.Split(JsonSplitter);
@@ -81,44 +77,44 @@ namespace NetCoreBootstrap.Mail
             return jTokenValue;
         }
 
-        public string JsonFilePath
+        public static string JsonFilePath
         {
-            get { return _jsonFilePath; }
+            get { return jsonFilePath; }
         }
 
-        public char JsonSplitter
+        public static char JsonSplitter
         {
             get { return _jsonSplitter; }
         }
 
-        public string Host 
+        public static string Host 
         {
-            get { return _host; }
+            get { return host; }
         }
 
-        public int HostPort
+        public static int HostPort
         {
-            get { return _hostPort; }
+            get { return hostPort; }
         }
 
-        public string Username 
+        public static string Username 
         { 
-            get { return _username; }
+            get { return username; }
         }
 
-        public string Password 
+        public static string Password 
         { 
-            get { return _password; }
+            get { return password; }
         }
 
-        public string Name 
+        public static string Name 
         {
-            get { return _name; }
+            get { return name; }
         }
 
-        public string Email 
+        public static string Email 
         { 
-            get { return _email; } 
+            get { return email; } 
         }
     }
 }

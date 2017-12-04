@@ -16,6 +16,7 @@ using LocalizationCultureCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Google;
+using NetCoreBootstrap.Mail;
 
 namespace NetCoreBootstrap
 {
@@ -49,10 +50,10 @@ namespace NetCoreBootstrap
                                             options.LoginPath = "/Account/Login";
                                             options.AccessDeniedPath = "/Account/AccessDenied";
                                         });
-            services.AddAuthentication().AddFacebook(facebookOptions => {
-                                            facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
-                                            facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
-                                        });
+            // services.AddAuthentication().AddFacebook(facebookOptions => {
+            //                                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+            //                                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+            //                             });
             //Final for Identity
             services.AddScoped<DataBaseContext>();
             // Uncomment this if you want use Hangfire
@@ -85,6 +86,7 @@ namespace NetCoreBootstrap
                 var context = serviceScope.ServiceProvider.GetService<DataBaseContext>();
                 context.Database.Migrate();
             }
+            Mailer.SetAccountConfiguration();
             // Uncomment this if you want use Hangfire
             // app.UseHangfireDashboard();
             // app.UseHangfireServer(new BackgroundJobServerOptions(), null, new PostgreSqlStorage(Configuration["ConnectionString"]));
