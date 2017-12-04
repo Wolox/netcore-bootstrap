@@ -13,9 +13,7 @@ namespace NetCoreBootstrap.Mail
     {
         private static string host, username, password, name, email;
         private static int hostPort;
-        private static string jsonFilePath;
-        private readonly static char _jsonSplitter = ':';
-
+        
         public static void Send(string toAddress, string subject, string body)
         {
             SmtpClient client = new SmtpClient(Host,HostPort)
@@ -42,28 +40,6 @@ namespace NetCoreBootstrap.Mail
             password = configuration["Mailer:Password"];
             name = configuration["Mailer:Name"];
             email =configuration["Mailer:Email"];
-        }
-
-        private static JToken TryGetValue(JObject resource, string name)
-        {
-            JToken jTokenValue = null;
-            string[] keys = name.Split(JsonSplitter);
-            jTokenValue = resource[keys[0]];            
-            for(var i = 1; i < keys.Length; i++)
-            {
-                jTokenValue = jTokenValue[keys[i]];
-            }
-            return jTokenValue;
-        }
-
-        public static string JsonFilePath
-        {
-            get { return jsonFilePath; }
-        }
-
-        public static char JsonSplitter
-        {
-            get { return _jsonSplitter; }
         }
 
         public static string Host 
