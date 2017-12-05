@@ -179,7 +179,8 @@ This will set the ClientId and ClientSecret, which should be taken from the 'app
   "ConnectionString" : "..."
 }
 ```
-#### Mailer.
+
+## Mailer
 
 To set up the mailer, it is only necessary to add the authentication information into the environment variables. To do this via the appsetings.Development.json file, the mailer config section should look something like this:
 ```bash
@@ -201,6 +202,32 @@ To send an email, you just need to call the static class:
 ```bash
     Mailer.Send(toAddress, subject, body);
 ```
+
+## Globalization
+
+To globalize the application is necessary to add the Localization Culture Core package to the project, to do this just run:
+
+```bash
+    dotnet add package LocalizationCultureCore --version x.x.x
+```
+
+Then, we configure it on ```ConfigureServices``` method on ```Startup.cs``` by adding this line:
+
+```bash
+    services.AddJsonLocalization(options => options.ResourcesPath = "Resources");
+    services.AddMvc().AddViewLocalization();
+```
+
+And locate all the JSON files that the library uses, inside the folder called "Resources" in the project's root directory.
+The second line allows us to use localization in views as well as in the controllers.
+
+Finally, also in ```ConfigureServices``` method, we can set the default language that your application will use:
+```bash
+    CultureInfo.CurrentUICulture = new CultureInfo("en-US");
+    CultureInfo.CurrentCulture = new CultureInfo("en-US");
+```
+
+The source code can be found [here](https://github.com/Wolox/localization-culture-core)
 
 ## Deploying to Heroku
 
