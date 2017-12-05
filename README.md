@@ -179,7 +179,8 @@ This will set the ClientId and ClientSecret, which should be taken from the 'app
   "ConnectionString" : "..."
 }
 ```
-#### Mailer.
+
+## Mailer.
 
 To set up the mailer, it is only necessary to add the authentication information into the environment variables. To do this via the appsetings.Development.json file, the mailer config section should look something like this:
 ```bash
@@ -200,6 +201,30 @@ The mailer should be set up in the Startup.cs file. In order to use it, you shou
 To send an email, you just need to call the static class:
 ```bash
     Mailer.Send(toAddress, subject, body);
+```
+
+## Globalization
+
+To globalize our application, we are going to add the localization culture core package to the project:
+
+```bash
+    dotnet add package LocalizationCultureCore --version x.x.x
+```
+
+Then, we configure it on ```ConfigureServices``` method on ```Startup.cs``` by adding this line:
+
+```bash
+    services.AddJsonLocalization(options => options.ResourcesPath = "Resources");
+    services.AddMvc().AddViewLocalization();
+```
+
+We will have to place all the JSON files that the library uses, inside the folder called "Resources" in the project's root directory.
+The second line allows us to use localization in views as well as in the controllers.
+
+Finally, also in ```ConfigureServices``` method, we can set the default language that your application will use:
+```bash
+    CultureInfo.CurrentUICulture = new CultureInfo("en-US");
+    CultureInfo.CurrentCulture = new CultureInfo("en-US");
 ```
 
 ## Deploying to Heroku
