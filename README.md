@@ -227,6 +227,8 @@ Finally, also in ```ConfigureServices``` method, we can set the default language
     CultureInfo.CurrentCulture = new CultureInfo("en-US");
 ```
 
+The source code can be found [here](https://github.com/Wolox/localization-culture-core)
+
 ## Deploying to Heroku
 
 1. Install Heroku CLI https://devcenter.heroku.com/articles/heroku-cli
