@@ -21,7 +21,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Composition" Version="1.0.31" ExcludeAssets="All" />
     <PackageReference Include="System.Composition" Version="1.1.0" />
-    <PackageReference Include="MailKit" Version="1.18.1.1" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.4.0" />
   </ItemGroup>
   <ItemGroup>

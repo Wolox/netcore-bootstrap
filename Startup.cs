@@ -16,6 +16,7 @@ using LocalizationCultureCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Google;
+using NetCoreBootstrap.Mail;
 
 namespace NetCoreBootstrap
 {
@@ -85,6 +86,8 @@ namespace NetCoreBootstrap
                 var context = serviceScope.ServiceProvider.GetService<DataBaseContext>();
                 context.Database.Migrate();
             }
+            // Uncomment this to use Mailer
+            // Mailer.SetAccountConfiguration(Configuration);
             // Uncomment this if you want use Hangfire
             // app.UseHangfireDashboard();
             // app.UseHangfireServer(new BackgroundJobServerOptions(), null, new PostgreSqlStorage(Configuration["ConnectionString"]));

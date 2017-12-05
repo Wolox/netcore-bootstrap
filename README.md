@@ -179,6 +179,28 @@ This will set the ClientId and ClientSecret, which should be taken from the 'app
   "ConnectionString" : "..."
 }
 ```
+#### Mailer.
+
+To set up the mailer, it is only necessary to add the authentication information into the environment variables. To do this via the appsetings.Development.json file, the mailer config section should look something like this:
+```bash
+    "Mailer":
+    {
+        "Email":YOUR_APP_EMAIL
+        "Username":YOUR_APP_EMAIL_USERNAME
+        "Password":YOUR_APP_EMAIL_PASSWORD,
+        "Host":EMAIL_HOST,
+        "Port":EMAIL_PORT,
+        "Name":EMAIL_NAME
+    }
+```
+The mailer should be set up in the Startup.cs file. In order to use it, you should uncomment this line:
+```bash
+    Mailer.SetAccountConfiguration(Configuration);
+```
+To send an email, you just need to call the static class:
+```bash
+    Mailer.Send(toAddress, subject, body);
+```
 
 ## Deploying to Heroku
 

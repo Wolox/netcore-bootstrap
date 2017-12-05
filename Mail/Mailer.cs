@@ -1,134 +1,73 @@
 using System;
 using System.IO;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
-using MailKit.Net.Smtp;
-using MimeKit;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NetCoreBootstrap.Mail
 {
-    public class Mailer
+    public static class Mailer
     {
-        private readonly SmtpClient _smtpClient;
-        private string host, username, password, name, email;
-        private int hostPort;
-        private readonly string _jsonFilePath;
-        private readonly char _jsonSplitter = ':';
+        private static string host, username, password, name, email;
+        private static int hostPort;
         
-        public Mailer()
+        public static void Send(string toAddress, string subject, string body)
         {
-            _smtpClient = new SmtpClient();
-            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            if(environment == "Production") _jsonFilePath = "appsettings.json";
-            else _jsonFilePath = $"appsettings.{environment}.json";
-            SetAccountConfiguration();
-        }
-
-        public void Send(string toName, string toAddress, string subject, string body, string type = "plain")
-        {
-            var message = new MimeMessage { Subject = subject, Body = new TextPart(type) { Text = body }};
-            message.From.Add(new MailboxAddress(Name, Email));
-            message.To.Add(new MailboxAddress(toName, toAddress));
-            using(var client = Client)
+            SmtpClient client = new SmtpClient(Host,HostPort)
             {
-                try
-                {
-                    client.Connect(Host, HostPort);
-                    client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    if(String.IsNullOrEmpty(Username) || String.IsNullOrEmpty(Password)) throw new ArgumentNullException();
-                    client.Authenticate(Username, Password);
-                    client.Send(message);
-                    client.Disconnect(true);
-                }
-                catch(Exception e)
-                {
-                    throw new Exception(message: e.Message);
-                }
-            }
-        }
-
-        private void SetAccountConfiguration()
-        {
-            try
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(Username, Password),
+                EnableSsl = true
+            };    
+            MailMessage mailMessage = new MailMessage()
             {
-                var resourceFileStream = new FileStream(JsonFilePath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, 
-                                                        FileOptions.Asynchronous | FileOptions.SequentialScan);
-                using (resourceFileStream)
-                {
-                    var resourceReader = new JsonTextReader(new StreamReader(resourceFileStream, Encoding.UTF8, detectEncodingFromByteOrderMarks: true));
-                    using (resourceReader)
-                    {
-                        var resource = JObject.Load(resourceReader);
-                        if(resource == null) throw new ArgumentNullException();
-                        host = TryGetValue(resource, "Mailer:Host").ToString();
-                        hostPort = Convert.ToInt32(TryGetValue(resource, "Mailer:Port").ToString());
-                        username = TryGetValue(resource, "Mailer:Username").ToString();
-                        password = TryGetValue(resource, "Mailer:Password").ToString();
-                        name = TryGetValue(resource, "Mailer:Name").ToString();
-                        email = TryGetValue(resource, "Mailer:Email").ToString();
-                    }
-                }
-            }
-            catch(Exception e)
-            {
-                throw new Exception(message: e.Message);
-            }
+                From = new MailAddress(Email,Name),
+                Body = body,
+                Subject = subject
+            };
+            mailMessage.To.Add(toAddress);
+            client.Send(mailMessage);
         }
 
-        private JToken TryGetValue(JObject resource, string name)
+        public static void SetAccountConfiguration(IConfiguration configuration)
         {
-            JToken jTokenValue = null;
-            string[] keys = name.Split(JsonSplitter);
-            jTokenValue = resource[keys[0]];            
-            for(var i = 1; i < keys.Length; i++)
-            {
-                jTokenValue = jTokenValue[keys[i]];
-            }
-            return jTokenValue;
+            host = configuration["Mailer:Host"];
+            hostPort = Convert.ToInt32(configuration["Mailer:Port"]);
+            username = configuration["Mailer:Username"];
+            password = configuration["Mailer:Password"];
+            name = configuration["Mailer:Name"];
+            email =configuration["Mailer:Email"];
         }
 
-        public string JsonFilePath
-        {
-            get { return _jsonFilePath; }
-        }
-
-        public char JsonSplitter
-        {
-            get { return _jsonSplitter; }
-        }
-
-        public string Host 
+        public static string Host 
         {
             get { return host; }
         }
 
-        public int HostPort
+        public static int HostPort
         {
             get { return hostPort; }
         }
 
-        public SmtpClient Client
-        {
-            get { return _smtpClient; }
-        }
-
-        public string Username 
+        public static string Username 
         { 
             get { return username; }
         }
 
-        public string Password 
+        public static string Password 
         { 
             get { return password; }
         }
 
-        public string Name 
+        public static string Name 
         {
             get { return name; }
         }
 
-        public string Email 
+        public static string Email 
         { 
             get { return email; } 
         }
