@@ -23,6 +23,21 @@ namespace NetCoreBootstrap.Repositories
             this._roleManager = roleManager;
         }
 
+        public UserManager<User> UserManager
+        {
+            get { return _userManager; }
+        }
+
+        public RoleManager<IdentityRole> RoleManager
+        {
+            get { return _roleManager; }
+        }
+
+        public DataBaseContext Context
+        {
+            get { return new DataBaseContext(_options); }
+        }
+
         public async Task<User> GetUserById(string id)
         {
             return await UserManager.FindByIdAsync(id);
@@ -133,21 +148,6 @@ namespace NetCoreBootstrap.Repositories
         public List<SelectListItem> GetUsersListItem()
         {
             return (from user in UserManager.Users.OrderBy(u => u.Email) select new SelectListItem { Text = user.Email, Value = user.Id }).ToList();
-        }
-
-        public UserManager<User> UserManager
-        {
-            get { return _userManager; }
-        }
-
-        public RoleManager<IdentityRole> RoleManager
-        {
-            get { return _roleManager; }
-        }
-
-        public DataBaseContext Context
-        {
-            get { return new DataBaseContext(_options); }
         }
     }
 }

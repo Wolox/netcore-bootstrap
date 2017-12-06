@@ -11,9 +11,7 @@ namespace NetCoreBootstrap.Models.Database
 {
     public class DataBaseContext : IdentityDbContext<User>
     {
-        public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
-        {
-        }
+        public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options) { }
 
         public override int SaveChanges()
         {

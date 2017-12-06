@@ -24,7 +24,6 @@
     <PackageReference Include="System.Composition" Version="1.1.0"/>
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.4.0"/>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004"/>
-    <PackageReference Include="Microsoft.CodeAnalysis" Version="2.6.0-beta3"/>
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0"/>

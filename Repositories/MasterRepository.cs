@@ -15,6 +15,16 @@ namespace NetCoreBootstrap.Repositories
             this._options = options;
         }
 
+        public DbContextOptions<DataBaseContext> Options
+        {
+            get { return _options; }
+        }
+
+        public DataBaseContext Context
+        {
+            get { return new DataBaseContext(Options); }
+        }
+
         public T GetById(int id)
         {
             using (var context = Context)
@@ -68,16 +78,6 @@ namespace NetCoreBootstrap.Repositories
                 context.Set<T>().Remove(entity);
                 context.SaveChanges();
             }
-        }
-
-        public DbContextOptions<DataBaseContext> Options
-        {
-            get { return _options; }
-        }
-
-        public DataBaseContext Context
-        {
-            get { return new DataBaseContext(Options); }
         }
     }
 }

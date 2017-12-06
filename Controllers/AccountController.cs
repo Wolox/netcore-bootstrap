@@ -27,6 +27,16 @@ namespace NetCoreBootstrap.Controllers
             _signInManager = signInManager;
         }
 
+        public SignInManager<User> SignInManager
+        {
+            get { return _signInManager; }
+        }
+
+        public UserManager<User> UserManager
+        {
+            get { return _userManager; }
+        }
+
         [AllowAnonymous]
         [HttpGet("Register")]
         public IActionResult Register() => View();
@@ -147,16 +157,6 @@ namespace NetCoreBootstrap.Controllers
 
         [HttpGet("AccessDenied")]
         public IActionResult AccessDenied() => View();
-
-        public SignInManager<User> SignInManager
-        {
-            get { return _signInManager; }
-        }
-
-        public UserManager<User> UserManager
-        {
-            get { return _userManager; }
-        }
 
         private async Task<bool> ConfirmExternalLogin(UserManagementViewModel viewModel)
         {

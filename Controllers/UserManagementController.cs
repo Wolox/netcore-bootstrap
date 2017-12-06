@@ -15,7 +15,6 @@ namespace NetCoreBootstrap.Controllers
     [Authorize]
     public class UserManagementController : Controller
     {
-        private readonly DbContextOptions<DataBaseContext> _options;
         private readonly IHtmlLocalizer<UserManagementController> _localizer;
         private readonly UserRepository _userRepository;
 
@@ -24,9 +23,18 @@ namespace NetCoreBootstrap.Controllers
                                         RoleManager<IdentityRole> roleManager,
                                         IHtmlLocalizer<UserManagementController> localizer)
         {
-            this._options = options;
             this._localizer = localizer;
-            this._userRepository = new UserRepository(this._options, userManager, roleManager);
+            this._userRepository = new UserRepository(options, userManager, roleManager);
+        }
+
+        public UserRepository UserRepository
+        {
+            get { return this._userRepository; }
+        }
+
+        public IHtmlLocalizer<UserManagementController> Localizer
+        {
+            get { return this._localizer; }
         }
 
         [HttpGet("Users")]
@@ -111,21 +119,6 @@ namespace NetCoreBootstrap.Controllers
                 else if (role.Value) await UserRepository.AddRoleToUser(user, role.Key);
             }
             return RedirectToAction("RoleManager");
-        }
-
-        public DbContextOptions<DataBaseContext> Options
-        {
-            get { return _options; }
-        }
-
-        public UserRepository UserRepository
-        {
-            get { return _userRepository; }
-        }
-
-        public IHtmlLocalizer<UserManagementController> Localizer
-        {
-            get { return _localizer; }
         }
     }
 }
