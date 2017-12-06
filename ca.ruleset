@@ -269,7 +269,7 @@
         <Rule Id="SA1026" Action="Warning"/> <!--SA1026: An implicitly typed new array allocation within a C# code file is not spaced correctly.-->
         <Rule Id="SA1027" Action="None"/> <!--SA1027: The C# code contains a tab character.-->
         <Rule Id="SA1100" Action="Warning"/> <!--SA1100: A call to a member from an inherited class begins with ‘base.’, and the local class does not contain an override-->
-        <Rule Id="SA1101" Action="Warning"/> <!--SA1101: A call to an instance member of the local class or a base class is not prefixed with ‘this.’, within a C# code file-->
+        <Rule Id="SA1101" Action="None"/> <!--SA1101: A call to an instance member of the local class or a base class is not prefixed with ‘this.’, within a C# code file-->
         <Rule Id="SA1102" Action="Warning"/> <!--SA1102: A C# query clause does not begin on the same line as the previous clause, or on the next line. -->
         <Rule Id="SA1103" Action="Warning"/> <!--SA1103: The clauses within a C# query expression are not all placed on the same line, and each clause is not placed on its own line.-->
         <Rule Id="SA1104" Action="Warning"/> <!--SA1104: A clause within a C# query expression begins on the same line as the previous clause, when the previous clause spans across multiple lines.-->
@@ -284,7 +284,7 @@
         <Rule Id="SA1113" Action="Warning"/> <!--SA1113: A comma between two parameters in a call to a C# method or indexer, or in the declaration of a method or indexer, is not placed on the same line as the previous parameter.-->
         <Rule Id="SA1114" Action="Warning"/> <!--SA1114: The start of the parameter list for a method or indexer call or declaration does not begin on the same line as the opening bracket, or on the line after the opening bracket.-->
         <Rule Id="SA1115" Action="Warning"/> <!--SA1115: A parameter within a C# method or indexer call or declaration does not begin on the same line as the previous parameter, or on the next line.-->
-        <Rule Id="SA1116" Action="Warning"/> <!--SA1116: The parameters to a C# method or indexer call or declaration span across multiple lines, but the first parameter does not start on the line after the opening bracket.-->
+        <Rule Id="SA1116" Action="None"/> <!--SA1116: The parameters to a C# method or indexer call or declaration span across multiple lines, but the first parameter does not start on the line after the opening bracket.-->
         <Rule Id="SA1117" Action="Warning"/> <!--SA1117: The parameters to a C# method or indexer call or declaration are not all on the same line or each on a separate line-->
         <Rule Id="SA1118" Action="Warning"/> <!--SA1118: A parameter to a C# method or indexer, other than the first parameter, spans across multiple lines. -->
         <Rule Id="SA1119" Action="Warning"/> <!--SA1119: A C# statement contains parenthesis which are unnecessary and should be removed. -->
@@ -295,7 +295,7 @@
         <Rule Id="SA1124" Action="None"/> <!--SA1124: The C# code contains a region. -->
         <Rule Id="SA1125" Action="Warning"/> <!--SA1125: The Nullable type has been defined not using the C# shorthand. For example, Nullable<DateTime> has been used instead of the preferred DateTime?-->
         <Rule Id="SA1200" Action="None"/> <!--SA1200: A C# using directive is placed outside of a namespace element.-->
-        <Rule Id="SA1201" Action="Warning"/> <!--SA1201: An element within a C# code file is out of order in relation to the other elements in the code.-->
+        <Rule Id="SA1201" Action="None"/> <!--SA1201: An element within a C# code file is out of order in relation to the other elements in the code.-->
         <Rule Id="SA1202" Action="Warning"/> <!--SA1202: An element within a C# code file is out of order within regard to access level, in relation to other elements in the code.-->
         <Rule Id="SA1203" Action="Warning"/> <!--SA1203: A const field is placed beneath a non-const field.-->
         <Rule Id="SA1204" Action="Warning"/> <!--SA1204: A static element is positioned beneath an instance element of the same type.-->
@@ -317,7 +317,7 @@
         <Rule Id="SA1306" Action="Warning"/> <!--SA1306: The name of a field or variable in C# does not begin with a lower-case letter.-->
         <Rule Id="SA1307" Action="Warning"/> <!--SA1307: The name of a public or internal field in C# does not begin with an upper-case letter.-->
         <Rule Id="SA1308" Action="Warning"/> <!--SA1308: A field name in C# is prefixed with m_ or s_.-->
-        <Rule Id="SA1309" Action="Warning"/> <!--SA1309: A field name in C# begins with an underscore.-->
+        <Rule Id="SA1309" Action="None"/> <!--SA1309: A field name in C# begins with an underscore.-->
         <Rule Id="SA1310" Action="Warning"/> <!--SA1310: A field name in C# contains an underscore.-->
         <Rule Id="SA1400" Action="Warning"/> <!--SA1400: The access modifier for a C# element has not been explicitly defined. -->
         <Rule Id="SA1401" Action="Warning"/> <!--SA1401: A field within a C# class has an access modifier other than private. -->
@@ -331,9 +331,9 @@
         <Rule Id="SA1409" Action="Warning"/> <!--SA1409: A C# file contains code which is unnecessary and can be removed without changing the overall logic of the code. -->
         <Rule Id="SA1410" Action="Warning"/> <!--SA1410: A call to a C# anonymous method does not contain any method parameters, yet the statement still includes parenthe-->
         <Rule Id="SA1500" Action="Warning"/> <!--SA1500: The opening or closing curly bracket within a C# statement, element, or expression is not placed on its own line.-->
-        <Rule Id="SA1501" Action="Warning"/> <!--SA1501: A C# statement containing opening and closing curly brackets is written completely on a single line.-->
+        <Rule Id="SA1501" Action="None"/> <!--SA1501: A C# statement containing opening and closing curly brackets is written completely on a single line.-->
         <Rule Id="SA1502" Action="Warning"/> <!--SA1502: A C# element containing opening and closing curly brackets is written completely on a single line. -->
-        <Rule Id="SA1503" Action="Warning"/> <!--SA1503: The opening and closing curly brackets for a C# statement have been omitted. -->
+        <Rule Id="SA1503" Action="None"/> <!--SA1503: The opening and closing curly brackets for a C# statement have been omitted. -->
         <Rule Id="SA1504" Action="Warning"/> <!--SA1504: Within a C# property, indexer or event, at least one of the child accessors is written on a single line, and at l-->
         <Rule Id="SA1505" Action="Warning"/> <!--SA1505: An opening curly bracket within a C# element, statement, or expression is followed by a blank line. -->
         <Rule Id="SA1506" Action="Warning"/> <!--SA1506: An element documentation header above a C# element is followed by a blank line. -->
@@ -343,11 +343,14 @@
         <Rule Id="SA1510" Action="Warning"/> <!--SA1510: Chained C# statements are separated by a blank line. -->
         <Rule Id="SA1511" Action="Warning"/> <!--SA1511: The while footer at the bottom of a do-while statement is separated from the statement by a blank line. -->
         <Rule Id="SA1512" Action="Warning"/> <!--SA1512: A single-line comment within C# code is followed by a blank line. -->
-        <Rule Id="SA1513" Action="Warning"/> <!--SA1513: A closing curly bracket within a C# element, statement, or expression is not followed by a blank line. -->
+        <Rule Id="SA1513" Action="None"/> <!--SA1513: A closing curly bracket within a C# element, statement, or expression is not followed by a blank line. -->
         <Rule Id="SA1514" Action="Warning"/> <!--SA1514: An element documentation header above a C# element is not preceded by a blank line. -->
         <Rule Id="SA1515" Action="Warning"/> <!--SA1515: A single-line comment within C# code is not preceded by a blank line. -->
-        <Rule Id="SA1516" Action="Warning"/> <!--SA1516: Adjacent C# elements are not separated by a blank line. -->
+        <Rule Id="SA1516" Action="None"/> <!--SA1516: Adjacent C# elements are not separated by a blank line. -->
         <Rule Id="SA1517" Action="Warning"/> <!--SA1517: The code file has blank lines at the start. -->
         <Rule Id="SA1518" Action="None"/> <!--SA1518: The code file has blank lines at the end. -->
+        <Rule Id="SA1633" Action="None"/> 
+        <Rule Id="SA1137" Action="None"/>
+        <Rule Id="SA1127" Action="None"/>
     </Rules>
 </RuleSet>

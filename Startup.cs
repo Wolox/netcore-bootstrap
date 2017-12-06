@@ -1,22 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
-using Swashbuckle.AspNetCore.Swagger;
 using NetCoreBootstrap.Models.Database;
-using Hangfire;
-using Hangfire.PostgreSql;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using Microsoft.AspNetCore.Localization;
-using LocalizationCultureCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.Google;
-using NetCoreBootstrap.Mail;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace NetCoreBootstrap
 {
@@ -42,22 +33,27 @@ namespace NetCoreBootstrap
             });
             var connectionString = Configuration["ConnectionString"];
             services.AddDbContext<DataBaseContext>(options => options.UseNpgsql(connectionString));
-            //Begin for Identity
+
+            // Begin for Identity
             services.AddIdentity<User, IdentityRole>()
                     .AddEntityFrameworkStores<DataBaseContext>()
                     .AddDefaultTokenProviders();
-            services.ConfigureApplicationCookie(options => {
-                                            options.LoginPath = "/Account/Login";
-                                            options.AccessDeniedPath = "/Account/AccessDenied";
-                                        });
-            services.AddAuthentication().AddFacebook(facebookOptions => {
-                                            facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
-                                            facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
-                                        });
-            //Final for Identity
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+            });
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+            });
+
+            // Final for Identity
             services.AddScoped<DataBaseContext>();
+
             // Uncomment this if you want use Hangfire
-            //services.AddHangfire(options => GlobalConfiguration.Configuration.UsePostgreSqlStorage(connectionString));
+            // services.AddHangfire(options => GlobalConfiguration.Configuration.UsePostgreSqlStorage(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -86,6 +82,7 @@ namespace NetCoreBootstrap
                 var context = serviceScope.ServiceProvider.GetService<DataBaseContext>();
                 context.Database.Migrate();
             }
+
             // Uncomment this to use Mailer
             // Mailer.SetAccountConfiguration(Configuration);
             // Uncomment this if you want use Hangfire
