@@ -1,0 +1,353 @@
+<RuleSet Name="Custom Rulset" Description="Custom Rulset" ToolsVersion="14.0">
+    <Rules AnalyzerId="AsyncUsageAnalyzers" RuleNamespace="AsyncUsageAnalyzers">
+        <Rule Id="UseConfigureAwait" Action="Warning" />
+    </Rules>
+    <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
+        <Rule Id="CA1000" Action="Warning"/> <!--CA1000: Do not declare static members on generic types-->
+        <Rule Id="CA1001" Action="Warning"/> <!--CA1001: Types that own disposable fields should be disposable-->
+        <Rule Id="CA1002" Action="None"/> <!--CA1002: Do not expose generic lists-->
+        <Rule Id="CA1003" Action="Warning"/> <!--CA1003: Use generic event handler instances-->
+        <Rule Id="CA1004" Action="Warning"/> <!--CA1004: Generic methods should provide type parameter-->
+        <Rule Id="CA1005" Action="Error"/> <!--CA1005: Avoid excessive parameters on generic types-->
+        <Rule Id="CA1006" Action="Warning"/> <!--CA1006: Do not nest generic types in member signatures-->
+        <Rule Id="CA1007" Action="None"/> <!--CA1007: Use generics where appropriate-->
+        <Rule Id="CA1008" Action="Warning"/> <!--CA1008: Enums should have zero value-->
+        <Rule Id="CA1009" Action="Warning"/> <!--CA1009: Declare event handlers correctly-->
+        <Rule Id="CA1010" Action="Error"/> <!--CA1010: Collections should implement generic interface-->
+        <Rule Id="CA1011" Action="Warning"/> <!--CA1011: Consider passing base types as parameters-->
+        <Rule Id="CA1012" Action="Error"/> <!--CA1012: Abstract types should not have constructors-->
+        <Rule Id="CA1013" Action="Warning"/> <!--CA1013: Overload operator equals on overloading add and subtract-->
+        <Rule Id="CA1014" Action="None"/> <!--CA1014: Mark assemblies with CLSCompliantAttribute-->
+        <Rule Id="CA1016" Action="None"/> <!--CA1016: Mark assemblies with AssemblyVersionAttribute-->
+        <Rule Id="CA1017" Action="None"/> <!--CA1017: Mark assemblies with ComVisibleAttribute-->
+        <Rule Id="CA1018" Action="None"/> <!--CA1018: Mark attributes with AttributeUsageAttribute-->
+        <Rule Id="CA1019" Action="Warning"/> <!--CA1019: Define accessors for attribute arguments-->
+        <Rule Id="CA1020" Action="Warning"/> <!--CA1020: Avoid namespaces with few types-->
+        <Rule Id="CA1021" Action="Warning"/> <!--CA1021: Avoid out parameters-->
+        <Rule Id="CA1023" Action="Warning"/> <!--CA1023: Indexers should not be multidimensional-->
+        <Rule Id="CA1024" Action="Warning"/> <!--CA1024: Use properties where appropriate-->
+        <Rule Id="CA1025" Action="Warning"/> <!--CA1025: Replace repetitive arguments with params array-->
+        <Rule Id="CA1026" Action="Warning"/> <!--CA1026: Default parameters should not be used-->
+        <Rule Id="CA1027" Action="None"/> <!--CA1027: Mark enums with FlagsAttribute-->
+        <Rule Id="CA1028" Action="Warning"/> <!--CA1028: Enum storage should be Int32-->
+        <Rule Id="CA1030" Action="None"/> <!--CA1030: Use events where appropriate-->
+        <Rule Id="CA1031" Action="Warning"/> <!--CA1031: Do not catch general exception types-->
+        <Rule Id="CA1032" Action="Warning"/> <!--CA1032: Implement standard exception constructors-->
+        <Rule Id="CA1033" Action="Warning"/> <!--CA1033: Interface methods should be callable by child types-->
+        <Rule Id="CA1034" Action="Warning"/> <!--CA1034: Nested types should not be visible-->
+        <Rule Id="CA1035" Action="Warning"/> <!--CA1035: ICollection implementations have strongly typed members-->
+        <Rule Id="CA1036" Action="Warning"/> <!--CA1036: Override methods on comparable types-->
+        <Rule Id="CA1038" Action="Warning"/> <!--CA1038: Enumerators should be strongly typed-->
+        <Rule Id="CA1039" Action="Warning"/> <!--CA1039: Lists are strongly typed-->
+        <Rule Id="CA1040" Action="Warning"/> <!--CA1040: Avoid empty interfaces-->
+        <Rule Id="CA1041" Action="Warning"/> <!--CA1041: Provide ObsoleteAttribute message-->
+        <Rule Id="CA1043" Action="Warning"/> <!--CA1043: Use integral or string argument for indexers-->
+        <Rule Id="CA1044" Action="Warning"/> <!--CA1044: Properties should not be write only-->
+        <Rule Id="CA1045" Action="Warning"/> <!--CA1045: Do not pass types by reference-->
+        <Rule Id="CA1046" Action="Warning"/> <!--CA1046: Do not overload operator equals on reference types-->
+        <Rule Id="CA1047" Action="Warning"/> <!--CA1047: Do not declare protected members in sealed types-->
+        <Rule Id="CA1048" Action="Warning"/> <!--CA1048: Do not declare virtual members in sealed types-->
+        <Rule Id="CA1049" Action="Warning"/> <!--CA1049: Types that own native resources should be disposable-->
+        <Rule Id="CA1050" Action="Error"/> <!--CA1050: Declare types in namespaces-->
+        <Rule Id="CA1051" Action="Warning"/> <!--CA1051: Do not declare visible instance fields-->
+        <Rule Id="CA1052" Action="Warning"/> <!--CA1052: Static holder types should be sealed-->
+        <Rule Id="CA1053" Action="Error"/> <!--CA1053: Static holder types should not have constructors-->
+        <Rule Id="CA1054" Action="Warning"/> <!--CA1054: URI parameters should not be strings-->
+        <Rule Id="CA1055" Action="Warning"/> <!--CA1055: URI return values should not be strings-->
+        <Rule Id="CA1056" Action="Warning"/> <!--CA1056: URI properties should not be strings-->
+        <Rule Id="CA1057" Action="Warning"/> <!--CA1057: String URI overloads call System.Uri overloads-->
+        <Rule Id="CA1058" Action="Warning"/> <!--CA1058: Types should not extend certain base types-->
+        <Rule Id="CA1059" Action="Warning"/> <!--CA1059: Members should not expose certain concrete types-->
+        <Rule Id="CA1060" Action="None"/> <!--CA1060: Move P/Invokes to NativeMethods class-->
+        <Rule Id="CA1061" Action="Warning"/> <!--CA1061: Do not hide base class methods-->
+        <Rule Id="CA1062" Action="Warning"/> <!--CA1062: Validate arguments of public methods-->
+        <Rule Id="CA1063" Action="Warning"/> <!--CA1063: Implement IDisposable correctly-->
+        <Rule Id="CA1064" Action="Warning"/> <!--CA1064: Exceptions should be public-->
+        <Rule Id="CA1065" Action="Error"/> <!--CA1065: Do not raise exceptions in unexpected locations-->
+        <Rule Id="CA1300" Action="Warning"/> <!--CA1300: Specify MessageBoxOptions-->
+        <Rule Id="CA1301" Action="Warning"/> <!--CA1301: Avoid duplicate accelerators-->
+        <Rule Id="CA1302" Action="Warning"/> <!--CA1302: Do not hardcode locale specific strings-->
+        <Rule Id="CA1303" Action="Warning"/> <!--CA1303: Do not pass literals as localized parameters-->
+        <Rule Id="CA1304" Action="Warning"/> <!--CA1304: Specify CultureInfo-->
+        <Rule Id="CA1305" Action="Warning"/> <!--CA1305: Specify IFormatProvider-->
+        <Rule Id="CA1306" Action="Warning"/> <!--CA1306: Set locale for data types-->
+        <Rule Id="CA1307" Action="Warning"/> <!--CA1307: Specify StringComparison-->
+        <Rule Id="CA1308" Action="Warning"/> <!--CA1308: Normalize strings to uppercase-->
+        <Rule Id="CA1309" Action="None"/> <!--CA1309: Use ordinal StringComparison-->
+        <Rule Id="CA1400" Action="None"/> <!--CA1400: P/Invoke entry points should exist-->
+        <Rule Id="CA1401" Action="None"/> <!--CA1401: P/Invokes should not be visible-->
+        <Rule Id="CA1402" Action="None"/> <!--CA1402: Avoid overloads in COM visible interfaces-->
+        <Rule Id="CA1403" Action="None"/> <!--CA1403: Auto layout types should not be COM visible-->
+        <Rule Id="CA1404" Action="None"/> <!--CA1404: Call GetLastError immediately after P/Invoke-->
+        <Rule Id="CA1405" Action="None"/> <!--CA1405: COM visible type base types should be COM visible-->
+        <Rule Id="CA1406" Action="None"/> <!--CA1406: Avoid Int64 arguments for Visual Basic 6 clients-->
+        <Rule Id="CA1407" Action="None"/> <!--CA1407: Avoid static members in COM visible types-->
+        <Rule Id="CA1408" Action="None"/> <!--CA1408: Do not use AutoDual ClassInterfaceType-->
+        <Rule Id="CA1409" Action="None"/> <!--CA1409: Com visible types should be creatable-->
+        <Rule Id="CA1410" Action="None"/> <!--CA1410: COM registration methods should be matched-->
+        <Rule Id="CA1411" Action="None"/> <!--CA1411: COM registration methods should not be visible-->
+        <Rule Id="CA1412" Action="None"/> <!--CA1412: Mark ComSource Interfaces as IDispatch-->
+        <Rule Id="CA1413" Action="None"/> <!--CA1413: Avoid non-public fields in COM visible value types-->
+        <Rule Id="CA1414" Action="None"/> <!--CA1414: Mark boolean P/Invoke arguments with MarshalAs-->
+        <Rule Id="CA1415" Action="None"/> <!--CA1415: Declare P/Invokes correctly-->
+        <Rule Id="CA1500" Action="Warning"/> <!--CA1500: Variable names should not match field names-->
+        <Rule Id="CA1501" Action="Error"/> <!--CA1501: Avoid excessive inheritance-->
+        <Rule Id="CA1502" Action="Warning"/> <!--CA1502: Avoid excessive complexity-->
+        <Rule Id="CA1504" Action="Warning"/> <!--CA1504: Review misleading field names-->
+        <Rule Id="CA1505" Action="Warning"/> <!--CA1505: Avoid unmaintainable code-->
+        <Rule Id="CA1506" Action="Warning"/> <!--CA1506: Avoid excessive class coupling-->
+        <Rule Id="CA1600" Action="Warning"/> <!--CA1600: Do not use idle process priority-->
+        <Rule Id="CA1601" Action="Warning"/> <!--CA1601: Do not use timers that prevent power state changes-->
+        <Rule Id="CA1700" Action="Warning"/> <!--CA1700: Do not name enum values 'Reserved'-->
+        <Rule Id="CA1701" Action="Warning"/> <!--CA1701: Resource string compound words should be cased correctly-->
+        <Rule Id="CA1702" Action="Warning"/> <!--CA1702: Compound words should be cased correctly-->
+        <Rule Id="CA1703" Action="Warning"/> <!--CA1703: Resource strings should be spelled correctly-->
+        <Rule Id="CA1704" Action="Warning"/> <!--CA1704: Identifiers should be spelled correctly-->
+        <Rule Id="CA1707" Action="Warning"/> <!--CA1707: Identifiers should not contain underscores-->
+        <Rule Id="CA1708" Action="Warning"/> <!--CA1708: Identifiers should differ by more than case-->
+        <Rule Id="CA1709" Action="Warning"/> <!--CA1709: Identifiers should be cased correctly-->
+        <Rule Id="CA1710" Action="Warning"/> <!--CA1710: Identifiers should have correct suffix-->
+        <Rule Id="CA1711" Action="Warning"/> <!--CA1711: Identifiers should not have incorrect suffix-->
+        <Rule Id="CA1712" Action="Warning"/> <!--CA1712: Do not prefix enum values with type name-->
+        <Rule Id="CA1713" Action="Warning"/> <!--CA1713: Events should not have before or after prefix-->
+        <Rule Id="CA1714" Action="Warning"/> <!--CA1714: Flags enums should have plural names-->
+        <Rule Id="CA1715" Action="Warning"/> <!--CA1715: Identifiers should have correct prefix-->
+        <Rule Id="CA1716" Action="Warning"/> <!--CA1716: Identifiers should not match keywords-->
+        <Rule Id="CA1717" Action="Warning"/> <!--CA1717: Only FlagsAttribute enums should have plural names-->
+        <Rule Id="CA1719" Action="Warning"/> <!--CA1719: Parameter names should not match member names-->
+        <Rule Id="CA1720" Action="Warning"/> <!--CA1720: Identifiers should not contain type names-->
+        <Rule Id="CA1721" Action="Warning"/> <!--CA1721: Property names should not match get methods-->
+        <Rule Id="CA1722" Action="Warning"/> <!--CA1722: Identifiers should not have incorrect prefix-->
+        <Rule Id="CA1724" Action="Error"/> <!--CA1724: Type Names Should Not Match Namespaces-->
+        <Rule Id="CA1725" Action="Warning"/> <!--CA1725: Parameter names should match base declaration-->
+        <Rule Id="CA1726" Action="Warning"/> <!--CA1726: Use preferred terms-->
+        <Rule Id="CA1800" Action="Warning"/> <!--CA1800: Do not cast unnecessarily-->
+        <Rule Id="CA1801" Action="Warning"/> <!--CA1801: Review unused parameters-->
+        <Rule Id="CA1802" Action="Warning"/> <!--CA1802: Use Literals Where Appropriate-->
+        <Rule Id="CA1804" Action="Warning"/> <!--CA1804: Remove unused locals-->
+        <Rule Id="CA1806" Action="Warning"/> <!--CA1806: Do not ignore method results-->
+        <Rule Id="CA1809" Action="Warning"/> <!--CA1809: Avoid excessive locals-->
+        <Rule Id="CA1810" Action="Warning"/> <!--CA1810: Initialize reference type static fields inline-->
+        <Rule Id="CA1811" Action="Warning"/> <!--CA1811: Avoid uncalled private code-->
+        <Rule Id="CA1812" Action="Warning"/> <!--CA1812: Avoid uninstantiated internal classes-->
+        <Rule Id="CA1813" Action="Warning"/> <!--CA1813: Avoid unsealed attributes-->
+        <Rule Id="CA1814" Action="Warning"/> <!--CA1814: Prefer jagged arrays over multidimensional-->
+        <Rule Id="CA1815" Action="Warning"/> <!--CA1815: Override equals and operator equals on value types-->
+        <Rule Id="CA1816" Action="None"/> <!--CA1816: Call GC.SuppressFinalize correctly-->
+        <Rule Id="CA1819" Action="Warning"/> <!--CA1819: Properties should not return arrays-->
+        <Rule Id="CA1820" Action="Error"/> <!--CA1820: Test for empty strings using string length-->
+        <Rule Id="CA1821" Action="Warning"/> <!--CA1821: Remove empty finalizers-->
+        <Rule Id="CA1822" Action="Warning"/> <!--CA1822: Mark members as static-->
+        <Rule Id="CA1823" Action="Warning"/> <!--CA1823: Avoid unused private fields-->
+        <Rule Id="CA1824" Action="Warning"/> <!--CA1824: Mark assemblies with NeutralResourcesLanguageAttribute-->
+        <Rule Id="CA1900" Action="Warning"/> <!--CA1900: Value type fields should be portable-->
+        <Rule Id="CA1901" Action="Warning"/> <!--CA1901: P/Invoke declarations should be portable-->
+        <Rule Id="CA1903" Action="Warning"/> <!--CA1903: Use only API from targeted framework-->
+        <Rule Id="CA2000" Action="Warning"/> <!--CA2000: Dispose objects before losing scope-->
+        <Rule Id="CA2001" Action="Warning"/> <!--CA2001: Avoid calling problematic methods-->
+        <Rule Id="CA2002" Action="Warning"/> <!--CA2002: Do not lock on objects with weak identity-->
+        <Rule Id="CA2003" Action="None"/> <!--CA2003: Do not treat fibers as threads-->
+        <Rule Id="CA2004" Action="None"/> <!--CA2004: Remove calls to GC.KeepAlive-->
+        <Rule Id="CA2006" Action="None"/> <!--CA2006: Use SafeHandle to encapsulate native resources-->
+        <Rule Id="CA2100" Action="Warning"/> <!--CA2100: Review SQL queries for security vulnerabilities-->
+        <Rule Id="CA2101" Action="Warning"/> <!--CA2101: Specify marshaling for P/Invoke string arguments-->
+        <Rule Id="CA2102" Action="Warning"/> <!--CA2102: Catch non-CLSCompliant exceptions in general handlers-->
+        <Rule Id="CA2103" Action="Warning"/> <!--CA2103: Review imperative security-->
+        <Rule Id="CA2104" Action="Warning"/> <!--CA2104: Do not declare read only mutable reference types-->
+        <Rule Id="CA2105" Action="Warning"/> <!--CA2105: Array fields should not be read only-->
+        <Rule Id="CA2106" Action="Warning"/> <!--CA2106: Secure asserts-->
+        <Rule Id="CA2107" Action="Warning"/> <!--CA2107: Review deny and permit only usage-->
+        <Rule Id="CA2108" Action="Warning"/> <!--CA2108: Review declarative security on value types-->
+        <Rule Id="CA2109" Action="Warning"/> <!--CA2109: Review visible event handlers-->
+        <Rule Id="CA2111" Action="Warning"/> <!--CA2111: Pointers should not be visible-->
+        <Rule Id="CA2112" Action="Warning"/> <!--CA2112: Secured types should not expose fields-->
+        <Rule Id="CA2114" Action="Warning"/> <!--CA2114: Method security should be a superset of type-->
+        <Rule Id="CA2115" Action="Warning"/> <!--CA2115: Call GC.KeepAlive when using native resources-->
+        <Rule Id="CA2116" Action="Warning"/> <!--CA2116: APTCA methods should only call APTCA methods-->
+        <Rule Id="CA2117" Action="Warning"/> <!--CA2117: APTCA types should only extend APTCA base types-->
+        <Rule Id="CA2118" Action="Warning"/> <!--CA2118: Review SuppressUnmanagedCodeSecurityAttribute usage-->
+        <Rule Id="CA2119" Action="Warning"/> <!--CA2119: Seal methods that satisfy private interfaces-->
+        <Rule Id="CA2120" Action="Warning"/> <!--CA2120: Secure serialization constructors-->
+        <Rule Id="CA2121" Action="Error"/> <!--CA2121: Static constructors should be private-->
+        <Rule Id="CA2122" Action="Warning"/> <!--CA2122: Do not indirectly expose methods with link demands-->
+        <Rule Id="CA2123" Action="Warning"/> <!--CA2123: Override link demands should be identical to base-->
+        <Rule Id="CA2124" Action="Warning"/> <!--CA2124: Wrap vulnerable finally clauses in outer try-->
+        <Rule Id="CA2126" Action="Warning"/> <!--CA2126: Type link demands require inheritance demands-->
+        <Rule Id="CA2136" Action="Warning"/> <!--CA2136: Members should not have conflicting transparency annotations-->
+        <Rule Id="CA2147" Action="Warning"/> <!--CA2147: Transparent methods may not use security asserts-->
+        <Rule Id="CA2140" Action="Warning"/> <!--CA2140: Transparent code must not reference security critical items-->
+        <Rule Id="CA2130" Action="Warning"/> <!--CA2130: Security critical constants should be transparent-->
+        <Rule Id="CA2131" Action="Warning"/> <!--CA2131: Security critical types may not participate in type equivalence-->
+        <Rule Id="CA2132" Action="Warning"/> <!--CA2132: Default constructors must be at least as critical as base type default constructors-->
+        <Rule Id="CA2133" Action="Warning"/> <!--CA2133: Delegates must bind to methods with consistent transparency-->
+        <Rule Id="CA2134" Action="Warning"/> <!--CA2134: Methods must keep consistent transparency when overriding base methods-->
+        <Rule Id="CA2135" Action="Warning"/> <!--CA2135: Level 2 assemblies should not contain LinkDemands-->
+        <Rule Id="CA2136" Action="Warning"/> <!--CA2136: Members should not have conflicting transparency annotations-->
+        <Rule Id="CA2137" Action="Warning"/> <!--CA2137: Transparent methods must contain only verifiable IL-->
+        <Rule Id="CA2138" Action="Warning"/> <!--CA2138: Transparent methods must not call methods with the SuppressUnmanagedCodeSecurity attribute-->
+        <Rule Id="CA2139" Action="Warning"/> <!--CA2139: Transparent methods may not use the HandleProcessCorruptingExceptions attribute-->
+        <Rule Id="CA2140" Action="Warning"/> <!--CA2140: Transparent code must not reference security critical items-->
+        <Rule Id="CA2141" Action="Warning"/> <!--CA2141:Transparent methods must not satisfy LinkDemands-->
+        <Rule Id="CA2142" Action="Warning"/> <!--CA2142: Transparent code should not be protected with LinkDemands-->
+        <Rule Id="CA2143" Action="Warning"/> <!--CA2143: Transparent methods should not use security demands-->
+        <Rule Id="CA2144" Action="Warning"/> <!--CA2144: Transparent code should not load assemblies from byte arrays-->
+        <Rule Id="CA2145" Action="Warning"/> <!--CA2145: Transparent methods should not be decorated with the SuppressUnmanagedCodeSecurityAttribute-->
+        <Rule Id="CA2146" Action="Warning"/> <!--CA2146: Types must be at least as critical as their base types and interfaces-->
+        <Rule Id="CA2147" Action="Warning"/> <!--CA2147: Transparent methods may not use security asserts-->
+        <Rule Id="CA2149" Action="Warning"/> <!--CA2149: Transparent methods must not call into native code-->
+        <Rule Id="CA2151" Action="Warning"/> <!--CA2151: Fields with critical types should be security critical-->
+        <Rule Id="CA2200" Action="Warning"/> <!--CA2200: Rethrow to preserve stack details-->
+        <Rule Id="CA2201" Action="Warning"/> <!--CA2201: Do not raise reserved exception types-->
+        <Rule Id="CA2202" Action="Warning"/> <!--CA2202: Do not dispose objects multiple times-->
+        <Rule Id="CA2204" Action="Warning"/> <!--CA2204: Literals should be spelled correctly-->
+        <Rule Id="CA2205" Action="Warning"/> <!--CA2205: Use managed equivalents of Win32 API-->
+        <Rule Id="CA2207" Action="Warning"/> <!--CA2207: Initialize value type static fields inline-->
+        <Rule Id="CA2208" Action="Warning"/> <!--CA2208: Instantiate argument exceptions correctly-->
+        <Rule Id="CA2210" Action="Warning"/> <!--CA2210: Assemblies should have valid strong names-->
+        <Rule Id="CA2211" Action="Warning"/> <!--CA2211: Non-constant fields should not be visible-->
+        <Rule Id="CA2212" Action="Warning"/> <!--CA2212: Do not mark serviced components with WebMethod-->
+        <Rule Id="CA2213" Action="Warning"/> <!--CA2213: Disposable fields should be disposed-->
+        <Rule Id="CA2214" Action="Warning"/> <!--CA2214: Do not call overridable methods in constructors-->
+        <Rule Id="CA2215" Action="Warning"/> <!--CA2215: Dispose methods should call base class dispose-->
+        <Rule Id="CA2216" Action="Warning"/> <!--CA2216: Disposable types should declare finalizer-->
+        <Rule Id="CA2217" Action="Warning"/> <!--CA2217: Do not mark enums with FlagsAttribute-->
+        <Rule Id="CA2218" Action="Warning"/> <!--CA2218: Override GetHashCode on overriding Equals-->
+        <Rule Id="CA2219" Action="Warning"/> <!--CA2219: Do not raise exceptions in exception clauses-->
+        <Rule Id="CA2220" Action="None"/> <!--CA2220: Finalizers should call base class finalizer-->
+        <Rule Id="CA2221" Action="None"/> <!--CA2221: Finalizers should be protected-->
+        <Rule Id="CA2222" Action="Warning"/> <!--CA2222: Do not decrease inherited member visibility-->
+        <Rule Id="CA2223" Action="None"/> <!--CA2223: Members should differ by more than return type-->
+        <Rule Id="CA2224" Action="Warning"/> <!--CA2224: Override equals on overloading operator equals-->
+        <Rule Id="CA2225" Action="Warning"/> <!--CA2225: Operator overloads have named alternates-->
+        <Rule Id="CA2226" Action="Warning"/> <!--CA2226: Operators should have symmetrical overloads-->
+        <Rule Id="CA2227" Action="Warning"/> <!--CA2227: Collection properties should be read only-->
+        <Rule Id="CA2228" Action="Warning"/> <!--CA2228: Do not ship unreleased resource formats-->
+        <Rule Id="CA2229" Action="Warning"/> <!--CA2229: Implement serialization constructors-->
+        <Rule Id="CA2230" Action="Warning"/> <!--CA2230: Use params for variable arguments-->
+        <Rule Id="CA2231" Action="Warning"/> <!--CA2231: Overload operator equals on overriding ValueType.Equals-->
+        <Rule Id="CA2232" Action="None"/> <!--CA2232: Mark Windows Forms entry points with STAThread-->
+        <Rule Id="CA2233" Action="Warning"/> <!--CA2233: Operations should not overflow-->
+        <Rule Id="CA2234" Action="Warning"/> <!--CA2234: Pass System.Uri objects instead of strings-->
+        <Rule Id="CA2235" Action="Warning"/> <!--CA2235: Mark all non-serializable fields-->
+        <Rule Id="CA2236" Action="Warning"/> <!--CA2236: Call base class methods on ISerializable types-->
+        <Rule Id="CA2237" Action="Warning"/> <!--CA2237: Mark ISerializable types with SerializableAttribute-->
+        <Rule Id="CA2238" Action="Warning"/> <!--CA2238: Implement serialization methods correctly-->
+        <Rule Id="CA2239" Action="Warning"/> <!--CA2239: Provide deserialization methods for optional fields-->
+        <Rule Id="CA2240" Action="Warning"/> <!--CA2240: Implement ISerializable correctly-->
+        <Rule Id="CA2241" Action="Warning"/> <!--CA2241: Provide correct arguments to formatting methods-->
+        <Rule Id="CA2242" Action="Warning"/> <!--CA2242: Test for NaN correctly-->
+        <Rule Id="CA2243" Action="Warning"/> <!--CA2243: Attribute string literals should parse correctly-->
+        <Rule Id="CA5122" Action="Warning"/> <!--CA5122: P/Invoke declarations should not be safe critical-->
+    </Rules>
+    <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+        <Rule Id="SA1000" Action="Warning"/> <!--SA1000: The spacing around a C# keyword is incorrect.-->
+        <Rule Id="SA1001" Action="Warning"/> <!--SA1001: The spacing around a comma is incorrect, within a C# code file.-->
+        <Rule Id="SA1002" Action="Warning"/> <!--SA1002: The spacing around a semicolon is incorrect, within a C# code file.-->
+        <Rule Id="SA1003" Action="Warning"/> <!--SA1003: The spacing around an operator symbol is incorrect, within a C# code file.-->
+        <Rule Id="SA1004" Action="Warning"/> <!--SA1004: A line within a documentation header above a C# element does not begin with a single space.-->
+        <Rule Id="SA1005" Action="Warning"/> <!--SA1005: A single-line comment within a C# code file does not begin with a single space.-->
+        <Rule Id="SA1006" Action="Warning"/> <!--SA1006: A C# preprocessor-type keyword is preceded by space.-->
+        <Rule Id="SA1007" Action="Warning"/> <!--SA1007: The operator keyword within a C# operator overload method is not followed by any whitespace.-->
+        <Rule Id="SA1008" Action="Warning"/> <!--SA1008: An opening parenthesis within a C# statement is not spaced correctly.-->
+        <Rule Id="SA1009" Action="Warning"/> <!--SA1009: A closing parenthesis within a C# statement is not spaced correctly.-->
+        <Rule Id="SA1010" Action="Warning"/> <!--SA1010: An opening square bracket within a C# statement is not spaced correctly.-->
+        <Rule Id="SA1011" Action="Warning"/> <!--SA1011: A closing square bracket within a C# statement is not spaced correctly.-->
+        <Rule Id="SA1012" Action="Warning"/> <!--SA1012: An opening curly bracket within a C# element is not spaced correctly.-->
+        <Rule Id="SA1013" Action="Warning"/> <!--SA1013: A closing curly bracket within a C# element is not spaced correctly.-->
+        <Rule Id="SA1014" Action="Warning"/> <!--SA1014: An opening generic bracket within a C# element is not spaced correctly.-->
+        <Rule Id="SA1015" Action="Warning"/> <!--SA1015: A closing generic bracket within a C# element is not spaced correctly.-->
+        <Rule Id="SA1016" Action="Warning"/> <!--SA1016: An opening attribute bracket within a C# element is not spaced correctly.-->
+        <Rule Id="SA1017" Action="Warning"/> <!--SA1017: A closing attribute bracket within a C# element is not spaced correctly.-->
+        <Rule Id="SA1018" Action="Warning"/> <!--SA1018: A nullable type symbol within a C# element is not spaced correctly.-->
+        <Rule Id="SA1019" Action="Warning"/> <!--SA1019: The spacing around a member access symbol is incorrect, within a C# code file.-->
+        <Rule Id="SA1020" Action="Warning"/> <!--SA1020: An increment or decrement symbol within a C# element is not spaced correctly.-->
+        <Rule Id="SA1021" Action="Warning"/> <!--SA1021: A negative sign within a C# element is not spaced correctly.-->
+        <Rule Id="SA1022" Action="Warning"/> <!--SA1022: A positive sign within a C# element is not spaced correctly.-->
+        <Rule Id="SA1023" Action="Warning"/> <!--SA1023: A dereference symbol or an access-of symbol within a C# element is not spaced correctly.-->
+        <Rule Id="SA1024" Action="Warning"/> <!--SA1024: A colon within a C# element is not spaced correctly.-->
+        <Rule Id="SA1025" Action="Warning"/> <!--SA1025: The code contains multiple whitespace characters in a row.-->
+        <Rule Id="SA1026" Action="Warning"/> <!--SA1026: An implicitly typed new array allocation within a C# code file is not spaced correctly.-->
+        <Rule Id="SA1027" Action="None"/> <!--SA1027: The C# code contains a tab character.-->
+        <Rule Id="SA1100" Action="Warning"/> <!--SA1100: A call to a member from an inherited class begins with ‘base.’, and the local class does not contain an override-->
+        <Rule Id="SA1101" Action="Warning"/> <!--SA1101: A call to an instance member of the local class or a base class is not prefixed with ‘this.’, within a C# code file-->
+        <Rule Id="SA1102" Action="Warning"/> <!--SA1102: A C# query clause does not begin on the same line as the previous clause, or on the next line. -->
+        <Rule Id="SA1103" Action="Warning"/> <!--SA1103: The clauses within a C# query expression are not all placed on the same line, and each clause is not placed on its own line.-->
+        <Rule Id="SA1104" Action="Warning"/> <!--SA1104: A clause within a C# query expression begins on the same line as the previous clause, when the previous clause spans across multiple lines.-->
+        <Rule Id="SA1105" Action="Warning"/> <!--SA1105: A clause within a C# query expression spans across multiple lines, and does not begin on its own line. -->
+        <Rule Id="SA1106" Action="Error"/> <!--SA1106: The C# code contains an extra semicolon. -->
+        <Rule Id="SA1107" Action="Warning"/> <!--SA1107: The C# code contains more than one statement on a single line. -->
+        <Rule Id="SA1108" Action="Warning"/> <!--SA1108: A C# statement contains a comment between the declaration of the statement and the opening curly bracket of the statement-->
+        <Rule Id="SA1109" Action="Warning"/> <!--SA1109: A C# statement contains a region tag between the declaration of the statement and the opening curly bracket of the statement-->
+        <Rule Id="SA1110" Action="Warning"/> <!--SA1110: The opening parenthesis or bracket in a call to a C# method or indexer, or the declaration of a method or indexer, is not placed on the same line as the method or indexer name.-->
+        <Rule Id="SA1111" Action="Warning"/> <!--SA1111: The closing parenthesis or bracket in a call to a C# method or indexer, or the declaration of a method or indexer, is not placed on the same line as the last parameter.-->
+        <Rule Id="SA1112" Action="Warning"/> <!--SA1112: The closing parenthesis or bracket in a call to a C# method or indexer, or the declaration of a method or indexer, is not placed on the same line as the opening bracket when the element does not take any parameters.-->
+        <Rule Id="SA1113" Action="Warning"/> <!--SA1113: A comma between two parameters in a call to a C# method or indexer, or in the declaration of a method or indexer, is not placed on the same line as the previous parameter.-->
+        <Rule Id="SA1114" Action="Warning"/> <!--SA1114: The start of the parameter list for a method or indexer call or declaration does not begin on the same line as the opening bracket, or on the line after the opening bracket.-->
+        <Rule Id="SA1115" Action="Warning"/> <!--SA1115: A parameter within a C# method or indexer call or declaration does not begin on the same line as the previous parameter, or on the next line.-->
+        <Rule Id="SA1116" Action="Warning"/> <!--SA1116: The parameters to a C# method or indexer call or declaration span across multiple lines, but the first parameter does not start on the line after the opening bracket.-->
+        <Rule Id="SA1117" Action="Warning"/> <!--SA1117: The parameters to a C# method or indexer call or declaration are not all on the same line or each on a separate line-->
+        <Rule Id="SA1118" Action="Warning"/> <!--SA1118: A parameter to a C# method or indexer, other than the first parameter, spans across multiple lines. -->
+        <Rule Id="SA1119" Action="Warning"/> <!--SA1119: A C# statement contains parenthesis which are unnecessary and should be removed. -->
+        <Rule Id="SA1120" Action="Warning"/> <!--SA1120: The C# comment does not contain any comment text. -->
+        <Rule Id="SA1121" Action="Warning"/> <!--SA1121: The code uses one of the basic C# types, but does not use the built-in alias for the type. -->
+        <Rule Id="SA1122" Action="Warning"/> <!--SA1122: The C# code includes an empty string, written as “”. -->
+        <Rule Id="SA1123" Action="Warning"/> <!--SA1123: The C# code contains a region within the body of a code element. -->
+        <Rule Id="SA1124" Action="None"/> <!--SA1124: The C# code contains a region. -->
+        <Rule Id="SA1125" Action="Warning"/> <!--SA1125: The Nullable type has been defined not using the C# shorthand. For example, Nullable<DateTime> has been used instead of the preferred DateTime?-->
+        <Rule Id="SA1200" Action="None"/> <!--SA1200: A C# using directive is placed outside of a namespace element.-->
+        <Rule Id="SA1201" Action="Warning"/> <!--SA1201: An element within a C# code file is out of order in relation to the other elements in the code.-->
+        <Rule Id="SA1202" Action="Warning"/> <!--SA1202: An element within a C# code file is out of order within regard to access level, in relation to other elements in the code.-->
+        <Rule Id="SA1203" Action="Warning"/> <!--SA1203: A const field is placed beneath a non-const field.-->
+        <Rule Id="SA1204" Action="Warning"/> <!--SA1204: A static element is positioned beneath an instance element of the same type.-->
+        <Rule Id="SA1205" Action="None"/> <!--SA1205: The partial element does not have an access modifier defined. StyleCop may not be able to determine the correct placement of the elements in the file. Please declare an access modifier for all partial elements.-->
+        <Rule Id="SA1206" Action="Warning"/> <!--SA1206: The keywords within the declaration of an element do not follow a standard ordering scheme.-->
+        <Rule Id="SA1207" Action="Warning"/> <!--SA1207: The keyword protected is positioned after the keyword internal within the declaration of a protected internal C# element.-->
+        <Rule Id="SA1208" Action="Warning"/> <!--SA1208: A using directive which declares a member of the System namespace appears after a using directive which declares a member of a different namespace, within a C# code file.-->
+        <Rule Id="SA1209" Action="Warning"/> <!--SA1209: A using-alias directive is positioned before a regular using directive.-->
+        <Rule Id="SA1210" Action="Warning"/> <!--SA1210: The using directives within a C# code file are not sorted alphabetically by namespace.-->
+        <Rule Id="SA1211" Action="Warning"/> <!--SA1211: The using-alias directives within a C# code file are not sorted alphabetically by alias name.-->
+        <Rule Id="SA1212" Action="Warning"/> <!--SA1212: A get accessor appears after a set accessor within a property or indexer.-->
+        <Rule Id="SA1213" Action="Warning"/> <!--SA1213: An add accessor appears after a remove accessor within an event.-->
+        <Rule Id="SA1300" Action="Warning"/> <!--SA1300: The name of a C# element does not begin with an upper-case letter.-->
+        <Rule Id="SA1301" Action="Warning"/> <!--SA1301: There are currently no situations in which this rule will fire.-->
+        <Rule Id="SA1302" Action="Warning"/> <!--SA1302: The name of a C# interface does not begin with the capital letter I.-->
+        <Rule Id="SA1303" Action="Warning"/> <!--SA1303: The name of a constant C# field must begin with an upper-case letter.-->
+        <Rule Id="SA1304" Action="None"/> <!--SA1304: The name of a non-private readonly C# field must being with an upper-case letter.-->
+        <Rule Id="SA1305" Action="Warning"/> <!--SA1305: The name of a field or variable in C# uses Hungarian notation.-->
+        <Rule Id="SA1306" Action="Warning"/> <!--SA1306: The name of a field or variable in C# does not begin with a lower-case letter.-->
+        <Rule Id="SA1307" Action="Warning"/> <!--SA1307: The name of a public or internal field in C# does not begin with an upper-case letter.-->
+        <Rule Id="SA1308" Action="Warning"/> <!--SA1308: A field name in C# is prefixed with m_ or s_.-->
+        <Rule Id="SA1309" Action="Warning"/> <!--SA1309: A field name in C# begins with an underscore.-->
+        <Rule Id="SA1310" Action="Warning"/> <!--SA1310: A field name in C# contains an underscore.-->
+        <Rule Id="SA1400" Action="Warning"/> <!--SA1400: The access modifier for a C# element has not been explicitly defined. -->
+        <Rule Id="SA1401" Action="Warning"/> <!--SA1401: A field within a C# class has an access modifier other than private. -->
+        <Rule Id="SA1402" Action="Error"/> <!--SA1402: A C# code file contains more than one unique class. -->
+        <Rule Id="SA1403" Action="Error"/> <!--SA1403: A C# code file contains more than one namespace. -->
+        <Rule Id="SA1404" Action="None"/> <!--SA1404: A Code Analysis SuppressMessage attribute does not include a justification. -->
+        <Rule Id="SA1405" Action="None"/> <!--SA1405: A call to Debug.Assert in C# code does not include a descriptive message. -->
+        <Rule Id="SA1406" Action="None"/> <!--SA1406: A call to Debug.Fail in C# code does not include a descriptive message. -->
+        <Rule Id="SA1407" Action="Warning"/> <!--SA1407: A C# statement contains a complex arithmetic expression which omits parenthesis around operators. -->
+        <Rule Id="SA1408" Action="Warning"/> <!--SA1408: A C# statement contains a complex conditional expression which omits parenthesis around operators. -->
+        <Rule Id="SA1409" Action="Warning"/> <!--SA1409: A C# file contains code which is unnecessary and can be removed without changing the overall logic of the code. -->
+        <Rule Id="SA1410" Action="Warning"/> <!--SA1410: A call to a C# anonymous method does not contain any method parameters, yet the statement still includes parenthe-->
+        <Rule Id="SA1500" Action="Warning"/> <!--SA1500: The opening or closing curly bracket within a C# statement, element, or expression is not placed on its own line.-->
+        <Rule Id="SA1501" Action="Warning"/> <!--SA1501: A C# statement containing opening and closing curly brackets is written completely on a single line.-->
+        <Rule Id="SA1502" Action="Warning"/> <!--SA1502: A C# element containing opening and closing curly brackets is written completely on a single line. -->
+        <Rule Id="SA1503" Action="Warning"/> <!--SA1503: The opening and closing curly brackets for a C# statement have been omitted. -->
+        <Rule Id="SA1504" Action="Warning"/> <!--SA1504: Within a C# property, indexer or event, at least one of the child accessors is written on a single line, and at l-->
+        <Rule Id="SA1505" Action="Warning"/> <!--SA1505: An opening curly bracket within a C# element, statement, or expression is followed by a blank line. -->
+        <Rule Id="SA1506" Action="Warning"/> <!--SA1506: An element documentation header above a C# element is followed by a blank line. -->
+        <Rule Id="SA1507" Action="Warning"/> <!--SA1507: The C# code contains multiple blank lines in a row. -->
+        <Rule Id="SA1508" Action="Warning"/> <!--SA1508: A closing curly bracket within a C# element, statement, or expression is preceded by a blank line. -->
+        <Rule Id="SA1509" Action="Warning"/> <!--SA1509: An opening curly bracket within a C# element, statement, or expression is preceded by a blank line. -->
+        <Rule Id="SA1510" Action="Warning"/> <!--SA1510: Chained C# statements are separated by a blank line. -->
+        <Rule Id="SA1511" Action="Warning"/> <!--SA1511: The while footer at the bottom of a do-while statement is separated from the statement by a blank line. -->
+        <Rule Id="SA1512" Action="Warning"/> <!--SA1512: A single-line comment within C# code is followed by a blank line. -->
+        <Rule Id="SA1513" Action="Warning"/> <!--SA1513: A closing curly bracket within a C# element, statement, or expression is not followed by a blank line. -->
+        <Rule Id="SA1514" Action="Warning"/> <!--SA1514: An element documentation header above a C# element is not preceded by a blank line. -->
+        <Rule Id="SA1515" Action="Warning"/> <!--SA1515: A single-line comment within C# code is not preceded by a blank line. -->
+        <Rule Id="SA1516" Action="Warning"/> <!--SA1516: Adjacent C# elements are not separated by a blank line. -->
+        <Rule Id="SA1517" Action="Warning"/> <!--SA1517: The code file has blank lines at the start. -->
+        <Rule Id="SA1518" Action="None"/> <!--SA1518: The code file has blank lines at the end. -->
+    </Rules>
+</RuleSet>
