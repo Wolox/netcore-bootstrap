@@ -6,6 +6,8 @@ using NetCoreBootstrap;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace NetcoreBootstrap.Tests
 {
@@ -16,10 +18,17 @@ namespace NetcoreBootstrap.Tests
         public PrimeWebDefaultRequestShould()
         {
             // Arrange
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Path.GetFullPath(@"../../../../NetcoreBootstrap/"))
+                .AddJsonFile("appsettings.json", optional: false)
+                .Build();
             _server = new TestServer(new WebHostBuilder()
-                .UseStartup<Startup>());
+                .UseStartup<Startup>()
+                .UseConfiguration(configuration));
             _client = _server.CreateClient();
         }
+
+        
 
         [Fact]
         public async Task ReturnHelloWorld()
