@@ -11,24 +11,22 @@ using System.IO;
 
 namespace NetcoreBootstrap.Tests
 {
-    public class PrimeWebDefaultRequestShould
+    public class NetcoreBootstrapWebTestRequestShould
     {
         private readonly TestServer _server;
         private readonly HttpClient _client;
-        public PrimeWebDefaultRequestShould()
+        public NetcoreBootstrapWebTestRequestShould()
         {
             // Arrange
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Path.GetFullPath(@"../../../../NetcoreBootstrap/"))
-                .AddJsonFile("appsettings.json", optional: false)
+                .AddJsonFile("appsettings.Development.json", optional: false)
                 .Build();
             _server = new TestServer(new WebHostBuilder()
                 .UseStartup<Startup>()
                 .UseConfiguration(configuration));
             _client = _server.CreateClient();
-        }
-
-        
+        }        
 
         [Fact]
         public async Task ReturnHelloWorld()
@@ -36,11 +34,10 @@ namespace NetcoreBootstrap.Tests
             // Act
             var response = await _client.GetAsync("/api/v1/Test");
             response.EnsureSuccessStatusCode();
-
             var responseString = await response.Content.ReadAsStringAsync();
 
             // Assert
-            Assert.Equal("Hello World!",
+            Assert.Equal("\"Hello World!\"",
                 responseString);
         }
     }
