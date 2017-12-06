@@ -33,7 +33,6 @@ namespace NetCoreBootstrap
             });
             var connectionString = Configuration["ConnectionString"];
             services.AddDbContext<DataBaseContext>(options => options.UseNpgsql(connectionString));
-
             // Begin for Identity
             services.AddIdentity<User, IdentityRole>()
                     .AddEntityFrameworkStores<DataBaseContext>()
@@ -48,10 +47,8 @@ namespace NetCoreBootstrap
                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             });
-
             // Final for Identity
             services.AddScoped<DataBaseContext>();
-
             // Uncomment this if you want use Hangfire
             // services.AddHangfire(options => GlobalConfiguration.Configuration.UsePostgreSqlStorage(connectionString));
         }
@@ -64,10 +61,7 @@ namespace NetCoreBootstrap
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+            else app.UseExceptionHandler("/Home/Error");
             loggerFactory.AddFile("Logs/NetCoreBootstrapLogs-{Date}.txt", LogLevel.Error);
             app.UseStaticFiles();
             app.UseAuthentication();
@@ -82,7 +76,6 @@ namespace NetCoreBootstrap
                 var context = serviceScope.ServiceProvider.GetService<DataBaseContext>();
                 context.Database.Migrate();
             }
-
             // Uncomment this to use Mailer
             // Mailer.SetAccountConfiguration(Configuration);
             // Uncomment this if you want use Hangfire

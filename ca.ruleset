@@ -108,7 +108,7 @@
         <Rule Id="SA1512" Action="Warning"/> <!--SA1512: A single-line comment within C# code is followed by a blank line. -->
         <Rule Id="SA1513" Action="None"/> <!--SA1513: A closing curly bracket within a C# element, statement, or expression is not followed by a blank line. -->
         <Rule Id="SA1514" Action="Warning"/> <!--SA1514: An element documentation header above a C# element is not preceded by a blank line. -->
-        <Rule Id="SA1515" Action="Warning"/> <!--SA1515: A single-line comment within C# code is not preceded by a blank line. -->
+        <Rule Id="SA1515" Action="None"/> <!--SA1515: A single-line comment within C# code is not preceded by a blank line. -->
         <Rule Id="SA1516" Action="None"/> <!--SA1516: Adjacent C# elements are not separated by a blank line. -->
         <Rule Id="SA1517" Action="Warning"/> <!--SA1517: The code file has blank lines at the start. -->
         <Rule Id="SA1518" Action="None"/> <!--SA1518: The code file has blank lines at the end. -->

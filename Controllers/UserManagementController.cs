@@ -112,10 +112,7 @@ namespace NetCoreBootstrap.Controllers
             var user = await UserRepository.GetUserById(viewModel.SelectedUserId);
             foreach (var role in viewModel.Roles)
             {
-                if (await UserRepository.IsUserInRole(user, role.Key) && !role.Value)
-                {
-                    await UserRepository.RemoveRoleFromUser(user, role.Key);
-                }
+                if (await UserRepository.IsUserInRole(user, role.Key) && !role.Value) await UserRepository.RemoveRoleFromUser(user, role.Key);
                 else if (role.Value) await UserRepository.AddRoleToUser(user, role.Key);
             }
             return RedirectToAction("RoleManager");
