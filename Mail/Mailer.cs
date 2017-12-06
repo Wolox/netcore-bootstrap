@@ -13,20 +13,20 @@ namespace NetCoreBootstrap.Mail
     {
         private static string host, username, password, name, email;
         private static int hostPort;
-        
+
         public static void Send(string toAddress, string subject, string body)
         {
-            SmtpClient client = new SmtpClient(Host,HostPort)
+            SmtpClient client = new SmtpClient(Host, HostPort)
             {
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(Username, Password),
-                EnableSsl = true
-            };    
+                EnableSsl = true,
+            };
             MailMessage mailMessage = new MailMessage()
             {
-                From = new MailAddress(Email,Name),
+                From = new MailAddress(Email, Name),
                 Body = body,
-                Subject = subject
+                Subject = subject,
             };
             mailMessage.To.Add(toAddress);
             client.Send(mailMessage);
@@ -39,10 +39,10 @@ namespace NetCoreBootstrap.Mail
             username = configuration["Mailer:Username"];
             password = configuration["Mailer:Password"];
             name = configuration["Mailer:Name"];
-            email =configuration["Mailer:Email"];
+            email = configuration["Mailer:Email"];
         }
 
-        public static string Host 
+        public static string Host
         {
             get { return host; }
         }
@@ -52,24 +52,24 @@ namespace NetCoreBootstrap.Mail
             get { return hostPort; }
         }
 
-        public static string Username 
-        { 
+        public static string Username
+        {
             get { return username; }
         }
 
-        public static string Password 
-        { 
+        public static string Password
+        {
             get { return password; }
         }
 
-        public static string Name 
+        public static string Name
         {
             get { return name; }
         }
 
-        public static string Email 
-        { 
-            get { return email; } 
+        public static string Email
+        {
+            get { return email; }
         }
     }
 }

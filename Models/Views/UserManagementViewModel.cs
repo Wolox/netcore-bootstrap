@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 namespace NetCoreBootstrap.Models.Views
 {
     public class UserManagementViewModel
-    {   
+    {
         [MinLength(4)]
         public string Name { get; set; }
         public string UserId { get; set; }
@@ -19,13 +19,20 @@ namespace NetCoreBootstrap.Models.Views
         public List<User> Users { get; set; }
         public List<IdentityRole> Roles { get; set; }
 
-        [Display(Name = "Current Password"), DataType(DataType.Password)]
+        [Display(Name = "Current Password")] 
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [MinLength(6), MaxLength(40), DataType(DataType.Password), Display(Name = "New password")]
+        [MinLength(6)]
+        [MaxLength(40)] 
+        [DataType(DataType.Password)]
+        [Display(Name = "New password")]
         public string NewPassword { get; set; }
 
-        [MinLength(6), MaxLength(40), DataType(DataType.Password), Display(Name = "Confirm new password")]
+        [MinLength(6)] 
+        [MaxLength(40)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The password doesn't match the confirmation password")]
         public string ConfirmNewPassword { get; set; }
     }

@@ -1,35 +1,32 @@
-using System;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using NetCoreBootstrap.Models.Database;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
-using NetCoreBootstrap.Models.Views;
-using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
-using NetCoreBootstrap.Repositories;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
+using Microsoft.EntityFrameworkCore;
+using NetCoreBootstrap.Models.Database;
+using NetCoreBootstrap.Models.Views;
+using NetCoreBootstrap.Repositories;
 
 namespace NetCoreBootstrap.Controllers
 {
-    [Route("[controller]"), Authorize]
+    [Route("[controller]")]
+    [Authorize]
     public class UserManagementController : Controller
     {
         private readonly DbContextOptions<DataBaseContext> _options;
-		private readonly IHtmlLocalizer<UserManagementController> _localizer;
-		private readonly UserRepository _userRepository;
+        private readonly IHtmlLocalizer<UserManagementController> _localizer;
+        private readonly UserRepository _userRepository;
 
-        public UserManagementController(DbContextOptions<DataBaseContext> options, 
-                                        UserManager<User> userManager, 
-                                        RoleManager<IdentityRole> roleManager, 
+        public UserManagementController(DbContextOptions<DataBaseContext> options,
+                                        UserManager<User> userManager,
+                                        RoleManager<IdentityRole> roleManager,
                                         IHtmlLocalizer<UserManagementController> localizer)
         {
             this._options = options;
-			this._localizer = localizer;
-			this._userRepository = new UserRepository(this._options, userManager, roleManager);
+            this._localizer = localizer;
+            this._userRepository = new UserRepository(this._options, userManager, roleManager);
         }
 
         [HttpGet("Users")]
@@ -47,11 +44,11 @@ namespace NetCoreBootstrap.Controllers
         [HttpPost("NewRole")]
         public async Task<IActionResult> CreateRole(UserManagementViewModel viewModel)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var result = await UserRepository.CreateRole(viewModel.Name);
-                if(result.Succeeded) return RedirectToAction("Roles");
-                foreach(var error in result.Errors) ModelState.AddModelError(error.Code, error.Description);
+                if (result.Succeeded) return RedirectToAction("Roles");
+                foreach (var error in result.Errors) ModelState.AddModelError(error.Code, error.Description);
             }
             return View(viewModel);
         }
@@ -60,7 +57,7 @@ namespace NetCoreBootstrap.Controllers
         public async Task<IActionResult> DeleteRole(string roleId)
         {
             var result = await UserRepository.DeleteRole(roleId);
-            if(result) ViewData["Message"] = Localizer["RoleDeleted"];
+            if (result) ViewData["Message"] = Localizer["RoleDeleted"];
             else ViewData["Message"] = Localizer["RoleNotDeleted"];
             return View("./Views/UserManagement/Roles.cshtml", new UserManagementViewModel { Roles = UserRepository.GetAllRoles() });
         }
@@ -77,7 +74,7 @@ namespace NetCoreBootstrap.Controllers
         public async Task<IActionResult> EditRole(UserManagementViewModel viewModel)
         {
             var result = await UserRepository.UpdateRole(viewModel.RoleId, viewModel.Name);
-            if(result) ViewData["Message"] = Localizer["RoleUpdated"];
+            if (result) ViewData["Message"] = Localizer["RoleUpdated"];
             else ViewData["Message"] = Localizer["RoleNotUpdated"];
             return View("./Views/UserManagement/Roles.cshtml", new UserManagementViewModel { Roles = UserRepository.GetAllRoles() });
         }
@@ -93,7 +90,7 @@ namespace NetCoreBootstrap.Controllers
         {
             var viewModel = new RoleManagerViewModel { Roles = new Dictionary<string, bool>() };
             var user = await UserRepository.GetUserById(userId);
-            foreach(var role in UserRepository.GetAllRoles())
+            foreach (var role in UserRepository.GetAllRoles())
             {
                 viewModel.Roles[role.ToString()] = await UserRepository.IsUserInRole(user, role.ToString());
             }
@@ -105,13 +102,13 @@ namespace NetCoreBootstrap.Controllers
         public async Task<IActionResult> AddRolesToUser(RoleManagerViewModel viewModel)
         {
             var user = await UserRepository.GetUserById(viewModel.SelectedUserId);
-            foreach(var role in viewModel.Roles)
+            foreach (var role in viewModel.Roles)
             {
-                if(await UserRepository.IsUserInRole(user, role.Key) && !role.Value)
+                if (await UserRepository.IsUserInRole(user, role.Key) && !role.Value)
                 {
                     await UserRepository.RemoveRoleFromUser(user, role.Key);
                 }
-                else if(role.Value) await UserRepository.AddRoleToUser(user, role.Key);
+                else if (role.Value) await UserRepository.AddRoleToUser(user, role.Key);
             }
             return RedirectToAction("RoleManager");
         }
