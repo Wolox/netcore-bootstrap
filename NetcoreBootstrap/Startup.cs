@@ -37,17 +37,15 @@ namespace NetCoreBootstrap
             services.AddIdentity<User, IdentityRole>()
                     .AddEntityFrameworkStores<DataBaseContext>()
                     .AddDefaultTokenProviders();
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.LoginPath = "/Account/Login";
-                options.AccessDeniedPath = "/Account/AccessDenied";
-            });
-            services.AddAuthentication().AddFacebook(facebookOptions =>
-            {
-                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
-                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
-            });
-            // Final for Identity
+            services.ConfigureApplicationCookie(options => {
+                                            options.LoginPath = "/Account/Login";
+                                            options.AccessDeniedPath = "/Account/AccessDenied";
+                                        });
+            // services.AddAuthentication().AddFacebook(facebookOptions => {
+            //                                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+            //                                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+            //                             });
+            //Final for Identity
             services.AddScoped<DataBaseContext>();
             // Uncomment this if you want use Hangfire
             // services.AddHangfire(options => GlobalConfiguration.Configuration.UsePostgreSqlStorage(connectionString));
