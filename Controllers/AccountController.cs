@@ -23,18 +23,18 @@ namespace NetCoreBootstrap.Controllers
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            this._userManager = userManager;
+            this._signInManager = signInManager;
         }
 
         public SignInManager<User> SignInManager
         {
-            get { return _signInManager; }
+            get { return this._signInManager; }
         }
 
         public UserManager<User> UserManager
         {
-            get { return _userManager; }
+            get { return this._userManager; }
         }
 
         [AllowAnonymous]
@@ -151,7 +151,7 @@ namespace NetCoreBootstrap.Controllers
         [HttpPost("Logout")]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
+            await SignInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
 
@@ -160,7 +160,7 @@ namespace NetCoreBootstrap.Controllers
 
         private async Task<bool> ConfirmExternalLogin(UserManagementViewModel viewModel)
         {
-            var info = await _signInManager.GetExternalLoginInfoAsync();
+            var info = await SignInManager.GetExternalLoginInfoAsync();
             if (info == null) return false;
             var user = new User { UserName = viewModel.Email, Email = viewModel.Email, IsExternal = true };
             var result = await UserManager.CreateAsync(user);

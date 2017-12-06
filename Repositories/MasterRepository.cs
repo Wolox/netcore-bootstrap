@@ -15,14 +15,9 @@ namespace NetCoreBootstrap.Repositories
             this._options = options;
         }
 
-        public DbContextOptions<DataBaseContext> Options
-        {
-            get { return _options; }
-        }
-
         public DataBaseContext Context
         {
-            get { return new DataBaseContext(Options); }
+            get { return new DataBaseContext(this._options); }
         }
 
         public T GetById(int id)

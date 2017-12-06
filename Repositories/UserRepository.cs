@@ -25,17 +25,17 @@ namespace NetCoreBootstrap.Repositories
 
         public UserManager<User> UserManager
         {
-            get { return _userManager; }
+            get { return this._userManager; }
         }
 
         public RoleManager<IdentityRole> RoleManager
         {
-            get { return _roleManager; }
+            get { return this._roleManager; }
         }
 
         public DataBaseContext Context
         {
-            get { return new DataBaseContext(_options); }
+            get { return new DataBaseContext(this._options); }
         }
 
         public async Task<User> GetUserById(string id)
