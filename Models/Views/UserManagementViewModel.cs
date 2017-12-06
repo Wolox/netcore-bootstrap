@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NetCoreBootstrap.Models.Database;
-using Microsoft.AspNetCore.Identity;
 
 namespace NetCoreBootstrap.Models.Views
 {
@@ -19,17 +19,17 @@ namespace NetCoreBootstrap.Models.Views
         public List<User> Users { get; set; }
         public List<IdentityRole> Roles { get; set; }
 
-        [Display(Name = "Current Password")] 
+        [Display(Name = "Current Password")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [MinLength(6)]
-        [MaxLength(40)] 
+        [MaxLength(40)]
         [DataType(DataType.Password)]
         [Display(Name = "New password")]
         public string NewPassword { get; set; }
 
-        [MinLength(6)] 
+        [MinLength(6)]
         [MaxLength(40)]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm new password")]

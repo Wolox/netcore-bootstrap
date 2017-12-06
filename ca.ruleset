@@ -352,5 +352,7 @@
         <Rule Id="SA1633" Action="None"/> 
         <Rule Id="SA1137" Action="None"/>
         <Rule Id="SA1127" Action="None"/>
+        <Rule Id="SA1128" Action="None"/>
+        <Rule Id="SA1132" Action="None"/>
     </Rules>
 </RuleSet>
