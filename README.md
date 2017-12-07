@@ -229,6 +229,16 @@ Finally, also in ```ConfigureServices``` method, we can set the default language
 
 The source code can be found [here](https://github.com/Wolox/localization-culture-core)
 
+## Testing
+For testing, you should use the files in the NetcoreBootstrap.Tests folder.
+They currently allow the use of a Test server, created based on the source files of the project.
+If you want to add a test project to the test folder, you just need to position yourself in NetcoreBootstrap.Tests and run the following command:
+```bash
+    dotnet new xunit
+```
+That will create a xUnit Test Project.
+For more information, please head [here](https://github.com/dotnet/docs/blob/master/docs/core/testing/unit-testing-with-dotnet-test.md)
+
 ## Deploying to Heroku
 
 1. Install Heroku CLI https://devcenter.heroku.com/articles/heroku-cli

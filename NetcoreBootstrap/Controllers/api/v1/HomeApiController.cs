@@ -11,9 +11,9 @@ namespace NetCoreBootstrap.Controllers.Api.V1
     {
         // GET api/v1/homeapi/{id}
         [HttpGet("{id}")]
-        public string Get(int id)
+        public int Get(int id)
         {
-            return "value";
+            return id;
         }
 
         // POST api/v1/homeapi

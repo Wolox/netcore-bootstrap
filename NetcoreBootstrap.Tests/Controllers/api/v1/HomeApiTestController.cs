@@ -37,12 +37,14 @@ namespace NetcoreBootstrap.Tests.Controllers.api.v1
         public async Task Get()
         {
             // Act
-            var response = await Client.GetAsync("/api/v1/homeapi/1");
+            Random rnd = new Random();
+            int id = rnd.Next(1,1000);
+            var response = await Client.GetAsync($"/api/v1/homeapi/{id}");
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
 
             // Assert
-            Assert.Equal("value", responseString);
+            Assert.Equal($"{id}", responseString);
         }
     }
 }
