@@ -159,24 +159,24 @@ services.AddAuthentication().AddGoogle(googleOptions => {
 This will set the ClientId and ClientSecret, which should be taken from the 'appsettings.{Environment}.json'. An example of this file:
 ```bash
 {
-  "Logging": {
-    "IncludeScopes": false,
-    "LogLevel": {
-      "Default": "Debug",
-      "System": "Information",
-      "Microsoft": "Information"
-    }
-  },
-  "GoogleAuth": {
-		"ClientId": "...",
-		"ProjectId": "...", 
+    "Logging": {
+        "IncludeScopes": false,
+        "LogLevel": {
+            "Default": "Debug",
+            "System": "Information",
+            "Microsoft": "Information"
+        }
+    },
+    "GoogleAuth": {
+	    "ClientId": "...",
+	    "ProjectId": "...", 
         "auth_uri": "https://accounts.google.com/o/oauth2/auth",
 		"TokenUri": "https://accounts.google.com/o/oauth2/token",
         "AuthProviderX509CertUrl": "https://www.googleapis.com/oauth2/v1/certs",
 		"ClientSecret": "...",
 		"RedirectUris": ["http://localhost:5000/signin-google"]
-  },
-  "ConnectionString" : "..."
+    },
+    "ConnectionString" : "..."
 }
 ```
 

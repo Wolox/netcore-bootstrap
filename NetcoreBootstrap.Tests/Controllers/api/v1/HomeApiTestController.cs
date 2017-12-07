@@ -1,19 +1,17 @@
 using System;
-using Xunit;
-using NetcoreBootstrap;
+using System.IO;
 using System.Net.Http;
-using NetCoreBootstrap;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
-using System.IO;
+using NetCoreBootstrap;
+using Xunit;
 
-namespace NetcoreBootstrap.Tests.Controllers.api.v1
+namespace NetcoreBootstrap.Tests.Controllers.Api.V1
 {
     public class HomeApiTestController
     {
-        private readonly TestServer _server;
         private readonly HttpClient _client;
 
         public HomeApiTestController()
@@ -22,11 +20,10 @@ namespace NetcoreBootstrap.Tests.Controllers.api.v1
                                 .SetBasePath(Path.GetFullPath(@"../../../../NetcoreBootstrap/"))
                                 .AddJsonFile("appsettings.Development.json", optional: false)
                                 .Build();
-            this._server = new TestServer(new WebHostBuilder()
+            this._client = new TestServer(new WebHostBuilder()
                             .UseStartup<Startup>()
-                            .UseConfiguration(configuration));
-            this._client = this._server.CreateClient();
-        }        
+                            .UseConfiguration(configuration)).CreateClient();
+        }
 
         public HttpClient Client
         {
@@ -38,7 +35,7 @@ namespace NetcoreBootstrap.Tests.Controllers.api.v1
         {
             // Act
             Random rnd = new Random();
-            int id = rnd.Next(1,1000);
+            int id = rnd.Next(1, 1000);
             var response = await Client.GetAsync($"/api/v1/homeapi/{id}");
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
