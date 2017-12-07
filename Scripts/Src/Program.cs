@@ -55,10 +55,10 @@ namespace BootstrapScript
                                                 .Replace($@"using Microsoft.AspNetCore.Identity;{endOfLine}", string.Empty)
                                                 .Replace($@"using Microsoft.AspNetCore.Authentication.Google;{endOfLine}", string.Empty)
                                                 .Replace($@"app.UseAuthentication();{endOfLine}            ", string.Empty);
-                            startIndex = contents.IndexOf("//Begin for Identity");
-                            endIndex = contents.IndexOf("//Final for Identity", startIndex + 1);
+                            startIndex = contents.IndexOf("// Begin for Identity");
+                            endIndex = contents.IndexOf("// Final for Identity", startIndex + 1);
                             contents = contents.Remove(startIndex, endIndex - startIndex);
-                            contents = contents.Replace($"//Final for Identity;{endOfLine}", string.Empty);
+                            contents = contents.Replace($"// Final for Identity;{endOfLine}", string.Empty);
                         }
                         else if (file.Contains("/Models/Database/DataBaseContext.cs"))
                         {
