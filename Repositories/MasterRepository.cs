@@ -6,7 +6,7 @@ using NetCoreBootstrap.Models.Database;
 
 namespace NetCoreBootstrap.Repositories
 {
-    public abstract class MasterRepository <T> where T: BaseEntity
+    public abstract class MasterRepository<T> where T : BaseEntity
     {
         private readonly DbContextOptions<DataBaseContext> _options;
 
@@ -15,9 +15,14 @@ namespace NetCoreBootstrap.Repositories
             this._options = options;
         }
 
+        public DataBaseContext Context
+        {
+            get { return new DataBaseContext(this._options); }
+        }
+
         public T GetById(int id)
         {
-            using(var context = Context)
+            using (var context = Context)
             {
                 return context.Set<T>().Find(id);
             }
@@ -25,7 +30,7 @@ namespace NetCoreBootstrap.Repositories
 
         public List<T> GetAll()
         {
-            using(var context = Context)
+            using (var context = Context)
             {
                 return context.Set<T>().ToList();
             }
@@ -33,7 +38,7 @@ namespace NetCoreBootstrap.Repositories
 
         public void Insert(T entity)
         {
-            using(var context = Context)
+            using (var context = Context)
             {
                 if (entity == null)
                 {
@@ -46,7 +51,7 @@ namespace NetCoreBootstrap.Repositories
 
         public void Update(T entity)
         {
-            using(var context = Context)
+            using (var context = Context)
             {
                 if (entity == null)
                 {
@@ -59,7 +64,7 @@ namespace NetCoreBootstrap.Repositories
 
         public void Delete(T entity)
         {
-            using(var context = Context)
+            using (var context = Context)
             {
                 if (entity == null)
                 {
@@ -68,16 +73,6 @@ namespace NetCoreBootstrap.Repositories
                 context.Set<T>().Remove(entity);
                 context.SaveChanges();
             }
-        }
-
-        public DbContextOptions<DataBaseContext> Options
-        {
-            get {return _options;}
-        }
-
-        public DataBaseContext Context
-        {
-            get {return new DataBaseContext(Options);}
         }
     }
 }

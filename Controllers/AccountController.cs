@@ -1,17 +1,17 @@
-using Microsoft.AspNetCore.Mvc;
-using NetCoreBootstrap.Models.Database;
-using NetCoreBootstrap.Repositories;
-using Microsoft.EntityFrameworkCore;
-using NetCoreBootstrap.Models.Views;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using System.Threading.Tasks;
+using System;
 using System.Linq;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
-using System;
-using Microsoft.Extensions.Options;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using NetCoreBootstrap.Models.Database;
+using NetCoreBootstrap.Models.Views;
+using NetCoreBootstrap.Repositories;
 
 namespace NetCoreBootstrap.Controllers
 {
@@ -23,8 +23,18 @@ namespace NetCoreBootstrap.Controllers
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            this._userManager = userManager;
+            this._signInManager = signInManager;
+        }
+
+        public SignInManager<User> SignInManager
+        {
+            get { return this._signInManager; }
+        }
+
+        public UserManager<User> UserManager
+        {
+            get { return this._userManager; }
         }
 
         [AllowAnonymous]
@@ -35,16 +45,16 @@ namespace NetCoreBootstrap.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register(UserViewModel userViewModel)
         {
-            if(ModelState.IsValid)
-            {      
+            if (ModelState.IsValid)
+            {
                 var user = new User { UserName = userViewModel.UserName, Email = userViewModel.Email, IsExternal = false };
                 var result = await UserManager.CreateAsync(user, userViewModel.Password);
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, true);
                     return RedirectToAction("Users", "UserManagement");
                 }
-                else foreach (var error in result.Errors) ModelState.AddModelError("", error.Description);
+                else foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
             }
             return View(userViewModel);
         }
@@ -63,11 +73,11 @@ namespace NetCoreBootstrap.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var result = await SignInManager.PasswordSignInAsync(loginViewModel.UserName, loginViewModel.Password, loginViewModel.RememberMe, false);
-                if(result.Succeeded) return RedirectToAction("Users", "UserManagement");
-                ModelState.AddModelError("", "Invalid login attempt.");
+                if (result.Succeeded) return RedirectToAction("Users", "UserManagement");
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             }
             loginViewModel.LoginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             return View(loginViewModel);
@@ -97,9 +107,9 @@ namespace NetCoreBootstrap.Controllers
             {
                 return RedirectToAction("Login");
             }
-            
+
             var user = await UserManager.FindByEmailAsync(info.Principal.FindFirstValue(ClaimTypes.Email));
-            if(user != null && !user.IsExternal)
+            if (user != null && !user.IsExternal)
             {
                 // Already exists a local user with the external login mail.
                 throw new Exception($"This email {user.Email} is already registered.");
@@ -107,52 +117,33 @@ namespace NetCoreBootstrap.Controllers
 
             // Sign in the user with this external login provider if the user already has a login.
             var result = await SignInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("Users", "UserManagement");
-            }
-            else if(result.IsLockedOut || result.IsNotAllowed || result.RequiresTwoFactor) throw new Exception(result.ToString());
-            else if(await ConfirmExternalLogin(new UserManagementViewModel { Email = info.Principal.FindFirstValue(ClaimTypes.Email)}))
+            if (result.Succeeded) return RedirectToAction("Users", "UserManagement");
+            else if (result.IsLockedOut || result.IsNotAllowed || result.RequiresTwoFactor) throw new Exception(result.ToString());
+            else if (await ConfirmExternalLogin(new UserManagementViewModel { Email = info.Principal.FindFirstValue(ClaimTypes.Email) }))
                 return RedirectToAction("Users", "UserManagement");
             else return RedirectToAction("Login");
         }
 
-        private async Task<bool> ConfirmExternalLogin(UserManagementViewModel viewModel)
-        {
-            var info = await _signInManager.GetExternalLoginInfoAsync();
-            if(info == null) return false;
-            var user = new User { UserName = viewModel.Email, Email = viewModel.Email, IsExternal = true };
-            var result = await UserManager.CreateAsync(user);
-            if(result.Succeeded)
-            {
-                result = await UserManager.AddLoginAsync(user, info);
-                if(result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent: false);
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        [HttpGet("Edit"), Authorize]
+        [HttpGet("Edit")]
+        [Authorize]
         public async Task<IActionResult> Edit()
         {
             var user = await UserManager.GetUserAsync(HttpContext.User);
-            if(user.IsExternal) return RedirectToAction("AccessDenied");
+            if (user.IsExternal) return RedirectToAction("AccessDenied");
             var userViewModel = new UserManagementViewModel { UserId = user.Id };
             return View(userViewModel);
         }
 
-        [HttpPost("Edit"), Authorize]
+        [HttpPost("Edit")]
+        [Authorize]
         public async Task<IActionResult> Edit(UserManagementViewModel viewModel)
         {
             var user = await UserManager.GetUserAsync(HttpContext.User);
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var result = await UserManager.ChangePasswordAsync(user, viewModel.Password, viewModel.NewPassword);
-                if(result.Succeeded) return RedirectToAction("Users", "UserManagement");
-                foreach(var error in result.Errors) ModelState.AddModelError(error.Code, error.Description);
+                if (result.Succeeded) return RedirectToAction("Users", "UserManagement");
+                foreach (var error in result.Errors) ModelState.AddModelError(error.Code, error.Description);
             }
             return View(viewModel);
         }
@@ -160,21 +151,29 @@ namespace NetCoreBootstrap.Controllers
         [HttpPost("Logout")]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
+            await SignInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
 
         [HttpGet("AccessDenied")]
         public IActionResult AccessDenied() => View();
 
-        public SignInManager<User> SignInManager
+        private async Task<bool> ConfirmExternalLogin(UserManagementViewModel viewModel)
         {
-            get { return _signInManager; }
-        }
-
-        public UserManager<User> UserManager
-        {
-            get { return _userManager; }
+            var info = await SignInManager.GetExternalLoginInfoAsync();
+            if (info == null) return false;
+            var user = new User { UserName = viewModel.Email, Email = viewModel.Email, IsExternal = true };
+            var result = await UserManager.CreateAsync(user);
+            if (result.Succeeded)
+            {
+                result = await UserManager.AddLoginAsync(user, info);
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

@@ -23,6 +23,21 @@ namespace NetCoreBootstrap.Repositories
             this._roleManager = roleManager;
         }
 
+        public UserManager<User> UserManager
+        {
+            get { return this._userManager; }
+        }
+
+        public RoleManager<IdentityRole> RoleManager
+        {
+            get { return this._roleManager; }
+        }
+
+        public DataBaseContext Context
+        {
+            get { return new DataBaseContext(this._options); }
+        }
+
         public async Task<User> GetUserById(string id)
         {
             return await UserManager.FindByIdAsync(id);
@@ -40,17 +55,18 @@ namespace NetCoreBootstrap.Repositories
 
         public List<User> GetAllUsersWithRoles()
         {
-            using(var context = Context)
+            using (var context = Context)
             {
                 return (from user in context.Users
-                        select new User {
+                        select new User
+                        {
                             Id = user.Id,
                             Email = user.Email,
                             UserName = user.UserName,
-                            Roles = (from role in context.Roles 
-                                        join userRole in context.UserRoles on role.Id equals userRole.RoleId
-                                        where userRole.UserId == user.Id
-                                        select role).ToList()
+                            Roles = (from role in context.Roles
+                                     join userRole in context.UserRoles on role.Id equals userRole.RoleId
+                                     where userRole.UserId == user.Id
+                                     select role).ToList(),
                         }).Distinct().ToList();
             }
         }
@@ -68,7 +84,7 @@ namespace NetCoreBootstrap.Repositories
         public Dictionary<string, string> GetRoleMap()
         {
             var map = new Dictionary<string, string>();
-            foreach(var role in GetAllRoles())
+            foreach (var role in GetAllRoles())
             {
                 map[role.Id] = role.Name;
             }
@@ -88,11 +104,11 @@ namespace NetCoreBootstrap.Repositories
         public async Task<bool> DeleteRole(string roleId)
         {
             var role = await RoleManager.FindByIdAsync(roleId);
-            try 
+            try
             {
                 return (await RoleManager.DeleteAsync(role)).Succeeded;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
@@ -106,7 +122,7 @@ namespace NetCoreBootstrap.Repositories
                 role.Name = name;
                 return (await RoleManager.UpdateAsync(role)).Succeeded;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
@@ -118,7 +134,7 @@ namespace NetCoreBootstrap.Repositories
             {
                 return await RoleManager.FindByIdAsync(roleId);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
@@ -127,26 +143,11 @@ namespace NetCoreBootstrap.Repositories
         public async Task<IEnumerable<string>> GetRoles(User user)
         {
             return await UserManager.GetRolesAsync(user);
-		}
+        }
 
         public List<SelectListItem> GetUsersListItem()
         {
             return (from user in UserManager.Users.OrderBy(u => u.Email) select new SelectListItem { Text = user.Email, Value = user.Id }).ToList();
         }
-        
-        public UserManager<User> UserManager
-        {
-            get { return _userManager; }
-        }
-
-        public RoleManager<IdentityRole> RoleManager
-        {
-            get { return _roleManager; }
-        }
-
-        public DataBaseContext Context
-        {
-            get { return new DataBaseContext(_options); }
-        }
-	}
+    }
 }

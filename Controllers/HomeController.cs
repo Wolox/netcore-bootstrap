@@ -8,15 +8,23 @@ namespace NetCoreBootstrap.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly DbContextOptions<DataBaseContext> _options;
         private readonly IHtmlLocalizer<HomeController> _localizer;
         private readonly ILogger<HomeController> _log;
 
         public HomeController(DbContextOptions<DataBaseContext> options, IHtmlLocalizer<HomeController> localizer, ILogger<HomeController> log)
         {
-            this._options = options;
             this._localizer = localizer;
             this._log = log;
+        }
+
+        public IHtmlLocalizer<HomeController> Localizer
+        {
+            get { return this._localizer; }
+        }
+
+        public ILogger<HomeController> Log
+        {
+            get { return this._log; }
         }
 
         [HttpGet("")]
@@ -43,16 +51,6 @@ namespace NetCoreBootstrap.Controllers
         public IActionResult Error()
         {
             return View();
-        }
-
-        public IHtmlLocalizer<HomeController> Localizer
-        {
-            get { return this._localizer; }
-        }
-
-        public ILogger<HomeController> Log
-        {
-            get { return this._log; }
         }
     }
 }

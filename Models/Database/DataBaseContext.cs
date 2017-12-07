@@ -11,12 +11,17 @@ namespace NetCoreBootstrap.Models.Database
 {
     public class DataBaseContext : IdentityDbContext<User>
     {
-        public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options) {}
+        public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options) { }
 
         public override int SaveChanges()
         {
             AddTimestamps();
             return base.SaveChanges();
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
         }
 
         private void AddTimestamps()
@@ -30,11 +35,6 @@ namespace NetCoreBootstrap.Models.Database
                 }
                 ((BaseEntity)entity.Entity).UpdatedAt = DateTime.UtcNow;
             }
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
         }
     }
 }
