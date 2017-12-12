@@ -3,5 +3,5 @@ obj
 bin
 node_modules
 wwwroot/css
-/NetcoreBootstrap/appsettings.Development.json
+/NetCoreBootstrap/appsettings.Development.json
 Logs

@@ -28,7 +28,7 @@ namespace BootstrapScript
             }
             Console.WriteLine("Replacing " + bootstrapName + " to " + appName + " in " + bootstrapRootDir);
             string contents = "";
-            var files = from string file in Directory.EnumerateFiles(bootstrapRootDir, "*", SearchOption.AllDirectories) where !file.Contains("bootstrap-script") select file;
+            var files = from string file in Directory.EnumerateFiles(bootstrapRootDir, "*", SearchOption.AllDirectories) where !(file.Contains("bootstrap-script") || file.Contains("script.sh")) select file;
             string endOfLine = "";
             int startIndex, endIndex;
             foreach (string file in files)
@@ -87,30 +87,35 @@ namespace BootstrapScript
                 }
             }   
             Console.WriteLine("Renaming .csproj ...");
-            File.Move($@"{bootstrapRootDir}/NetcoreBootstrap/{bootstrapName}.csproj", $@"{bootstrapRootDir}/NetcoreBootstrap/{appName}.csproj");
+            File.Move($@"{bootstrapRootDir}/NetCoreBootstrap/{bootstrapName}.csproj", $@"{bootstrapRootDir}/NetCoreBootstrap/{appName}.csproj");
+            Console.WriteLine("Renaming Test .csproj ...");
+            File.Move($@"{bootstrapRootDir}/NetCoreBootstrap.Tests/{bootstrapName}.Tests.csproj", $@"{bootstrapRootDir}/NetCoreBootstrap.Tests/{appName}.Tests.csproj");
+            Console.WriteLine("Renaming sln ...");
+            File.Move($@"{bootstrapRootDir}/netcore-bootstrap.sln", $@"{bootstrapRootDir}/{PascalToKebabCase(appName)}.sln");
+            
             if(deleteAuth == DeleteAuthenticationParamValue()) 
             {
                 Console.WriteLine("Preparing to delete authentication files ...");
                 MoveAuthFilesToScriptFolder(bootstrapRootDir);
             } 
             Console.WriteLine("Moving appsettings.Development.json ...");
-            File.Move($@"{bootstrapRootDir}/NetcoreBootstrap/Scripts/appsettings.Development.json", $@"{bootstrapRootDir}/NetcoreBootstrap/appsettings.Development.json");
+            File.Move($@"{bootstrapRootDir}/NetCoreBootstrap/Scripts/appsettings.Development.json", $@"{bootstrapRootDir}/NetCoreBootstrap/appsettings.Development.json");
             Console.WriteLine(appName + " is ready! Happy coding!");
             return 1;
         }
 
         private static void MoveAuthFilesToScriptFolder(string bootstrapRootDir)
         {
-            Directory.Move($@"{bootstrapRootDir}/NetcoreBootstrap/Migrations", $@"{bootstrapRootDir}/NetcoreBootstrap/Scripts/Migrations");
-            Directory.Move($@"{bootstrapRootDir}/NetcoreBootstrap/Views/Account", $@"{bootstrapRootDir}/NetcoreBootstrap/Scripts/ViewsAccount");
-            Directory.Move($@"{bootstrapRootDir}/NetcoreBootstrap/Views/UserManagement", $@"{bootstrapRootDir}/NetcoreBootstrap/Scripts/ViewsUserManagement");
-            Directory.Move($@"{bootstrapRootDir}/NetcoreBootstrap/Models/Views", $@"{bootstrapRootDir}/NetcoreBootstrap/Scripts/ModelsViews");
-            File.Move($@"{bootstrapRootDir}/NetcoreBootstrap/Controllers/AccountController.cs", $@"{bootstrapRootDir}/NetcoreBootstrap/Scripts/ControllersAccountController.cs");
-            File.Move($@"{bootstrapRootDir}/NetcoreBootstrap/Controllers/UserManagementController.cs", $@"{bootstrapRootDir}/NetcoreBootstrap/Scripts/ControllersUserManagementController.cs");
-            File.Move($@"{bootstrapRootDir}/NetcoreBootstrap/Models/Database/User.cs", $@"{bootstrapRootDir}/NetcoreBootstrap/Scripts/ModelsDatabaseUser.cs");
-            File.Move($@"{bootstrapRootDir}/NetcoreBootstrap/Repositories/UserRepository.cs", $@"{bootstrapRootDir}/NetcoreBootstrap/Scripts/UserRepository.cs");
-            File.Move($@"{bootstrapRootDir}/NetcoreBootstrap/Views/Shared/_LoginPartial.cshtml", $@"{bootstrapRootDir}/NetcoreBootstrap/Scripts/_LoginPartial.cshtml");
-            File.Move($@"{bootstrapRootDir}/NetcoreBootstrap/Views/Shared/_UserManagementPartial.cshtml", $@"{bootstrapRootDir}/NetcoreBootstrap/Scripts/_UserManagementPartial.cshtml");
+            Directory.Move($@"{bootstrapRootDir}/NetCoreBootstrap/Migrations", $@"{bootstrapRootDir}/NetCoreBootstrap/Scripts/Migrations");
+            Directory.Move($@"{bootstrapRootDir}/NetCoreBootstrap/Views/Account", $@"{bootstrapRootDir}/NetCoreBootstrap/Scripts/ViewsAccount");
+            Directory.Move($@"{bootstrapRootDir}/NetCoreBootstrap/Views/UserManagement", $@"{bootstrapRootDir}/NetCoreBootstrap/Scripts/ViewsUserManagement");
+            Directory.Move($@"{bootstrapRootDir}/NetCoreBootstrap/Models/Views", $@"{bootstrapRootDir}/NetCoreBootstrap/Scripts/ModelsViews");
+            File.Move($@"{bootstrapRootDir}/NetCoreBootstrap/Controllers/AccountController.cs", $@"{bootstrapRootDir}/NetCoreBootstrap/Scripts/ControllersAccountController.cs");
+            File.Move($@"{bootstrapRootDir}/NetCoreBootstrap/Controllers/UserManagementController.cs", $@"{bootstrapRootDir}/NetCoreBootstrap/Scripts/ControllersUserManagementController.cs");
+            File.Move($@"{bootstrapRootDir}/NetCoreBootstrap/Models/Database/User.cs", $@"{bootstrapRootDir}/NetCoreBootstrap/Scripts/ModelsDatabaseUser.cs");
+            File.Move($@"{bootstrapRootDir}/NetCoreBootstrap/Repositories/UserRepository.cs", $@"{bootstrapRootDir}/NetCoreBootstrap/Scripts/UserRepository.cs");
+            File.Move($@"{bootstrapRootDir}/NetCoreBootstrap/Views/Shared/_LoginPartial.cshtml", $@"{bootstrapRootDir}/NetCoreBootstrap/Scripts/_LoginPartial.cshtml");
+            File.Move($@"{bootstrapRootDir}/NetCoreBootstrap/Views/Shared/_UserManagementPartial.cshtml", $@"{bootstrapRootDir}/NetCoreBootstrap/Scripts/_UserManagementPartial.cshtml");
         }
 
         private static string DeleteAuthenticationParamValue()
