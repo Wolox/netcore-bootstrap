@@ -17,7 +17,7 @@ namespace NetcoreBootstrap.Tests.Controllers.Api.V1
         public HomeApiTestController()
         {
             var configuration = new ConfigurationBuilder()
-                                .SetBasePath(Path.GetFullPath(@"../../../../NetcoreBootstrap/"))
+                                .SetBasePath(Path.GetFullPath(@"../../../../NetCoreBootstrap/"))
                                 .AddJsonFile("appsettings.Development.json", optional: false)
                                 .Build();
             this._client = new TestServer(new WebHostBuilder()
