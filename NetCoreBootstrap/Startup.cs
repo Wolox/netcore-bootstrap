@@ -37,10 +37,11 @@ namespace NetCoreBootstrap
             services.AddIdentity<User, IdentityRole>()
                     .AddEntityFrameworkStores<DataBaseContext>()
                     .AddDefaultTokenProviders();
-            services.ConfigureApplicationCookie(options => {
-                                            options.LoginPath = "/Account/Login";
-                                            options.AccessDeniedPath = "/Account/AccessDenied";
-                                        });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+            });
             // services.AddAuthentication().AddFacebook(facebookOptions => {
             //                                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
             //                                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
