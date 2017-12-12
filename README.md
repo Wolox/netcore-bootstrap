@@ -24,7 +24,7 @@ Run the following command from rootpath of the project to get the specified pack
 
 #### Starting your app
 
-Now, to start your app run `dotnet run` in the rootpath of the project. Then access your app at localhost:port. The port should be logged in the console.
+Now, to start your app run `dotnet run` in the src path of the project. Then access your app at localhost:port. The port should be logged in the console.
 
 
 #### Starting with wathcher
@@ -33,7 +33,7 @@ To enable auto restart run `dotnet watch run`
 
 
 ### Using SCSS
-To use Scss files you need to run the following comands:
+To use Scss files you need to run the following comands in the src path of the project:
 ```bash
     ./node_modules/.bin/gulp
 ```
@@ -159,24 +159,24 @@ services.AddAuthentication().AddGoogle(googleOptions => {
 This will set the ClientId and ClientSecret, which should be taken from the 'appsettings.{Environment}.json'. An example of this file:
 ```bash
 {
-  "Logging": {
-    "IncludeScopes": false,
-    "LogLevel": {
-      "Default": "Debug",
-      "System": "Information",
-      "Microsoft": "Information"
-    }
-  },
-  "GoogleAuth": {
-		"ClientId": "...",
-		"ProjectId": "...", 
+    "Logging": {
+        "IncludeScopes": false,
+        "LogLevel": {
+            "Default": "Debug",
+            "System": "Information",
+            "Microsoft": "Information"
+        }
+    },
+    "GoogleAuth": {
+	    "ClientId": "...",
+	    "ProjectId": "...", 
         "auth_uri": "https://accounts.google.com/o/oauth2/auth",
 		"TokenUri": "https://accounts.google.com/o/oauth2/token",
         "AuthProviderX509CertUrl": "https://www.googleapis.com/oauth2/v1/certs",
 		"ClientSecret": "...",
 		"RedirectUris": ["http://localhost:5000/signin-google"]
-  },
-  "ConnectionString" : "..."
+    },
+    "ConnectionString" : "..."
 }
 ```
 
@@ -224,10 +224,19 @@ The second line allows us to use localization in views as well as in the control
 Finally, also in ```ConfigureServices``` method, we can set the default language that your application will use:
 ```bash
     CultureInfo.CurrentUICulture = new CultureInfo("en-US");
-    CultureInfo.CurrentCulture = new CultureInfo("en-US");
 ```
 
 The source code can be found [here](https://github.com/Wolox/localization-culture-core)
+
+## Testing
+For testing, you should use the files in the NetCoreBootstrap.Tests folder.
+They currently allow the use of a Test server, created based on the source files of the project.
+If you want to add a test project to the test folder, you just need to position yourself in NetCoreBootstrap.Tests and run the following command:
+```bash
+    dotnet new xunit
+```
+That will create a xUnit Test Project.
+For more information, please head [here](https://github.com/dotnet/docs/blob/master/docs/core/testing/unit-testing-with-dotnet-test.md)
 
 ## Deploying to Heroku
 

@@ -4,30 +4,30 @@
     <CodeAnalysisRuleSet>ca.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Hangfire" Version="1.6.12"/>
-    <PackageReference Include="Hangfire.PostgreSql" Version="1.4.7.1"/>
-    <PackageReference Include="LocalizationCultureCore" Version="1.0.0"/>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0"/>
+    <PackageReference Include="Hangfire" Version="1.6.17"/>
+    <PackageReference Include="Hangfire.PostgreSql" Version="1.4.8.1"/>
+    <PackageReference Include="LocalizationCultureCore" Version="1.1.2"/>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3"/>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="2.0.1"/>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="2.0.0"/>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.0.0"/>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="2.0.1"/>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.0.1"/>
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.0"/>
-    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.0.0"/>
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.0.1"/>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.0"/>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="2.0.0-preview1"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.0"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.1"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" PrivateAssets="All"/>
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0"/>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0"/>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" PrivateAssets="All"/>
     <PackageReference Include="Microsoft.Composition" Version="1.0.31" ExcludeAssets="All"/>
     <PackageReference Include="System.Composition" Version="1.1.0"/>
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.4.0"/>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004"/>
   </ItemGroup>
   <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0"/>
-    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0"/>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1"/>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.1"/>
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0"/>
   </ItemGroup>
 </Project>
