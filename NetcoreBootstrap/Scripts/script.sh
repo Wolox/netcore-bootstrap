@@ -1,5 +1,5 @@
-dotnet ./Scripts/bootstrap-script.dll $1 $2
+dotnet ./NetcoreBootstrap/Scripts/bootstrap-script.dll $1 $2
 if test "$?" = '1'; then
-	chmod +x ./Scripts/delete_script.sh
-	./Scripts/delete_script.sh
+	chmod +x ./NetcoreBootstrap/Scripts/delete_script.sh
+	./NetcoreBootstrap/Scripts/delete_script.sh $1
 fi
