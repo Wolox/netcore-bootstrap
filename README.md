@@ -24,7 +24,7 @@ Run the following command from rootpath of the project to get the specified pack
 
 #### Starting your app
 
-Now, to start your app run `dotnet run` in the rootpath of the project. Then access your app at localhost:port. The port should be logged in the console.
+Now, to start your app run `dotnet run` in the src path of the project. Then access your app at localhost:port. The port should be logged in the console.
 
 
 #### Starting with wathcher
@@ -33,7 +33,7 @@ To enable auto restart run `dotnet watch run`
 
 
 ### Using SCSS
-To use Scss files you need to run the following comands:
+To use Scss files you need to run the following comands in the src path of the project:
 ```bash
     ./node_modules/.bin/gulp
 ```
@@ -224,7 +224,6 @@ The second line allows us to use localization in views as well as in the control
 Finally, also in ```ConfigureServices``` method, we can set the default language that your application will use:
 ```bash
     CultureInfo.CurrentUICulture = new CultureInfo("en-US");
-    CultureInfo.CurrentCulture = new CultureInfo("en-US");
 ```
 
 The source code can be found [here](https://github.com/Wolox/localization-culture-core)

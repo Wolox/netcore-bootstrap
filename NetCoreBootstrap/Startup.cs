@@ -25,7 +25,7 @@ namespace NetCoreBootstrap
         {
             // Add framework services.
             services.AddJsonLocalization(options => options.ResourcesPath = "Resources");
-            CultureInfo.CurrentCulture = new CultureInfo(Configuration["DefaultCulture"]);
+            CultureInfo.CurrentUICulture = new CultureInfo(Configuration["DefaultCulture"]);
             services.AddMvc().AddViewLocalization();
             services.AddSwaggerGen(c =>
             {
