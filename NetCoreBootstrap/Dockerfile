@@ -1,4 +1,11 @@
-FROM microsoft/aspnetcore
+FROM microsoft/dotnet:2.0-sdk
 WORKDIR /app
-COPY . .
-CMD ASPNETCORE_URLS=http://*:$PORT dotnet NetCoreBootstrap.dll
+
+# copy csproj and restore as distinct layers
+COPY *.csproj ./
+RUN dotnet restore
+
+# copy and build everything else
+COPY . ./
+RUN dotnet publish -c Release -o out
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet out/NetCoreBootstrap.dll
