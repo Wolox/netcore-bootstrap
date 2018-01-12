@@ -285,38 +285,55 @@ If you want to add a test project to the test folder, you just need to position 
 That will create a xUnit Test Project.
 For more information, please head [here](https://github.com/dotnet/docs/blob/master/docs/core/testing/unit-testing-with-dotnet-test.md)
 
-## Deploying to Heroku
+## Docker
 
+First you need to install Docker (https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-docker-ce-1)
+When you have installed Docker you just need to run the following comand to create the docker container
+```bash
+    docker build -t nectore-bootstrap .
+```
+
+With your docker container you can:
+
+#### Deploy to AWS
+1. You need an user on [Dockerhub](https://hub.docker.com/)
+
+2. Log in to dockerhub with the folloing command:
+```bash
+    docker login
+```
+
+3. Add a tag (is an extra name) to your image (with the following convention `<dockerhubuser>/<imagename>:<version>`. You can do this with the following comand:
+```bash
+    docker tag imagename new-name
+```
+
+3. Push to dockerhub with the following command:
+```bash
+    docker push new-name
+```
+
+4. WIP
+
+Check [this](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_docker_image.html) for more info
+
+#### Deploy to Heroku
 1. Install Heroku CLI https://devcenter.heroku.com/articles/heroku-cli
-2. Install Docker https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-docker-ce-1 
-3. Publish your app
-```bash
-    dotnet publish -c Release
-```
-4. Copy the DockerFile to your publish directory
 
-    Your publish directory should be:
-```bash
-    ./bin/release/netcoreapp2.0/publish
-```
-5. Build the Docker Image
-```bash
-    docker build -t <image-name> ./bin/release/netcoreapp2.0/publish
-```
-6. Log in to heroku with the folloing command:
+2. Log in to heroku with the folloing command:
 ```bash
     heroku login
     heroku container:login
 ```    
-7. Create the heroku app with:
+3. Create the heroku app with:
 ```bash
     heroku apps:create net-core-deploy-heroku
 ```
-8. Tag the heroku target image
+4. Tag the heroku target image
 ```bash
     docker tag <image-name> registry.heroku.com/<heroku-app-name>/web
 ```
-9. Push the docker image to heroku
+5. Push the docker image to heroku
 ```bash
     docker push registry.heroku.com/<heroku-app-name>/web
 ```
