@@ -1,4 +1,8 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -6,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using NetCoreBootstrap.Models.Database;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -42,10 +47,30 @@ namespace NetCoreBootstrap
                 options.LoginPath = "/Account/Login";
                 options.AccessDeniedPath = "/Account/AccessDenied";
             });
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(cfg =>
+            {
+                cfg.RequireHttpsMetadata = false;
+                cfg.SaveToken = true;
+                cfg.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = Configuration["JwtIssuer"],
+                    ValidAudience = Configuration["JwtIssuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtKey"])),
+                    ClockSkew = TimeSpan.Zero, // remove delay of token when expire
+                };
+            });
+            // Facebook Auth
             // services.AddAuthentication().AddFacebook(facebookOptions => {
             //                                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
             //                                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             //                             });
+            // -------------------------------------------------------------------------------------------------------------
             // Final for Identity
             services.AddScoped<DataBaseContext>();
             // Uncomment this if you want use Hangfire
