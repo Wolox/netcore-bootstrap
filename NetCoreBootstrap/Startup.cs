@@ -70,7 +70,6 @@ namespace NetCoreBootstrap
             //                                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
             //                                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             //                             });
-            // -------------------------------------------------------------------------------------------------------------
             // Final for Identity
             services.AddScoped<DataBaseContext>();
             // Uncomment this if you want use Hangfire
