@@ -111,6 +111,7 @@ namespace BootstrapScript
             Directory.Move($@"{bootstrapRootDir}/NetCoreBootstrap/Views/UserManagement", $@"{bootstrapRootDir}/NetCoreBootstrap/Scripts/ViewsUserManagement");
             Directory.Move($@"{bootstrapRootDir}/NetCoreBootstrap/Models/Views", $@"{bootstrapRootDir}/NetCoreBootstrap/Scripts/ModelsViews");
             File.Move($@"{bootstrapRootDir}/NetCoreBootstrap/Controllers/AccountController.cs", $@"{bootstrapRootDir}/NetCoreBootstrap/Scripts/ControllersAccountController.cs");
+            File.Move($@"{bootstrapRootDir}/NetCoreBootstrap/Controllers/api/v1/AccountController.cs", $@"{bootstrapRootDir}/NetCoreBootstrap/Scripts/Controllersapiv1AccountController.cs");
             File.Move($@"{bootstrapRootDir}/NetCoreBootstrap/Controllers/UserManagementController.cs", $@"{bootstrapRootDir}/NetCoreBootstrap/Scripts/ControllersUserManagementController.cs");
             File.Move($@"{bootstrapRootDir}/NetCoreBootstrap/Models/Database/User.cs", $@"{bootstrapRootDir}/NetCoreBootstrap/Scripts/ModelsDatabaseUser.cs");
             File.Move($@"{bootstrapRootDir}/NetCoreBootstrap/Repositories/UserRepository.cs", $@"{bootstrapRootDir}/NetCoreBootstrap/Scripts/UserRepository.cs");
