@@ -12,8 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using NetCoreBootstrap.Models.Database;
-using Swashbuckle.AspNetCore.Swagger;
 // using Rollbar;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace NetCoreBootstrap
 {
@@ -132,7 +132,6 @@ namespace NetCoreBootstrap
         // {
         //     string rollbarAccessToken = Configuration["Rollbar:AccessToken"];
         //     string rollbarEnvironment = Configuration["Rollbar:Environment"];
-
         //     RollbarLocator.RollbarInstance
         //         // minimally required Rollbar configuration:
         //         .Configure(new RollbarConfig(rollbarAccessToken) { Environment = rollbarEnvironment })
@@ -143,7 +142,6 @@ namespace NetCoreBootstrap
         // private static void OnRollbarInternalEvent(object sender, RollbarEventArgs e)
         // {
         //     Console.WriteLine(e.TraceAsString());
-
         //     RollbarApiErrorEventArgs apiErrorEvent = e as RollbarApiErrorEventArgs;
         //     if (apiErrorEvent != null)
         //     {
@@ -159,13 +157,13 @@ namespace NetCoreBootstrap
         //     CommunicationErrorEventArgs commErrorEvent = e as CommunicationErrorEventArgs;
         //     if (commErrorEvent != null)
         //     {
-        //         //TODO: handle/report basic communication error while attempting to reach Rollbar API service... 
+        //         //TODO: handle/report basic communication error while attempting to reach Rollbar API service...
         //         return;
         //     }
         //     InternalErrorEventArgs internalErrorEvent = e as InternalErrorEventArgs;
         //     if (internalErrorEvent != null)
         //     {
-        //         //TODO: handle/report basic internal error while using the Rollbar Notifier... 
+        //         //TODO: handle/report basic internal error while using the Rollbar Notifier...
         //         return;
         //     }
         // }
