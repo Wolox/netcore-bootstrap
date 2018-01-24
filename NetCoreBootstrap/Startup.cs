@@ -47,29 +47,43 @@ namespace NetCoreBootstrap
                 options.LoginPath = "/Account/Login";
                 options.AccessDeniedPath = "/Account/AccessDenied";
             });
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(cfg =>
-            {
-                cfg.RequireHttpsMetadata = false;
-                cfg.SaveToken = true;
-                cfg.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidIssuer = Configuration["JwtIssuer"],
-                    ValidAudience = Configuration["JwtIssuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtKey"])),
-                    ClockSkew = TimeSpan.Zero, // remove delay of token when expire
-                };
-            });
+            // ----------------------------------------------------------------------------------------
+            // JWT auth
+            // JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            // services.AddAuthentication(options =>
+            // {
+            //     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            //     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            // }).AddJwtBearer(cfg =>
+            // {
+            //     cfg.RequireHttpsMetadata = false;
+            //     cfg.SaveToken = true;
+            //     cfg.TokenValidationParameters = new TokenValidationParameters
+            //     {
+            //         ValidIssuer = Configuration["Authentication:Jwt:Issuer"],
+            //         ValidAudience = Configuration["Authentication:Jwt:JwtIssuer"],
+            //         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Authentication:Jwt:JwtKey"])),
+            //         ClockSkew = TimeSpan.Zero,
+            //     };
+            // });
+            // End JWT Auth
+            // ----------------------------------------------------------------------------------------
             // Facebook Auth
             // services.AddAuthentication().AddFacebook(facebookOptions => {
             //                                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
             //                                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             //                             });
+            // End Facebook Auth
+            // ----------------------------------------------------------------------------------------
+            // Google Auth
+            // services.AddAuthentication().AddGoogle(googleOptions =>
+            // {
+            //     googleOptions.ClientId = Configuration["Authentication:GoogleAuth:ClientId"];
+            //     googleOptions.ClientSecret = Configuration["Authentication:GoogleAuth:ClientSecret"];
+            // });
+            // End Google Auth
+            // ----------------------------------------------------------------------------------------
             // Final for Identity
             services.AddScoped<DataBaseContext>();
             // Uncomment this if you want use Hangfire
