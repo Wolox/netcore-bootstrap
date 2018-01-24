@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -51,6 +52,14 @@ namespace NetCoreBootstrap.Controllers
         public IActionResult Error()
         {
             return View();
+        }
+
+        // TestRollbar Controller Method
+        [HttpGet("TestRollbar")]
+        public IActionResult TestRollbar()
+        {
+            // Let's simulate an unhandled exception:
+            throw new Exception("AspNetCore2.WebApi sample: Unhandled exception within the ValueController");
         }
     }
 }
