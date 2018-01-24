@@ -53,13 +53,5 @@ namespace NetCoreBootstrap.Controllers
         {
             return View();
         }
-
-        // TestRollbar Controller Method
-        [HttpGet("TestRollbar")]
-        public IActionResult TestRollbar()
-        {
-            // Let's simulate an unhandled exception:
-            throw new Exception("AspNetCore2.WebApi sample: Unhandled exception within the ValueController");
-        }
     }
 }
