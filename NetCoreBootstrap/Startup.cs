@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using NetCoreBootstrap.Models.Database;
 using Swashbuckle.AspNetCore.Swagger;
-using Rollbar;
+// using Rollbar;
 
 namespace NetCoreBootstrap
 {
@@ -31,7 +31,7 @@ namespace NetCoreBootstrap
         {
             // Add framework services.
             // Rollbar service start
-            ConfigureRollbarSingleton();
+            // ConfigureRollbarSingleton();
             // Rollbar service end
             services.AddJsonLocalization(options => options.ResourcesPath = "Resources");
             CultureInfo.CurrentUICulture = new CultureInfo(Configuration["DefaultCulture"]);
@@ -107,7 +107,7 @@ namespace NetCoreBootstrap
             app.UseStaticFiles();
             app.UseAuthentication();
             // Rollbar middelware start
-            app.UseRollbarMiddleware();
+            // app.UseRollbarMiddleware();
             // Rollbar middelware end
             app.UseMvc();
             app.UseSwagger();
@@ -128,48 +128,47 @@ namespace NetCoreBootstrap
         }
 
         // Rollbar methods start
-        private void ConfigureRollbarSingleton()
-        {
-            string rollbarAccessToken = Configuration["Rollbar:AccessToken"];
-            string rollbarEnvironment = Configuration["Rollbar:Environment"];
+        // private void ConfigureRollbarSingleton()
+        // {
+        //     string rollbarAccessToken = Configuration["Rollbar:AccessToken"];
+        //     string rollbarEnvironment = Configuration["Rollbar:Environment"];
 
-            RollbarLocator.RollbarInstance
-                // minimally required Rollbar configuration:
-                .Configure(new RollbarConfig(rollbarAccessToken) { Environment = rollbarEnvironment })
-                // optional step if you would like to monitor Rollbar internal events within your application:
-                .InternalEvent += OnRollbarInternalEvent;
-        }
+        //     RollbarLocator.RollbarInstance
+        //         // minimally required Rollbar configuration:
+        //         .Configure(new RollbarConfig(rollbarAccessToken) { Environment = rollbarEnvironment })
+        //         // optional step if you would like to monitor Rollbar internal events within your application:
+        //         .InternalEvent += OnRollbarInternalEvent;
+        // }
 
-        private static void OnRollbarInternalEvent(object sender, RollbarEventArgs e)
-        {
-            Console.WriteLine(e.TraceAsString());
+        // private static void OnRollbarInternalEvent(object sender, RollbarEventArgs e)
+        // {
+        //     Console.WriteLine(e.TraceAsString());
 
-            RollbarApiErrorEventArgs apiErrorEvent = e as RollbarApiErrorEventArgs;
-            if (apiErrorEvent != null)
-            {
-                //TODO: handle/report Rollbar API communication error event...
-                return;
-            }
-            CommunicationEventArgs commEvent = e as CommunicationEventArgs;
-            if (commEvent != null)
-            {
-                //TODO: handle/report Rollbar API communication event...
-                return;
-            }
-            CommunicationErrorEventArgs commErrorEvent = e as CommunicationErrorEventArgs;
-            if (commErrorEvent != null)
-            {
-                //TODO: handle/report basic communication error while attempting to reach Rollbar API service... 
-                return;
-            }
-            InternalErrorEventArgs internalErrorEvent = e as InternalErrorEventArgs;
-            if (internalErrorEvent != null)
-            {
-                //TODO: handle/report basic internal error while using the Rollbar Notifier... 
-                return;
-            }
-        }
+        //     RollbarApiErrorEventArgs apiErrorEvent = e as RollbarApiErrorEventArgs;
+        //     if (apiErrorEvent != null)
+        //     {
+        //         //TODO: handle/report Rollbar API communication error event...
+        //         return;
+        //     }
+        //     CommunicationEventArgs commEvent = e as CommunicationEventArgs;
+        //     if (commEvent != null)
+        //     {
+        //         //TODO: handle/report Rollbar API communication event...
+        //         return;
+        //     }
+        //     CommunicationErrorEventArgs commErrorEvent = e as CommunicationErrorEventArgs;
+        //     if (commErrorEvent != null)
+        //     {
+        //         //TODO: handle/report basic communication error while attempting to reach Rollbar API service... 
+        //         return;
+        //     }
+        //     InternalErrorEventArgs internalErrorEvent = e as InternalErrorEventArgs;
+        //     if (internalErrorEvent != null)
+        //     {
+        //         //TODO: handle/report basic internal error while using the Rollbar Notifier... 
+        //         return;
+        //     }
+        // }
         // Rollbar methods end
-
     }
 }
