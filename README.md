@@ -366,7 +366,7 @@ Before you start, make sure you have a [valid Dockerfile](https://docs.aws.amazo
         "Volumes": [],
         "Logging": "/var/log/nginx"
         }
-```
+    ```
 
 4. Initialize Elastic Beanstalk in your application. Make sure the ```profile_name``` is the same one defined on your credentials file:
     ```bash
