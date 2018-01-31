@@ -315,24 +315,6 @@ With your docker container you can:
     ```bash
         docker push registry.heroku.com/<heroku-app-name>/web
     ```
-### Rollbar
-
-Rollbar is a tool that allows monitoring errors from your application.
-
-To use Rollbar, you only need to put the access token provided by rollbar in the appsettings.json file.
-
-Here is a sample of how that part of the file should look:
-
-```bash
-    "Rollbar": {
-        "AccessToken": "YOUR_ACCESS_TOKEN_HERE",
-        "Environment": "YOUR_ENVIRONMENT"
-    }
-```
-
-You can also set up your access token and environments using an environment variable.
-
-In this bootstrap, we have provided some initial configuration on the ```Startup.cs``` file. In order to use it, you just need to uncomment the ```Rollbar``` sections on the ```ConfigureServices``` and ```Configure``` methods. Make sure to also uncomment the specific methods defined at the end of the file.
 
 #### Deploy to AWS
 
@@ -390,6 +372,25 @@ Before you start, make sure you have a [valid Dockerfile](https://docs.aws.amazo
     ```bash
         eb deploy environment_name
     ```
+
+### Rollbar
+
+Rollbar is a tool that allows monitoring errors from your application.
+
+To use Rollbar, you only need to put the access token provided by rollbar in the appsettings.json file.
+
+Here is a sample of how that part of the file should look:
+
+```bash
+    "Rollbar": {
+        "AccessToken": "YOUR_ACCESS_TOKEN_HERE",
+        "Environment": "YOUR_ENVIRONMENT"
+    }
+```
+
+You can also set up your access token and environments using an environment variable.
+
+In this bootstrap, we have provided some initial configuration on the ```Startup.cs``` file. In order to use it, you just need to uncomment the ```Rollbar``` sections on the ```ConfigureServices``` and ```Configure``` methods. Make sure to also uncomment the specific methods defined at the end of the file.
 
 ## Contributing
 
