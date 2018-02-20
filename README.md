@@ -182,31 +182,26 @@ This will set the ClientId and ClientSecret, which should be taken from the 'app
 }
 ```
 
-#### JWT Authentication
+#### Auth0 Authentication
 
-To use JWT Authentication in our API calls, we only need to uncomment the following lines:
+To use Auth0 in our API calls, we first need to register [here](https://auth0.com/signup).
+An useful tutorial to set this up is available [here](https://auth0.com/blog/developing-web-apps-with-asp-dot-net-core-2-dot-0-and-react-part-1/?utm_source=twitter&utm_medium=sc&utm_campaign=aspnet2_reactjs)
+
+In order to enable Auth0 in your application, we only need to uncomment the following lines:
 ```bash
-    JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
     services.AddAuthentication(options =>
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    }).AddJwtBearer(cfg =>
+
+    }).AddJwtBearer(options =>
     {
-        cfg.RequireHttpsMetadata = false;
-        cfg.SaveToken = true;
-        cfg.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidIssuer = Configuration["Authentication:Jwt:Issuer"],
-            ValidAudience = Configuration["Authentication:Jwt:Issuer"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Authentication:Jwt:Key"])),
-            ClockSkew = TimeSpan.Zero,
-        };
+        options.Authority = Configuration["Authentication:Auth0:Authority"];
+        options.Audience = Configuration["Authentication:Auth0:Audience"];
     });
 ```
 
-This will set the JWT Issuer and JWT Key, which should be taken from the 'appsettings.{Environment}.json'. An example of this file:
+This will set the Authority and Audience needed, which should be taken from the 'appsettings.{Environment}.json'. An example of this file:
 ```bash
 {
     "Logging": {
@@ -218,14 +213,18 @@ This will set the JWT Issuer and JWT Key, which should be taken from the 'appset
         }
     },
     "Authentication":{
-        "Jwt": {
-            "Issuer": "http://localhost:5000/",
-            "Key": "SOME_RANDOM_KEY", 
+        "Auth0": {
+            "Authority": "<YOUR_AUTH0_AUTHORITY>",
+            "Audience": "<YOUR_AUTH0_AUDIENCE>", 
         }
     },
     "ConnectionString" : "..."
 }
 ```
+
+Make sure to use the ```[Authorize]``` with the controller methods that need to be called by an authenticated user.
+
+That's it! Whenever an endpoint that requires authrization needs to be accessed, a user can request a token querying to the domain provided by Auth0. The token can be obtained using the application's client id, client secret and audience url.
 
 ## Mailer
 
