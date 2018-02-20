@@ -372,7 +372,7 @@ Before you start, make sure you have a [valid Dockerfile](https://docs.aws.amazo
         eb deploy environment_name
     ```
 
-### Rollbar
+## Rollbar
 
 Rollbar is a tool that allows monitoring errors from your application.
 
@@ -390,6 +390,43 @@ Here is a sample of how that part of the file should look:
 You can also set up your access token and environments using an environment variable.
 
 In this bootstrap, we have provided some initial configuration on the ```Startup.cs``` file. In order to use it, you just need to uncomment the ```Rollbar``` sections on the ```ConfigureServices``` and ```Configure``` methods. Make sure to also uncomment the specific methods defined at the end of the file.
+
+## Code Coverage
+
+At the moment, the best tool available to do Code Coverage with .NET Core on Linux is [MiniCover](https://github.com/lucaslorentz/minicover)
+
+It is required to follow a couple steps before using the tool. The following is a build script taken from the [repository](https://github.com/lucaslorentz/minicover):
+
+```shell
+    dotnet restore
+    dotnet build
+
+    cd tools
+
+    # Instrument assemblies inside 'test' folder to detect hits for source files inside 'src' folder
+    dotnet minicover instrument --workdir ../ --assemblies test/**/bin/**/*.dll --sources src/**/*.cs 
+
+    # Reset hits count in case minicover was run for this project
+    dotnet minicover reset
+
+    cd ..
+
+    for project in test/**/*.csproj; do dotnet test --no-build $project; done
+
+    cd tools
+
+    # Uninstrument assemblies, it's important if you're going to publish or deploy build outputs
+    dotnet minicover uninstrument --workdir ../
+
+    # Create html reports inside folder coverage-html
+    dotnet minicover htmlreport --workdir ../ --threshold 90
+
+    # Print console report
+    # This command returns failure if the coverage is lower than the threshold
+    dotnet minicover report --workdir ../ --threshold 90
+
+    cd ..
+```
 
 ## Contributing
 

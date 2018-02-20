@@ -11,6 +11,6 @@
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.0.1"/>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NetCoreBootstrap\NetCoreBootstrap.csproj"/>
+    <ProjectReference Include="..\src\NetCoreBootstrap.csproj"/>
   </ItemGroup>
 </Project>
