@@ -53,23 +53,16 @@ namespace NetCoreBootstrap
             });
             // ----------------------------------------------------------------------------------------
             // JWT auth
-            // JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            // To use this con the controllers, add the [Authorize] tag on the methods that require auth
             // services.AddAuthentication(options =>
             // {
             //     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             //     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            // }).AddJwtBearer(cfg =>
+
+            // }).AddJwtBearer(options =>
             // {
-            //     cfg.RequireHttpsMetadata = false;
-            //     cfg.SaveToken = true;
-            //     cfg.TokenValidationParameters = new TokenValidationParameters
-            //     {
-            //         ValidIssuer = Configuration["Authentication:Jwt:Issuer"],
-            //         ValidAudience = Configuration["Authentication:Jwt:JwtIssuer"],
-            //         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Authentication:Jwt:JwtKey"])),
-            //         ClockSkew = TimeSpan.Zero,
-            //     };
+            //     options.Authority = Configuration["Authentication:Auth0:Authority"];
+            //     options.Audience = Configuration["Authentication:Auth0:Audience"];
             // });
             // End JWT Auth
             // ----------------------------------------------------------------------------------------
