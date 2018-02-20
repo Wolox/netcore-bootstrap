@@ -5,3 +5,6 @@ node_modules
 wwwroot/css
 /NetCoreBootstrap/appsettings.Development.json
 Logs
+coverage-html
+coverage.json
+coverage-hits.txt
