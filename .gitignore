@@ -3,7 +3,7 @@ obj
 bin
 node_modules
 wwwroot/css
-/NetCoreBootstrap/appsettings.Development.json
+/src/appsettings.Development.json
 Logs
 coverage-html
 coverage.json
