@@ -11,7 +11,7 @@ namespace NetCoreBootstrap.Persistance.Interfaces
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);
         bool Update(T entity);
-        int UpdateRange(IEnumerable<T> entities);
+        void UpdateRange(IEnumerable<T> entities);
         T Get(int id);
         IEnumerable<T> GetAll();
         IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
