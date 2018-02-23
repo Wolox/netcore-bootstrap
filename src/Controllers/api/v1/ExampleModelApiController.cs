@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NetCoreBootstrap.Models.Database;
 using NetCoreBootstrap.Persistance;
+using NetCoreBootstrap.Persistance.Interfaces;
 
 namespace NetCoreBootstrap.Controllers.Api.V1
 {
     [Route("api/v1/[controller]")]
     public class ExampleModelApiController : Controller
     {
-        public ExampleModelApiController(DataBaseContext context)
+        public ExampleModelApiController(IUnitOfWork unitOfWork)
         {
-            _unitOfwork = new UnitOfWork(context);
+            _unitOfwork = unitOfWork;
         }
 
-        private readonly UnitOfWork _unitOfwork;
+        private readonly IUnitOfWork _unitOfwork;
 
         // GET api/v1/examplemodelapi/{id}
         [HttpGet("{id}")]
