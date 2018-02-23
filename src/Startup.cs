@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using NetCoreBootstrap.Models.Database;
+using NetCoreBootstrap.Persistance;
 // using Rollbar;
 using Swashbuckle.AspNetCore.Swagger;
 

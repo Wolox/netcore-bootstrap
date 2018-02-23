@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NetCoreBootstrap.Models.Database;
+using NetCoreBootstrap.Persistance;
 
 namespace NetCoreBootstrap.Controllers
 {

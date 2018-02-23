@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using NetCoreBootstrap.Models.Database;
 using NetCoreBootstrap.Models.Views;
-using NetCoreBootstrap.Repositories;
+using NetCoreBootstrap.Persistance.Repositories;
 
 namespace NetCoreBootstrap.Controllers
 {
