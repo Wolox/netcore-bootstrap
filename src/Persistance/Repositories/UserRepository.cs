@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NetCoreBootstrap.Models.Database;
 
-namespace NetCoreBootstrap.Repositories
+namespace NetCoreBootstrap.Persistance.Repositories
 {
     public class UserRepository
     {

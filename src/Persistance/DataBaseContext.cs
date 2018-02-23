@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 #endregion
 
-namespace NetCoreBootstrap.Models.Database
+namespace NetCoreBootstrap.Persistance
 {
     public class DataBaseContext : IdentityDbContext<User>
     {
