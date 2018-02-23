@@ -13,7 +13,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using NetCoreBootstrap.Models.Database;
 using NetCoreBootstrap.Persistance;
-using NetCoreBootstrap.Persistance.Interfaces;
 // using Rollbar;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -53,7 +52,6 @@ namespace NetCoreBootstrap
                 options.LoginPath = "/Account/Login";
                 options.AccessDeniedPath = "/Account/AccessDenied";
             });
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
             // ----------------------------------------------------------------------------------------
             // JWT auth
             // To use this con the controllers, add the [Authorize] tag on the methods that require auth
