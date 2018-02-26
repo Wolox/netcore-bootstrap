@@ -1,7 +1,6 @@
 using NetCoreBootstrap.Persistance.Interfaces;
-using src.Persistance.Repositories;
 
-namespace NetCoreBootstrap.Persistance
+namespace NetCoreBootstrap.Persistance.Database
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -9,11 +8,7 @@ namespace NetCoreBootstrap.Persistance
         public UnitOfWork(DataBaseContext context)
         {
             this._context = context;
-            this.ExampleModelRepository = new ExampleModelRepository(_context);// TODO DELETE THIS
         }
-
-        public IExampleModelRepository ExampleModelRepository { get; private set; }// TODO DELETE THIS
-
 
         public int Complete()
         {
