@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using NetCoreBootstrap.Models.Database;
 using NetCoreBootstrap.Models.Views;
 using NetCoreBootstrap.Repositories;
+using NetCoreBootstrap.Repositories.Database;
 
 namespace NetCoreBootstrap.Controllers
 {
