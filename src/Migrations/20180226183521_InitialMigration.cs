@@ -36,23 +36,6 @@ namespace NetCoreBootstrap.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ExampleModels",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    Attribute1 = table.Column<int>(nullable: false),
-                    Attribute2 = table.Column<string>(nullable: true),
-                    Attribute3 = table.Column<bool>(nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false),
-                    UpdatedAt = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ExampleModels", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -238,9 +221,6 @@ namespace NetCoreBootstrap.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "ExampleModels");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

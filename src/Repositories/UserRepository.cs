@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NetCoreBootstrap.Models.Database;
+using NetCoreBootstrap.Persistance.Database;
 
 namespace NetCoreBootstrap.Persistance.Repositories
 {

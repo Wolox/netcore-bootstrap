@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NetCoreBootstrap.Models.Database;
 using NetCoreBootstrap.Persistance;
+using NetCoreBootstrap.Persistance.Database;
 
 namespace NetCoreBootstrap.Controllers
 {

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
-using NetCoreBootstrap.Persistance;
+using NetCoreBootstrap.Persistance.Database;
 using System;
 
 namespace NetCoreBootstrap.Migrations
@@ -129,26 +129,6 @@ namespace NetCoreBootstrap.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("NetCoreBootstrap.Models.Database.ExampleModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("Attribute1");
-
-                    b.Property<string>("Attribute2");
-
-                    b.Property<bool>("Attribute3");
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<DateTime>("UpdatedAt");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ExampleModels");
                 });
 
             modelBuilder.Entity("NetCoreBootstrap.Models.Database.User", b =>
