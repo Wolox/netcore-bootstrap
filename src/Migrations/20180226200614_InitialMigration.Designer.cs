@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
-using NetCoreBootstrap.Persistance.Database;
+using NetCoreBootstrap.Repositories.Database;
 using System;
 
 namespace NetCoreBootstrap.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20180226183521_InitialMigration")]
+    [Migration("20180226200614_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

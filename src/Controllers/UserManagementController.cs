@@ -7,9 +7,8 @@ using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.EntityFrameworkCore;
 using NetCoreBootstrap.Models.Database;
 using NetCoreBootstrap.Models.Views;
-using NetCoreBootstrap.Persistance;
-using NetCoreBootstrap.Persistance.Database;
-using NetCoreBootstrap.Persistance.Repositories;
+using NetCoreBootstrap.Repositories;
+using NetCoreBootstrap.Repositories.Database;
 
 namespace NetCoreBootstrap.Controllers
 {

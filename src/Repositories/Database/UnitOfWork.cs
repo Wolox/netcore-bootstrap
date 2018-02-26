@@ -1,6 +1,6 @@
-using NetCoreBootstrap.Persistance.Interfaces;
+using NetCoreBootstrap.Repositories.Interfaces;
 
-namespace NetCoreBootstrap.Persistance.Database
+namespace NetCoreBootstrap.Repositories.Database
 {
     public class UnitOfWork : IUnitOfWork
     {

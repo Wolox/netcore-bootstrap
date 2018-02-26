@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using NetCoreBootstrap.Persistance.Interfaces;
+using NetCoreBootstrap.Repositories.Interfaces;
 
-namespace NetCoreBootstrap.Persistance.Repositories
+namespace NetCoreBootstrap.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
@@ -24,9 +24,9 @@ namespace NetCoreBootstrap.Persistance.Repositories
         public void Remove(T entity) => _context.Set<T>().Remove(entity);
 
         public void RemoveRange(IEnumerable<T> entities) => _context.Set<T>().RemoveRange(entities);
-        
+
         public IEnumerable<T> Find(Expression<Func<T, bool>> predicate) => _context.Set<T>().Where(predicate);
-        
+
         public void UpdateRange(IEnumerable<T> entities) => _context.Set<T>().UpdateRange(entities);
 
         public bool Update(T entity)

@@ -6,7 +6,7 @@ using NetCoreBootstrap.Models.Database;
 
 #endregion
 
-namespace NetCoreBootstrap.Persistance.Database
+namespace NetCoreBootstrap.Repositories.Database
 {
     public class DataBaseContext : IdentityDbContext<User>
     {

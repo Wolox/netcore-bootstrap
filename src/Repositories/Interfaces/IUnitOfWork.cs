@@ -1,6 +1,6 @@
 using System;
 
-namespace NetCoreBootstrap.Persistance.Interfaces
+namespace NetCoreBootstrap.Repositories.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {

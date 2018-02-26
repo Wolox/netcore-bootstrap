@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
-using NetCoreBootstrap.Persistance.Database;
+using NetCoreBootstrap.Repositories.Database;
 using System;
 
 namespace NetCoreBootstrap.Migrations

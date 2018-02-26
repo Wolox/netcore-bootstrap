@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace NetCoreBootstrap.Persistance.Interfaces
+namespace NetCoreBootstrap.Repositories.Interfaces
 {
     public interface IRepository<T> where T : class
     {
