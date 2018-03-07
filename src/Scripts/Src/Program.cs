@@ -60,7 +60,7 @@ namespace BootstrapScript
                             contents = contents.Remove(startIndex, endIndex - startIndex);
                             contents = contents.Replace($"// Final for Identity;{endOfLine}", string.Empty);
                         }
-                        else if (file.Contains("/Models/Database/DataBaseContext.cs"))
+                        else if (file.Contains("/Repositories/Database/DataBaseContext.cs"))
                         {
                             Console.WriteLine("Updating DataBaseContext.cs ...");
                             contents = contents.Replace("IdentityDbContext<User>", "DbContext")
