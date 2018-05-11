@@ -1,0 +1,19 @@
+config:
+  dockerfile: .woloxci/Dockerfile
+  project_name: netcore-bootstrap
+
+services:
+  - postgres
+
+steps:
+  migrate_db:
+    - dotnet ef database update
+  lint:
+    - dotnet build
+  test:
+    - dotnet test
+
+environment:
+  GIT_COMMITTER_NAME: a
+  GIT_COMMITTER_EMAIL: b
+  LANG: C.UTF-8

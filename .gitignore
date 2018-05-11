@@ -1,6 +1,7 @@
 .vscode
 obj
 bin
+out
 node_modules
 wwwroot/css
 /src/appsettings.Development.json
@@ -8,3 +9,4 @@ Logs
 coverage-html
 coverage.json
 coverage-hits.txt
+
