@@ -10,4 +10,3 @@ RUN dotnet restore
 
 # Copy and build everything else
 COPY . ./
-RUN dotnet publish -c Release -o out
