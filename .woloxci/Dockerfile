@@ -6,8 +6,8 @@ EXPOSE 80
 COPY *.sln ./
 COPY src/*.csproj ./src/
 COPY test/*.csproj ./test/
-ENV DOTNET_CLI_TELEMETRY_OPTOUT=true
 RUN dotnet restore
 
 # Copy and build everything else
 COPY . ./
+RUN dotnet publish -c Release -o out
