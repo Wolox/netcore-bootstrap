@@ -7,7 +7,7 @@ services:
 
 steps:
   analysis:
-    - sudo dotnet build
+    - dotnet build
 
 environment:
   GIT_COMMITTER_NAME: netcore-bootstrap
