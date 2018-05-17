@@ -6,6 +6,8 @@ services:
   - postgres
 
 steps:
+  analysis:
+    - dotnet build
 
 environment:
   GIT_COMMITTER_NAME: netcore-bootstrap
