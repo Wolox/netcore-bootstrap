@@ -6,12 +6,8 @@ services:
   - postgres
 
 steps:
-  migrate_db:
-    - dotnet ef database update
-  lint:
+  analysis:
     - dotnet build
-  test:
-    - dotnet test
 
 environment:
   GIT_COMMITTER_NAME: a

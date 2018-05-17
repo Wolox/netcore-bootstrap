@@ -3,10 +3,12 @@ WORKDIR /app
 EXPOSE 80
 
 # Copy csproj and restore as distinct layers
-COPY *.csproj ./
+COPY *.sln ./
+COPY src/*.csproj ./src/
+COPY test/*.csproj ./test/
 RUN dotnet restore
 
 # Copy and build everything else
 COPY . ./
-RUN dotnet publish -c Release -o out
-CMD ASPNETCORE_URLS=http://*:$PORT dotnet out/NetCoreBootstrap.dll
+# RUN dotnet publish -c Release -o out
+# CMD ASPNETCORE_URLS=http://*:$PORT dotnet src/out/NetCoreBootstrap.dll
