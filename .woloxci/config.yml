@@ -14,4 +14,4 @@ environment:
   GIT_COMMITTER_NAME: netcore-bootstrap
   GIT_COMMITTER_EMAIL: gustavo.siciliano@wolox.com.ar
   LANG: C.UTF-8
-  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
