@@ -7,7 +7,7 @@ services:
 
 steps:
   analysis:
-    - export DOTNET_CLI_TELEMETRY_OPTOUT=true
+    - printenv
     - dotnet build
 
 environment:
