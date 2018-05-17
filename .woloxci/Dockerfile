@@ -6,7 +6,7 @@ EXPOSE 80
 COPY *.sln ./
 COPY src/*.csproj ./src/
 COPY test/*.csproj ./test/
-RUN export DOTNET_CLI_TELEMETRY_OPTOUT=1
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 RUN dotnet restore
 
 # Copy and build everything else
