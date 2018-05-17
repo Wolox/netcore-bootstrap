@@ -1,3 +1,4 @@
+@Library('dotnet-ci') _
 @Library('wolox-ci') _
 
 node {
