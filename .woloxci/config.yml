@@ -10,6 +10,7 @@ steps:
     - dotnet build
 
 environment:
-  GIT_COMMITTER_NAME: a
-  GIT_COMMITTER_EMAIL: b
+  GIT_COMMITTER_NAME: netcore-bootstrap
+  GIT_COMMITTER_EMAIL: gustavo.siciliano@wolox.com.ar
   LANG: C.UTF-8
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
