@@ -7,7 +7,7 @@ services:
 
 steps:
   analysis:
-    - printenv
+    - ls
     - dotnet build
 
 environment:
