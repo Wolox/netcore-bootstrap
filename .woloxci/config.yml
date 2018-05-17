@@ -7,7 +7,7 @@ services:
 
 steps:
   analysis:
-    - ls /home/user
+    - ls /home
     - ls /usr
 
 environment:
