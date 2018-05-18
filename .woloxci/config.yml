@@ -8,7 +8,6 @@ services:
 steps:
   analysis:
     - printenv
-    - chmod a+rw /.dotnet
     - dotnet build
 
 environment:
