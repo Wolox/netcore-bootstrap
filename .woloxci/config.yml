@@ -8,6 +8,7 @@ services:
 steps:
   analysis:
     - printenv
+    - ps -ef | grep jenkins
     - dotnet build
 
 environment:
