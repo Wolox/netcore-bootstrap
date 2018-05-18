@@ -8,7 +8,8 @@ services:
 steps:
   analysis:
     - printenv
-    - dotnet test
+    - chmod a+rw .dotnet
+    - dotnet build
 
 environment:
   GIT_COMMITTER_NAME: netcore-bootstrap
