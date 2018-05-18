@@ -8,9 +8,7 @@ services:
 steps:
   analysis:
     - ls -la
-    - cd src
-    - ls -la
-    - dotnet build
+    - dotnet build --source src/NetCoreBootstrap.csproj
 
 environment:
   GIT_COMMITTER_NAME: netcore-bootstrap
