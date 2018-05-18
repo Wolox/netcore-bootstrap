@@ -9,6 +9,7 @@ steps:
   analysis:
     - printenv
     - dotnet build
+    - dotnet test
 
 environment:
   GIT_COMMITTER_NAME: netcore-bootstrap
