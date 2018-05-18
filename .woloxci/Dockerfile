@@ -8,5 +8,7 @@ COPY src/*.csproj ./src/
 COPY test/*.csproj ./test/
 RUN dotnet restore
 
+RUN chmod a+rw /app
+
 # Copy and build everything else
 COPY . ./
