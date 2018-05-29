@@ -314,6 +314,11 @@ With your docker container you can:
     ```bash
         docker push registry.heroku.com/<heroku-app-name>/web
     ```
+6. Create a new release using the images pushed to the Container Registry
+    ```bash
+        heroku container:release web -a <heroku-app-name>
+    ```
+If you have trouble running this command, make sure you have the latest version of Heroku CLI.
 
 #### Deploy to AWS
 
