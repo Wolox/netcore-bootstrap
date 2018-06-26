@@ -16,13 +16,13 @@ using NetCoreBootstrap.Models.Views;
 namespace NetCoreBootstrap.Api.V1.Controllers
 {
     [Route("/api/v1/[controller]/[action]")]
-    public class AccountController : Controller
+    public class AccountApiController : Controller
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
+        public AccountApiController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
         {
             this._userManager = userManager;
             this._signInManager = signInManager;
