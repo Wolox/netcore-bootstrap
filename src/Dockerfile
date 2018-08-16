@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.0-sdk
+FROM microsoft/dotnet:2.1-sdk
 WORKDIR /app
 EXPOSE 80
 
@@ -9,4 +9,4 @@ RUN dotnet restore
 # Copy and build everything else
 COPY . ./
 RUN dotnet publish -c Release -o out
-CMD ASPNETCORE_URLS=http://*:$PORT dotnet out/NetCoreBootstrap.dll
+CMD ASPNETCORE_URLS=https://*:$PORT dotnet out/NetCoreBootstrap.dll

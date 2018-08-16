@@ -9,7 +9,7 @@ namespace NetCoreBootstrap.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        protected readonly DbContext _context;
+        private readonly DbContext _context;
 
         public Repository(DbContext context) => _context = context;
 

@@ -7,7 +7,7 @@
 @using (Html.BeginForm("EditRole", "UserManagement", FormMethod.Post))
 {  
 	@Html.HiddenFor(model => model.RoleId)
-    @Html.Partial("_EditRoleForm", Model);
+    <partial name="_EditRoleForm" model="Model"/>
     <div class='form-group'>
         <input type='submit' value='@Localizer["SaveChanges"]'/>
     </div>
