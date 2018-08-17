@@ -5,7 +5,10 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using NetCoreBootstrap.Models.Database;
 using NetCoreBootstrap.Repositories;
 using NetCoreBootstrap.Repositories.Database;
+using NetCoreBootstrap.Repositories.Interfaces;
 // using Rollbar;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -21,12 +25,15 @@ namespace NetCoreBootstrap
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment currentEnvironment)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
+            this.CurrentEnvironment = currentEnvironment;
         }
 
         public IConfiguration Configuration { get; }
+
+        public IHostingEnvironment CurrentEnvironment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -37,22 +44,42 @@ namespace NetCoreBootstrap
             // Rollbar service end
             services.AddJsonLocalization(options => options.ResourcesPath = "Resources");
             CultureInfo.CurrentUICulture = new CultureInfo(Configuration["DefaultCulture"]);
-            services.AddMvc().AddViewLocalization();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddViewLocalization();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "NetCoreBootstrap API", Version = "v1" });
             });
-            var connectionString = Configuration["ConnectionString"];
-            services.AddDbContext<DataBaseContext>(options => options.UseNpgsql(connectionString));
+            if (CurrentEnvironment.IsEnvironment("Testing"))
+            {
+                // If Testing environment, set in memory database
+                var connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+                var connectionString = connectionStringBuilder.ToString();
+                var connection = new SqliteConnection(connectionString);
+                services.AddDbContext<DataBaseContext>(options => options.UseSqlite(connection));
+            }
+            else
+            {
+                var connectionString = Configuration["ConnectionString"];
+                // if not, set the postgres database
+                services.AddDbContext<DataBaseContext>(options => options.UseNpgsql(connectionString));
+            }
             // Begin for Identity
             services.AddIdentity<User, IdentityRole>()
                     .AddEntityFrameworkStores<DataBaseContext>()
                     .AddDefaultTokenProviders();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Account/Login";
                 options.AccessDeniedPath = "/Account/AccessDenied";
             });
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             // ----------------------------------------------------------------------------------------
             // JWT auth
             // To use this con the controllers, add the [Authorize] tag on the methods that require auth
@@ -95,12 +122,29 @@ namespace NetCoreBootstrap
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
             }
-            else app.UseExceptionHandler("/Home/Error");
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
+            if (env.IsEnvironment("Testing"))
+            {
+                // Create Database
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+                {
+                    var context = serviceScope.ServiceProvider.GetService<DataBaseContext>();
+                    context.Database.OpenConnection(); // see Resource #2 link why we do this
+                    context.Database.EnsureDeleted();
+                    context.Database.EnsureCreated();
+                }
+            }
             loggerFactory.AddFile("Logs/NetCoreBootstrapLogs-{Date}.txt", LogLevel.Error);
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseCookiePolicy();
             // Rollbar middelware start
             // app.UseRollbarMiddleware();
             // Rollbar middelware end
