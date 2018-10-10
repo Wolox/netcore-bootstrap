@@ -8,36 +8,28 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NetCoreBootstrap.Models.Database;
 using NetCoreBootstrap.Repositories.Database;
+using NetCoreBootstrap.Repositories.Interfaces;
 
 namespace NetCoreBootstrap.Repositories
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
-        private readonly DbContextOptions<DataBaseContext> _options;
+        private readonly DataBaseContext _context;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserRepository(DbContextOptions<DataBaseContext> options, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public UserRepository(DataBaseContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
-            this._options = options;
+            this._context = context;
             this._userManager = userManager;
             this._roleManager = roleManager;
         }
 
-        public UserManager<User> UserManager
-        {
-            get { return this._userManager; }
-        }
+        public UserManager<User> UserManager { get => this._userManager; }
 
-        public RoleManager<IdentityRole> RoleManager
-        {
-            get { return this._roleManager; }
-        }
+        public RoleManager<IdentityRole> RoleManager { get => this._roleManager; }
 
-        public DataBaseContext Context
-        {
-            get { return new DataBaseContext(this._options); }
-        }
+        public DataBaseContext Context { get => this._context; }
 
         public async Task<User> GetUserById(string id)
         {

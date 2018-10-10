@@ -29,20 +29,11 @@ namespace NetCoreBootstrap.Api.V1.Controllers
             this._configuration = configuration;
         }
 
-        public UserManager<User> UserManager
-        {
-            get { return this._userManager; }
-        }
+        public UserManager<User> UserManager { get => this._userManager; }
 
-        public SignInManager<User> SignInManager
-        {
-            get { return this._signInManager; }
-        }
+        public SignInManager<User> SignInManager { get => this._signInManager; }
 
-        public IConfiguration Configuration
-        {
-            get { return this._configuration; }
-        }
+        public IConfiguration Configuration { get => this._configuration; }
 
         [HttpPost]
         public async Task<object> Login([FromBody] LoginViewModel loginViewModel)
