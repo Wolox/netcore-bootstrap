@@ -289,7 +289,7 @@ For more information, please head [here](https://github.com/dotnet/docs/blob/mas
 First you need to install Docker (https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-docker-ce-1)
 When you have installed Docker you just need to run the following comand to create the docker container
 ```bash
-    docker build -t nectore-bootstrap .
+    docker build -t netcore-bootstrap .
 ```
 
 With your docker container you can:
