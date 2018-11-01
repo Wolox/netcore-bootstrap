@@ -20,15 +20,9 @@ namespace NetCoreBootstrap.Controllers
             this._log = log;
         }
 
-        public IHtmlLocalizer<HomeController> Localizer
-        {
-            get { return this._localizer; }
-        }
+        public IHtmlLocalizer<HomeController> Localizer { get => this._localizer; }
 
-        public ILogger<HomeController> Log
-        {
-            get { return this._log; }
-        }
+        public ILogger<HomeController> Log { get => this._log; }
 
         [HttpGet("")]
         public IActionResult Index()

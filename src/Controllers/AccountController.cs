@@ -27,15 +27,9 @@ namespace NetCoreBootstrap.Controllers
             this._signInManager = signInManager;
         }
 
-        public SignInManager<User> SignInManager
-        {
-            get { return this._signInManager; }
-        }
+        public SignInManager<User> SignInManager { get => this._signInManager; }
 
-        public UserManager<User> UserManager
-        {
-            get { return this._userManager; }
-        }
+        public UserManager<User> UserManager { get => this._userManager; }
 
         [AllowAnonymous]
         [HttpGet("Register")]
