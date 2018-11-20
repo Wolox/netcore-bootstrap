@@ -330,7 +330,7 @@ Before you start, make sure you have a [valid Dockerfile](https://docs.aws.amazo
 
 1. Download the [Elastic Beanstalk Client](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-install.html)
     ```bash
-        sudo pip install awswebcli
+        sudo pip install awsebcli
     ```
 
 2. Configure your access credentials, creating a file in your root folder `~/.aws/credentials`. Make sure it has the following format:
