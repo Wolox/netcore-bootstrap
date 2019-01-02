@@ -242,11 +242,11 @@ To set up the mailer, it is only necessary to add the authentication information
 ```
 The mailer should be set up in the Startup.cs file. In order to use it, you should uncomment this line:
 ```bash
-    Mailer.SetAccountConfiguration(Configuration);
+    services.AddSingleton<IMailer, Mailer>();
 ```
-To send an email, you just need to call the static class:
+To send an email, you just need to call the method:
 ```bash
-    Mailer.Send(toAddress, subject, body);
+    SendMail(toAddress, subject, body, isHtml);
 ```
 
 ## Globalization

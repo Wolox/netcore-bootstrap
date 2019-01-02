@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using NetCoreBootstrap.Mail;
 using NetCoreBootstrap.Models.Database;
 using NetCoreBootstrap.Repositories;
 using NetCoreBootstrap.Repositories.Database;
@@ -83,16 +84,19 @@ namespace NetCoreBootstrap
             // ----------------------------------------------------------------------------------------
             // JWT auth
             // To use this con the controllers, add the [Authorize] tag on the methods that require auth
-            // services.AddAuthentication(options =>
-            // {
-            //     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
-            // }).AddJwtBearer(options =>
-            // {
-            //     options.Authority = Configuration["Authentication:Auth0:Authority"];
-            //     options.Audience = Configuration["Authentication:Auth0:Audience"];
-            // });
+            // services.AddAuthentication().AddJwtBearer(options =>
+            //    {
+            //        options.Audience = Configuration["Jwt:Issuer"];
+            //        options.TokenValidationParameters = new TokenValidationParameters()
+            //        {
+            //            ClockSkew = TimeSpan.FromMinutes(0),
+            //            ValidateLifetime = true,
+            //            ValidateIssuerSigningKey = true,
+            //            ValidAudience = Configuration["Jwt:Issuer"],
+            //            ValidIssuer = Configuration["Jwt:Issuer"],
+            //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Jwt:Key"])),
+            //        };
+            //    });
             // End JWT Auth
             // ----------------------------------------------------------------------------------------
             // Facebook Auth
@@ -114,6 +118,7 @@ namespace NetCoreBootstrap
             services.AddScoped<DataBaseContext>();
             // Uncomment this if you want use Hangfire
             // services.AddHangfire(options => GlobalConfiguration.Configuration.UsePostgreSqlStorage(connectionString));
+            // services.AddSingleton<IMailer, Mailer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
