@@ -16,5 +16,7 @@
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004"/>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.1"/>
+    <PackageReference Include="AWSSDK.Core" Version="3.3.31.7"/>
+    <PackageReference Include="AWSSDK.S3" Version="3.3.31.15"/>
   </ItemGroup>
 </Project>

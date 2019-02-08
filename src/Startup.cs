@@ -18,6 +18,7 @@ using NetCoreBootstrap.Models.Database;
 using NetCoreBootstrap.Repositories;
 using NetCoreBootstrap.Repositories.Database;
 using NetCoreBootstrap.Repositories.Interfaces;
+using NetCoreBootstrap.S3;
 // using Rollbar;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -117,7 +118,7 @@ namespace NetCoreBootstrap
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public async System.Threading.Tasks.Task ConfigureAsync(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -159,6 +160,11 @@ namespace NetCoreBootstrap
                 var context = serviceScope.ServiceProvider.GetService<DataBaseContext>();
                 context.Database.Migrate();
             }
+            await new S3Manager(Configuration)
+                    .BuildUploadRequest()
+                    .WithContentDisposition("whatever")
+                    .WithContentLength(5)
+                    .UploadAsync("key", "content body");
             // Uncomment this to use Mailer
             // Mailer.SetAccountConfiguration(Configuration);
             // Uncomment this if you want use Hangfire
