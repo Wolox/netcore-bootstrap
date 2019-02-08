@@ -274,6 +274,30 @@ Finally, also in ```ConfigureServices``` method, we can set the default language
 
 The source code can be found [here](https://github.com/Wolox/localization-culture-core)
 
+## S3Manager
+
+The S3Manager is an interface used to simplify operations against the AWS API. In order to use it one must indicate in a settings file the AWS access key and secret access key as well as a bucket name. The settings would be indicated like so:
+
+```
+"S3BucketName": "kimple-images-dev",
+"AWS_ACCESS_KEY_ID": "YOUR_AWS_ACCESS_KEY",
+"AWS_SECRET_ACCESS_KEY": "YOUR_AWS_SECRET_ACCESS_KEY",
+```
+
+The S3Manager constructor takes an IConfiguration file in order to obtain the previous credentials.
+
+The known exceptions that this might throw are AmazonS3Exception if a server side error was encountered, or a "no route to host" error if the credentials supplied in the appsettings file are invalid.
+
+The manager was implemented using the builder pattern, that is, the methods mostly return an S3 manager such that one can keep building the S3 request through methods. An example of building a request would be:
+
+```
+await new S3Manager(Configuration)
+                    .BuildUploadRequest()
+                    .WithContentDisposition("whatever")
+                    .WithContentLength(5)
+                    .UploadAsync("key", "content body");
+ ```
+
 ## Testing
 For testing, you should use the files in the NetCoreBootstrap.Tests folder.
 They currently allow the use of a Test server, created based on the source files of the project.
