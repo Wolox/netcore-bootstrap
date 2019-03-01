@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
@@ -10,5 +11,8 @@ namespace NetCoreBootstrap.Models.Database
     {
         public bool IsExternal { get; set; }
         public virtual ICollection<IdentityRole> Roles { get; set; }
+
+        public bool IsEmailValid() =>
+            new Regex("(@[a-zA-Z]{1,})(\\.[a-zA-Z]{2,}){1,2}").Match(Email).Success;
     }
 }
