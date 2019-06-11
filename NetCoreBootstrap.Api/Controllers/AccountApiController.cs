@@ -203,15 +203,44 @@ namespace NetCoreBootstrap.Api.Controllers
         }
 
         [HttpPost("ForgotPassword")]
-        public IActionResult ForgotPassword()
+        public async Task<IActionResult> ForgotPassword([FromBody] UserSignInVO userVO)
         {
-            return Ok(new {});
+            object response;
+            var user = await UserManager.FindByEmailAsync(userVO.Email);
+            if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+            {
+                Response.StatusCode = StatusCodes.Status400BadRequest;
+                response = new { Message = Localizer["account_forgot_password_user_not_found"].Value };
+            }
+            else
+            {
+                var token = await UserManager.GeneratePasswordResetTokenAsync(user);
+                AccountHelper.SendRecoveryPasswordEmail(user.Email, token, Url.Action("ResetPassword", "AccountApi", new { userId = user.Id }));
+                Response.StatusCode = StatusCodes.Status200OK;
+                response = new { Message = Localizer["account_forgot_password_email_sent"].Value };
+            }
+            return Json(response);
         }
 
         [HttpGet("ResetPassword/{userId}/{token}")]
-        public IActionResult ResetPassword(string userId, string token)
+        public async Task<IActionResult> ResetPassword(string userId, string token)
         {
-            return Ok(new {});
+            var user = await UserManager.FindByIdAsync(userId);
+            var newPassword = AccountHelper.GenerateRandomPassword(8);
+            var result = await UserManager.ResetPasswordAsync(user, HttpUtility.UrlDecode(token), newPassword);
+            object response;
+            if (result.Succeeded)
+            {
+                AccountHelper.SendNewPasswordEmail(user.Email, newPassword);
+                Response.StatusCode = StatusCodes.Status200OK;
+                response = new { Message = Localizer["account_new_password_confirmed"].Value };
+            }
+            else
+            {
+                Response.StatusCode = StatusCodes.Status400BadRequest;
+                response = new { Message = Localizer["account_new_password_not_confirmed"].Value, Errors = result.Errors };
+            }
+            return Json(response);
         }
     }
 }
