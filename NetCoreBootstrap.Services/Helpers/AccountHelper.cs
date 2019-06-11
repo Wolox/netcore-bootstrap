@@ -1,9 +1,11 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Text;
 using System.Web;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -13,6 +15,8 @@ namespace NetCoreBootstrap.Services.Helpers
 {
     public class AccountHelper
     {
+        private readonly string _authorizationKey = "Authorization";
+        private readonly string _usernameKey = "cognito:username";
         private readonly IConfiguration _configuration;
         private readonly IHtmlLocalizer _localizer;
         private readonly IMailer _mailer;
@@ -53,6 +57,18 @@ namespace NetCoreBootstrap.Services.Helpers
                 Expires = expires,
             });
             return handler.WriteToken(securityToken);
+        }
+
+        public string GetUsernameFromRequest(HttpRequest request)
+        {
+            var decodedToken = GetDecodedToken(request);
+            return decodedToken.Payload[_usernameKey].ToString();
+        }
+
+        private JwtSecurityToken GetDecodedToken(HttpRequest request)
+        {
+            var encodedToken = request.Headers[_authorizationKey].ToString().Split(" ").Last();
+            return new JwtSecurityTokenHandler().ReadToken(encodedToken) as JwtSecurityToken;
         }
     }
 }
