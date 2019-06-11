@@ -56,12 +56,12 @@ namespace NetCoreBootstrap.Api.Controllers
             if (!user.IsEmailValid())
             {
                 Response.StatusCode = StatusCodes.Status400BadRequest;
-                response = new { Message = Localizer["account_user_not_created_invalid_email"].Value };
+                response = new { Message = Localizer["AccountUserNotCreatedInvalidEmail"].Value };
             }
             else if (userVO.Password != userVO.ConfirmPassword)
             {
                 Response.StatusCode = StatusCodes.Status400BadRequest;
-                response = new { Message = Localizer["account_user_not_created_password_did_not_match"].Value };
+                response = new { Message = Localizer["AccountUserNotCreatedPasswordDidNotMatch"].Value };
             }
             else
             {
@@ -73,18 +73,18 @@ namespace NetCoreBootstrap.Api.Controllers
                         var token = await UserManager.GenerateEmailConfirmationTokenAsync(user);
                         AccountHelper.SendConfirmationEmail(user.Id, user.Email, token, Url.Action("ConfirmEmail", "AccountApi", new { userId = user.Id }));
                         Response.StatusCode = StatusCodes.Status200OK;
-                        response = new { Message = Localizer["account_user_created"].Value };
+                        response = new { Message = Localizer["AccountUserCreated"].Value };
                     }
                     else
                     {
                         Response.StatusCode = StatusCodes.Status400BadRequest;
-                        response = new { Message = $"{Localizer["account_user_not_created"].Value}{result.Errors.Select(e => e.Description).Last()}" };
+                        response = new { Message = $"{Localizer["AccountUserNotCreated"].Value}{result.Errors.Select(e => e.Description).Last()}" };
                     }
                 }
                 catch (ArgumentNullException e)
                 {
                     Response.StatusCode = StatusCodes.Status400BadRequest;
-                    response = new { Message = $"{Localizer["account_user_not_created"].Value}{e.Message}" };
+                    response = new { Message = $"{Localizer["AccountUserNotCreated"].Value}{e.Message}" };
                 }
             }
             return Json(response);
@@ -101,25 +101,28 @@ namespace NetCoreBootstrap.Api.Controllers
                 if (result.Succeeded)
                 {
                     var user = UserManager.Users.Single(r => r.Email == userVO.Email);
+                    var refreshToken = AccountHelper.GenerateRefreshToken();
+                    UnitOfWork.UserRepository.SaveRefreshToken(user, refreshToken);
                     Response.StatusCode = StatusCodes.Status200OK;
                     response = new UserVO
                     {
                         Token = $"Bearer {AccountHelper.GenerateJwtToken(user.Id, user.Email)}",
                         Email = user.Email,
+                        RefreshToken = refreshToken,
                     };
                 }
                 else if (result.IsNotAllowed)
                 {
                     Response.StatusCode = StatusCodes.Status401Unauthorized;
-                    response = new { Message = Localizer["account_login_confirm_email"].Value };
+                    response = new { Message = Localizer["AccountLoginConfirmEmail"].Value };
                 }
                 else
                 {
                     Response.StatusCode = StatusCodes.Status400BadRequest;
                     if (string.IsNullOrEmpty(userVO.Email) || string.IsNullOrEmpty(userVO.Password))
-                        response = new { Message = Localizer["account_login_failed_empty_fields"].Value };
+                        response = new { Message = Localizer["AccountLoginFailedEmptyFields"].Value };
                     else
-                        response = new { Message = Localizer["account_login_failed"].Value };
+                        response = new { Message = Localizer["AccountLoginFailed"].Value };
                 }
                 return Json(response);
             }
@@ -165,12 +168,12 @@ namespace NetCoreBootstrap.Api.Controllers
                 }
                 else
                 {
-                    string message = Localizer["account_external_login_failed"].Value;
+                    string message = Localizer["AccountExternalLoginFailed"].Value;
                     var logins = await UserManager.GetLoginsAsync(user);
                     if (!logins.Any(login => login.LoginProvider == provider))
-                        message = Localizer["account_external_login_invalid_provider"].Value + $"{provider}";
+                        message = Localizer["AccountExternalLoginInvalidProvider"].Value + $"{provider}";
                     else if (!logins.Any(login => login.ProviderKey == userVO.ExternalUserId))
-                        message = Localizer["account_external_login_invalid_user_id"].Value;
+                        message = Localizer["AccountExternalLoginInvalidUserId"].Value;
                     Response.StatusCode = StatusCodes.Status400BadRequest;
                     response = new { Message = message, Errors = string.Join(";", signInResult.ToString()) };
                 }
@@ -178,7 +181,7 @@ namespace NetCoreBootstrap.Api.Controllers
             else
             {
                 Response.StatusCode = StatusCodes.Status400BadRequest;
-                response = new { Message = Localizer["account_external_login_failed"].Value, Errors = string.Join(";", result.Errors) };
+                response = new { Message = Localizer["AccountExternalLoginFailed"].Value, Errors = string.Join(";", result.Errors) };
             }
             return Json(response);
         }
@@ -192,12 +195,12 @@ namespace NetCoreBootstrap.Api.Controllers
             if (result.Succeeded)
             {
                 Response.StatusCode = StatusCodes.Status200OK;
-                response = new { Message = Localizer["account_email_confirmed"].Value };
+                response = new { Message = Localizer["AccountEmailConfirmed"].Value };
             }
             else
             {
                 Response.StatusCode = StatusCodes.Status400BadRequest;
-                response = new { Message = Localizer["account_email_not_confirmed"].Value, Errors = result.Errors };
+                response = new { Message = Localizer["AccountEmailNotConfirmed"].Value, Errors = result.Errors };
             }
             return Json(response);
         }
@@ -210,14 +213,14 @@ namespace NetCoreBootstrap.Api.Controllers
             if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
             {
                 Response.StatusCode = StatusCodes.Status400BadRequest;
-                response = new { Message = Localizer["account_forgot_password_user_not_found"].Value };
+                response = new { Message = Localizer["AccountForgotPasswordUserNotFound"].Value };
             }
             else
             {
                 var token = await UserManager.GeneratePasswordResetTokenAsync(user);
                 AccountHelper.SendRecoveryPasswordEmail(user.Email, token, Url.Action("ResetPassword", "AccountApi", new { userId = user.Id }));
                 Response.StatusCode = StatusCodes.Status200OK;
-                response = new { Message = Localizer["account_forgot_password_email_sent"].Value };
+                response = new { Message = Localizer["AccountForgotPasswordEmailSent"].Value };
             }
             return Json(response);
         }
@@ -233,12 +236,42 @@ namespace NetCoreBootstrap.Api.Controllers
             {
                 AccountHelper.SendNewPasswordEmail(user.Email, newPassword);
                 Response.StatusCode = StatusCodes.Status200OK;
-                response = new { Message = Localizer["account_new_password_confirmed"].Value };
+                response = new { Message = Localizer["AccountNewPasswordConfirmed"].Value };
             }
             else
             {
                 Response.StatusCode = StatusCodes.Status400BadRequest;
-                response = new { Message = Localizer["account_new_password_not_confirmed"].Value, Errors = result.Errors };
+                response = new { Message = Localizer["AccountNewPasswordNotConfirmed"].Value, Errors = result.Errors };
+            }
+            return Json(response);
+        }
+
+        [HttpPost("RefreshToken")]
+        public IActionResult Refresh(RefreshTokenVO valueObject)
+        {       
+            object response;            
+            var principal = AccountHelper.GetPrincipalFromExpiredToken(valueObject.Token);
+            var username = principal.Identity.Name;
+            var user = UnitOfWork.UserRepository.GetByUsername(username);
+            var savedRefreshToken = UnitOfWork.UserRepository.GetRefreshToken(user); 
+            if (!savedRefreshToken.Any(rt => rt == valueObject.RefreshToken))
+            {
+                Response.StatusCode = StatusCodes.Status401Unauthorized;
+                response = new { Message = Localizer["AccountInvalidRefreshToken"].Value };
+            }
+            else
+            {
+                var newToken = AccountHelper.GenerateJwtToken(user.Id, user.Email);
+                var newRefreshToken = AccountHelper.GenerateRefreshToken();
+                UnitOfWork.UserRepository.DeleteRefreshToken(user, valueObject.RefreshToken);
+                UnitOfWork.UserRepository.SaveRefreshToken(user, newRefreshToken);
+                UnitOfWork.Complete();
+                response = new UserVO
+                {
+                    Token = $"Bearer {newToken}",
+                    RefreshToken = newRefreshToken,
+                    Email = user.Email,
+                };
             }
             return Json(response);
         }

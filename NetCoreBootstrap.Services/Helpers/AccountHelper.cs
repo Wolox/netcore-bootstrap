@@ -2,6 +2,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
 using System.Web;
@@ -36,8 +37,8 @@ namespace NetCoreBootstrap.Services.Helpers
         {
             var tokenHtml = HttpUtility.UrlEncode(token);
             var callbackUrl = $"{Configuration["AppUrl"]}{action}/{tokenHtml}";
-            var subject = Localizer["account_email_subject"].Value;
-            var body = Localizer["account_email_body"].Value + $" <a href='http://{callbackUrl}'>here.</a>";
+            var subject = Localizer["AccountEmailSubject"].Value;
+            var body = Localizer["AccountEmailBody"].Value + $" <a href='http://{callbackUrl}'>here.</a>";
             Mailer.SendMail(userEmail, subject, body);
         }
 
@@ -45,15 +46,15 @@ namespace NetCoreBootstrap.Services.Helpers
         {
             var tokenHtml = HttpUtility.UrlEncode(token);
             var callbackUrl = $"{Configuration["AppUrl"]}{action}/{tokenHtml}";
-            var subject = Localizer["account_forgot_password_email_subject"].Value;
-            var body = Localizer["account_forgot_password_email_body"].Value + $" <a href='http://{callbackUrl}'>here.</a>";
+            var subject = Localizer["AccountForgotPasswordEmailSubject"].Value;
+            var body = Localizer["AccountForgotPasswordEmailBody"].Value + $" <a href='http://{callbackUrl}'>here.</a>";
             Mailer.SendMail(userEmail, subject, body);
         }
 
         public void SendNewPasswordEmail(string userEmail, string newPassword)
         {
-            var subject = Localizer["account_new_password_email_subject"].Value;
-            var body = Localizer["account_new_password_email_body"].Value + $": {newPassword}";
+            var subject = Localizer["AccountNewPasswordEmailSubject"].Value;
+            var body = Localizer["AccountNewPasswordEmailBody"].Value + $": {newPassword}";
             Mailer.SendMail(userEmail, subject, body);
         }
 
@@ -100,7 +101,7 @@ namespace NetCoreBootstrap.Services.Helpers
             return sequence[random.Next(minIndex, maxIndex)].ToString();
         }
 
-        public static string GenerateRandomPassword(int length = 8)
+        public string GenerateRandomPassword(int length = 8)
         {
             if (length < 6) throw new ArgumentException();
             string characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!$+<[%,=]>*+-/)(¡?¿·#¬|";
@@ -116,7 +117,22 @@ namespace NetCoreBootstrap.Services.Helpers
             return result.ToString();
         }
 
-        private static string GetRandomValueFromSequence(string sequence, int minIndex, int maxIndex)
+        public string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+                return Convert.ToBase64String(randomNumber);
+            }
+        }
+
+        public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
+        {
+            throw new NotImplementedException();
+        }
+
+        private string GetRandomValueFromSequence(string sequence, int minIndex, int maxIndex)
         {
             var random = new Random();
             return sequence[random.Next(minIndex, maxIndex)].ToString();

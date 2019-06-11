@@ -10,7 +10,9 @@ namespace NetCoreBootstrap.Data.Repositories.Database
     public class DatabaseContext : IdentityDbContext<User>
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
-        
+
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+
         public override int SaveChanges()
         {
             AddTimestamps();
