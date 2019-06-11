@@ -247,14 +247,14 @@ namespace NetCoreBootstrap.Api.Controllers
         }
 
         [HttpPost("RefreshToken")]
-        public IActionResult Refresh(RefreshTokenVO valueObject)
+        public IActionResult Refresh([FromBody] RefreshTokenVO refreshTokenVO)
         {       
             object response;            
-            var principal = AccountHelper.GetPrincipalFromExpiredToken(valueObject.Token);
+            var principal = AccountHelper.GetPrincipalFromExpiredToken(refreshTokenVO.Token);
             var username = principal.Identity.Name;
             var user = UnitOfWork.UserRepository.GetByUsername(username);
             var savedRefreshToken = UnitOfWork.UserRepository.GetRefreshToken(user); 
-            if (!savedRefreshToken.Any(rt => rt == valueObject.RefreshToken))
+            if (!savedRefreshToken.Any(rt => rt == refreshTokenVO.RefreshToken))
             {
                 Response.StatusCode = StatusCodes.Status401Unauthorized;
                 response = new { Message = Localizer["AccountInvalidRefreshToken"].Value };
@@ -263,7 +263,7 @@ namespace NetCoreBootstrap.Api.Controllers
             {
                 var newToken = AccountHelper.GenerateJwtToken(user.Id, user.Email);
                 var newRefreshToken = AccountHelper.GenerateRefreshToken();
-                UnitOfWork.UserRepository.DeleteRefreshToken(user, valueObject.RefreshToken);
+                UnitOfWork.UserRepository.DeleteRefreshToken(user, refreshTokenVO.RefreshToken);
                 UnitOfWork.UserRepository.SaveRefreshToken(user, newRefreshToken);
                 UnitOfWork.Complete();
                 response = new UserVO
