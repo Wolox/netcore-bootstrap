@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -10,6 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NetCoreBootstrap.Data.Repositories.Database;
+using NetCoreBootstrap.Data.Repositories.Interfaces;
+using NetCoreBootstrap.Services;
+using NetCoreBootstrap.Services.Intefaces;
 
 namespace NetCoreBootstrap.Api
 {
@@ -26,6 +31,9 @@ namespace NetCoreBootstrap.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddJsonLocalization(options => options.ResourcesPath = "Resources");
+            CultureInfo.CurrentUICulture = new CultureInfo(Configuration["DefaultCulture"]);
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
