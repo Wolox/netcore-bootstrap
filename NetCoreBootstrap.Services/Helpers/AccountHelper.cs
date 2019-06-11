@@ -41,6 +41,22 @@ namespace NetCoreBootstrap.Services.Helpers
             Mailer.SendMail(userEmail, subject, body);
         }
 
+        public void SendRecoveryPasswordEmail(string userEmail, string token, string action)
+        {
+            var tokenHtml = HttpUtility.UrlEncode(token);
+            var callbackUrl = $"{Configuration["AppUrl"]}{action}/{tokenHtml}";
+            var subject = Localizer["account_forgot_password_email_subject"].Value;
+            var body = Localizer["account_forgot_password_email_body"].Value + $" <a href='http://{callbackUrl}'>here.</a>";
+            Mailer.SendMail(userEmail, subject, body);
+        }
+
+        public void SendNewPasswordEmail(string userEmail, string newPassword)
+        {
+            var subject = Localizer["account_new_password_email_subject"].Value;
+            var body = Localizer["account_new_password_email_body"].Value + $": {newPassword}";
+            Mailer.SendMail(userEmail, subject, body);
+        }
+
         public string GenerateJwtToken(string userId, string userEmail)
         {
             var claims = new ClaimsIdentity(new GenericIdentity(userEmail, "Token"), new[] { new Claim("ID", userId.ToString()) });
@@ -61,6 +77,28 @@ namespace NetCoreBootstrap.Services.Helpers
 
         public string GetUsernameFromRequest(HttpRequest request)
             => GetDecodedToken(request).Payload[_usernameKey].ToString();
+
+        public static string GenerateRandomPassword(int length = 8)
+        {
+            if (length < 6) throw new ArgumentException();
+            string characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!$+<[%,=]>*+-/)(¡?¿·#¬|";
+            StringBuilder result = new StringBuilder();
+            result.Append(GetRandomValueFromSequence(characters, 0, characters.IndexOf("A") - 1));
+            result.Append(GetRandomValueFromSequence(characters, characters.IndexOf("A"), characters.IndexOf("0") - 1));
+            result.Append(GetRandomValueFromSequence(characters, characters.IndexOf("0"), characters.IndexOf("!") - 1));
+            result.Append(GetRandomValueFromSequence(characters, characters.IndexOf("!"), characters.Length));
+            while (result.Length < length)
+            {
+                result.Append(GetRandomValueFromSequence(characters, 0, characters.Length));
+            }
+            return result.ToString();
+        }
+
+        private static string GetRandomValueFromSequence(string sequence, int minIndex, int maxIndex)
+        {
+            var random = new Random();
+            return sequence[random.Next(minIndex, maxIndex)].ToString();
+        }
 
         private JwtSecurityToken GetDecodedToken(HttpRequest request)
         {
