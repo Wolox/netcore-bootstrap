@@ -4,17 +4,20 @@
     <CodeAnalysisRuleSet>./ca.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Hangfire" Version="1.6.17"/>
-    <PackageReference Include="Hangfire.PostgreSql" Version="1.4.8.1"/>
-    <PackageReference Include="LocalizationCultureCore" Version="1.1.2"/>
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1"/>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="2.1.1"/>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="2.1.1"/>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.1"/>
-    <PackageReference Include="Rollbar" Version="1.5.0  "/>
-    <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0"/>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004"/>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.1"/>
+    <PackageReference Include="GraphQL" Version="2.4.0" />
+    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="3.4.0" />
+    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="3.5.0-alpha0014" />
+    <PackageReference Include="Hangfire" Version="1.6.17" />
+    <PackageReference Include="Hangfire.PostgreSql" Version="1.4.8.1" />
+    <PackageReference Include="LocalizationCultureCore" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="2.1.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.1" />
+    <PackageReference Include="Rollbar" Version="1.5.0  " />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.1" />
   </ItemGroup>
 </Project>
