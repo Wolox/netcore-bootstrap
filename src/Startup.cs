@@ -1,8 +1,8 @@
-﻿using System;
-using System.Globalization;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using System.Globalization;
+using GraphQL;
+using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
+using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -13,10 +13,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
-using NetCoreBootstrap.Mail;
+using NetCoreBootstrap.GraphQL.GraphQLTypes;
+using NetCoreBootstrap.GraphQL.Queries;
+using NetCoreBootstrap.GraphQL.Schemas;
 using NetCoreBootstrap.Models.Database;
-using NetCoreBootstrap.Repositories;
 using NetCoreBootstrap.Repositories.Database;
 using NetCoreBootstrap.Repositories.Interfaces;
 // using Rollbar;
@@ -39,6 +39,8 @@ namespace NetCoreBootstrap
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+
             // Add framework services.
             // Rollbar service start
             // ConfigureRollbarSingleton();
@@ -119,6 +121,13 @@ namespace NetCoreBootstrap
             // Uncomment this if you want use Hangfire
             // services.AddHangfire(options => GlobalConfiguration.Configuration.UsePostgreSqlStorage(connectionString));
             // services.AddSingleton<IMailer, Mailer>();
+
+            // ----------------------------------------- GraphQL services -----------------------------------------------
+            services.AddScoped<UserType>();
+            services.AddScoped<UserQuery>();
+            services.AddScoped<ISchema, UserSchema>();
+
+            services.AddGraphQL();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -169,6 +178,9 @@ namespace NetCoreBootstrap
             // Uncomment this if you want use Hangfire
             // app.UseHangfireDashboard();
             // app.UseHangfireServer(new BackgroundJobServerOptions(), null, new PostgreSqlStorage(Configuration["ConnectionString"]));
+            app.UseGraphQL<ISchema>("/graphql");
+            // use graphql-playground at default url /ui/playground
+            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions { Path = "/ui/playground" });
         }
 
         // Rollbar methods start
