@@ -11,24 +11,21 @@ using NetCoreBootstrap.Core.Models.Database;
 using NetCoreBootstrap.Core.Models.VOs;
 using NetCoreBootstrap.Data.Repositories.Interfaces;
 using NetCoreBootstrap.Services.Helpers;
-using NetCoreBootstrap.Services.Intefaces;
 
 namespace NetCoreBootstrap.Api.Controllers
 {
-    [ApiController]
-    [Route("/api/v1/[controller]")]
-    public class AccountApiController : Controller
+    public class AccountController : BaseApiController
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly IUnitOfWork _unitOfWork;
         private readonly AccountHelper _accountHelper;
-        private readonly IHtmlLocalizer<AccountApiController> _localizer;
+        private readonly IHtmlLocalizer<AccountController> _localizer;
 
-        public AccountApiController(UserManager<User> userManager,
+        public AccountController(UserManager<User> userManager,
                                     SignInManager<User> signInManager,
                                     IUnitOfWork unitOfWork,
-                                    IHtmlLocalizer<AccountApiController> localizer,
+                                    IHtmlLocalizer<AccountController> localizer,
                                     IConfiguration configuration)
         {
             this._userManager = userManager;
@@ -38,11 +35,11 @@ namespace NetCoreBootstrap.Api.Controllers
             this._accountHelper = new AccountHelper(configuration, this._localizer);
         }
 
-        public UserManager<User> UserManager { get => this._userManager; }
-        public SignInManager<User> SignInManager { get => this._signInManager; }
-        public IUnitOfWork UnitOfWork { get => this._unitOfWork; }
-        public AccountHelper AccountHelper { get => this._accountHelper; }
-        public IHtmlLocalizer<AccountApiController> Localizer { get => this._localizer; }
+        public UserManager<User> UserManager => this._userManager;
+        public SignInManager<User> SignInManager => this._signInManager;
+        public IUnitOfWork UnitOfWork => this._unitOfWork;
+        public AccountHelper AccountHelper => this._accountHelper;
+        public IHtmlLocalizer<AccountController> Localizer => this._localizer;
 
         [HttpPost("SignUp")]
         public async Task<IActionResult> SignUp([FromBody] UserSignUpVO userVO)
@@ -53,39 +50,26 @@ namespace NetCoreBootstrap.Api.Controllers
                 Email = userVO.Email.ToLower(),
             };
             object response;
-            if (!user.IsEmailValid())
+            try
             {
-                Response.StatusCode = StatusCodes.Status400BadRequest;
-                response = new { Message = Localizer["account_user_not_created_invalid_email"].Value };
-            }
-            else if (userVO.Password != userVO.ConfirmPassword)
-            {
-                Response.StatusCode = StatusCodes.Status400BadRequest;
-                response = new { Message = Localizer["account_user_not_created_password_did_not_match"].Value };
-            }
-            else
-            {
-                try
+                var result = await UserManager.CreateAsync(user, userVO.Password);
+                if (result.Succeeded)
                 {
-                    var result = await UserManager.CreateAsync(user, userVO.Password);
-                    if (result.Succeeded)
-                    {
-                        var token = await UserManager.GenerateEmailConfirmationTokenAsync(user);
-                        AccountHelper.SendConfirmationEmail(user.Id, user.Email, token, Url.Action("ConfirmEmail", "AccountApi", new { userId = user.Id }));
-                        Response.StatusCode = StatusCodes.Status200OK;
-                        response = new { Message = Localizer["account_user_created"].Value };
-                    }
-                    else
-                    {
-                        Response.StatusCode = StatusCodes.Status400BadRequest;
-                        response = new { Message = $"{Localizer["account_user_not_created"].Value}{result.Errors.Select(e => e.Description).Last()}" };
-                    }
+                    var token = await UserManager.GenerateEmailConfirmationTokenAsync(user);
+                    AccountHelper.SendConfirmationEmail(user.Id, user.Email, token, Url.Action("ConfirmEmail", "AccountApi", new { userId = user.Id }));
+                    Response.StatusCode = StatusCodes.Status200OK;
+                    response = new { Message = Localizer["account_user_created"].Value };
                 }
-                catch (ArgumentNullException e)
+                else
                 {
                     Response.StatusCode = StatusCodes.Status400BadRequest;
-                    response = new { Message = $"{Localizer["account_user_not_created"].Value}{e.Message}" };
+                    response = new { Message = $"{Localizer["account_user_not_created"].Value}{result.Errors.Select(e => e.Description).Last()}" };
                 }
+            }
+            catch (ArgumentNullException e)
+            {
+                Response.StatusCode = StatusCodes.Status400BadRequest;
+                response = new { Message = $"{Localizer["account_user_not_created"].Value}{e.Message}" };
             }
             return Json(response);
         }
@@ -96,7 +80,7 @@ namespace NetCoreBootstrap.Api.Controllers
             object response;
             try
             {
-                if (!string.IsNullOrEmpty(userVO.Email)) userVO.Email = userVO.Email.ToLower();
+                userVO.Email = userVO.Email.ToLower();
                 var result = await SignInManager.PasswordSignInAsync(userVO.Email, userVO.Password, false, false);
                 if (result.Succeeded)
                 {
@@ -115,11 +99,7 @@ namespace NetCoreBootstrap.Api.Controllers
                 }
                 else
                 {
-                    Response.StatusCode = StatusCodes.Status400BadRequest;
-                    if (string.IsNullOrEmpty(userVO.Email) || string.IsNullOrEmpty(userVO.Password))
-                        response = new { Message = Localizer["account_login_failed_empty_fields"].Value };
-                    else
-                        response = new { Message = Localizer["account_login_failed"].Value };
+                    response = new { Message = Localizer["account_login_failed"].Value };
                 }
                 return Json(response);
             }
