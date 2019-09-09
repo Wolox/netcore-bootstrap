@@ -15,16 +15,9 @@ namespace NetCoreBootstrap.Data.Repositories.Database
             this.UserRepository = new UserRepository(context, userManager, roleManager);
         }
 
-        public IUserRepository UserRepository { get; private set; }
+        public IUserRepository UserRepository { get; }
 
-        public int Complete()
-        {
-            return this._context.SaveChanges();
-        }
-
-        public void Dispose()
-        {
-            this._context.Dispose();
-        }
+        public int Complete() => _context.SaveChanges();
+        public void Dispose() => _context.Dispose();
     }
 }
