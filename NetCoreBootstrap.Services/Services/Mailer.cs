@@ -25,35 +25,12 @@ namespace NetCoreBootstrap.Services
             _email = configuration["Mailer:Email"];
         }
 
-        public string Host
-        {
-            get { return _host; }
-        }
-
-        public int HostPort
-        {
-            get { return _hostPort; }
-        }
-
-        public string Username
-        {
-            get { return _username; }
-        }
-
-        public string Password
-        {
-            get { return _password; }
-        }
-
-        public string Name
-        {
-            get { return _name; }
-        }
-
-        public string Email
-        {
-            get { return _email; }
-        }
+        public string Host => _host;
+        public int HostPort => _hostPort;
+        public string Username => _username;
+        public string Password => _password;
+        public string Name => _name;
+        public string Email => _email;
 
         public void SendMail(string toAddress, string subject, string body, bool isHtml = true)
         {

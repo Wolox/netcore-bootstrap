@@ -24,9 +24,9 @@ namespace NetCoreBootstrap.Services.Helpers
             this._mailer = new Mailer(configuration);
         }
 
-        public IConfiguration Configuration { get => this._configuration; }
-        public IHtmlLocalizer Localizer { get => this._localizer; }
-        public IMailer Mailer { get => this._mailer; }
+        public IConfiguration Configuration => _configuration;
+        public IHtmlLocalizer Localizer => _localizer;
+        public IMailer Mailer => _mailer;
 
         public void SendConfirmationEmail(string userId, string userEmail, string token, string action)
         {
