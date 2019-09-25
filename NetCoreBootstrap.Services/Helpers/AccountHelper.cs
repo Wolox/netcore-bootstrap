@@ -17,16 +17,16 @@ namespace NetCoreBootstrap.Services.Helpers
         private readonly IHtmlLocalizer _localizer;
         private readonly IMailer _mailer;
 
-        public AccountHelper(IConfiguration configuration, IHtmlLocalizer localizer)
+        public AccountHelper(IConfiguration configuration, IHtmlLocalizer localizer, IMailer mailer)
         {
             this._configuration = configuration;
             this._localizer = localizer;
-            this._mailer = new Mailer(configuration);
+            this._mailer = mailer;
         }
 
-        public IConfiguration Configuration { get => this._configuration; }
-        public IHtmlLocalizer Localizer { get => this._localizer; }
-        public IMailer Mailer { get => this._mailer; }
+        public IConfiguration Configuration => _configuration;
+        public IHtmlLocalizer Localizer => _localizer;
+        public IMailer Mailer => _mailer;
 
         public void SendConfirmationEmail(string userId, string userEmail, string token, string action)
         {
