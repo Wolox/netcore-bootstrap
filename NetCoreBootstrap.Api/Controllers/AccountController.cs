@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using NetCoreBootstrap.Core.Models.Database;
 using NetCoreBootstrap.Core.Models.VOs;
 using NetCoreBootstrap.Data.Repositories.Interfaces;
 using NetCoreBootstrap.Services.Helpers;
+using NetCoreBootstrap.Services.Intefaces;
 
 namespace NetCoreBootstrap.Api.Controllers
 {
@@ -26,13 +28,14 @@ namespace NetCoreBootstrap.Api.Controllers
                                     SignInManager<User> signInManager,
                                     IUnitOfWork unitOfWork,
                                     IHtmlLocalizer<AccountController> localizer,
-                                    IConfiguration configuration)
+                                    IConfiguration configuration,
+                                    IMailer mailer)
         {
             this._userManager = userManager;
             this._signInManager = signInManager;
             this._unitOfWork = unitOfWork;
             this._localizer = localizer;
-            this._accountHelper = new AccountHelper(configuration, this._localizer);
+            this._accountHelper = new AccountHelper(configuration, this._localizer, mailer);
         }
 
         public UserManager<User> UserManager => this._userManager;
