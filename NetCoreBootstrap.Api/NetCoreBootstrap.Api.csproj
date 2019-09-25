@@ -7,6 +7,7 @@
     <PackageReference Include="Microsoft.AspNetCore.App"/>
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All"/>
     <PackageReference Include="LocalizationCultureCore" Version="1.1.2"/>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.4"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../NetCoreBootstrap.Data/NetCoreBootstrap.Data.csproj"/>

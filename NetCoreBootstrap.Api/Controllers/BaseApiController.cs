@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace NetCoreBootstrap.Api.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class BaseApiController : ControllerBase
     {
