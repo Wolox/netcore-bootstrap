@@ -18,8 +18,8 @@ namespace NetCoreBootstrap.Data.Repositories
             this._roleManager = roleManager;
         }
 
-        public UserManager<User> UserManager { get => this._userManager; }
-        public RoleManager<IdentityRole> RoleManager { get => this._roleManager; }
-        public DatabaseContext Context { get => this._context; }
+        public UserManager<User> UserManager => _userManager;
+        public RoleManager<IdentityRole> RoleManager => _roleManager;
+        public DatabaseContext Context => _context;
     }
 }
