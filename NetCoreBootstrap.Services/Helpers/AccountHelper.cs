@@ -17,11 +17,11 @@ namespace NetCoreBootstrap.Services.Helpers
         private readonly IHtmlLocalizer _localizer;
         private readonly IMailer _mailer;
 
-        public AccountHelper(IConfiguration configuration, IHtmlLocalizer localizer)
+        public AccountHelper(IConfiguration configuration, IHtmlLocalizer localizer, IMailer mailer)
         {
             this._configuration = configuration;
             this._localizer = localizer;
-            this._mailer = new Mailer(configuration);
+            this._mailer = mailer;
         }
 
         public IConfiguration Configuration => _configuration;
