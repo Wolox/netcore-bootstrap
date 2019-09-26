@@ -118,7 +118,7 @@ namespace NetCoreBootstrap.Api.Controllers
             }
         }
 
-        [HttpPost("ExternalSignUp")]
+        [HttpPost("ExternalSignIn")]
         public IActionResult ExternalSignIn()
         {
             return Ok(new {});

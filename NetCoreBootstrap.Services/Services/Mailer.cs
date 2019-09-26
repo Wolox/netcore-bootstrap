@@ -33,9 +33,7 @@ namespace NetCoreBootstrap.Services
         public string Password => _password;
         public string Name => _name;
         public string Email => _email;
-
         public MailboxAddress FromMailbox => _fromAddress;
-
 
         public void SendMail(string toAddress, string subject, string body, bool isHtml = true)
         {
