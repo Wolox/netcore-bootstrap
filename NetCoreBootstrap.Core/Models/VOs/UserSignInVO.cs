@@ -7,10 +7,12 @@ namespace NetCoreBootstrap.Core.Models.VOs
         [Required]
         [StringLength(255, MinimumLength = 5)]
         public string UserName { get; set; }
+
         [Required]
         [StringLength(255, MinimumLength = 5)]
         [EmailAddress]
         public string Email { get; set; }
+        
         [Required]
         [StringLength(255, MinimumLength = 5)]
         public string Password { get; set; }
