@@ -129,7 +129,22 @@ namespace NetCoreBootstrap.Services.Helpers
 
         public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
         {
-            throw new NotImplementedException();
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+                                .GetBytes(Configuration["SignInKey"])),
+                ValidateLifetime = false
+            };
+            var tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken securityToken;
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
+            var jwtSecurityToken = securityToken as JwtSecurityToken;
+            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                throw new SecurityTokenException("Invalid token");
+            return principal;
         }
 
         private string GetRandomValueFromSequence(string sequence, int minIndex, int maxIndex)

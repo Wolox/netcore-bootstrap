@@ -251,9 +251,8 @@ namespace NetCoreBootstrap.Api.Controllers
         {       
             object response;            
             var principal = AccountHelper.GetPrincipalFromExpiredToken(refreshTokenVO.Token);
-            var username = principal.Identity.Name;
-            var user = UnitOfWork.UserRepository.GetByUsername(username);
-            var savedRefreshToken = UnitOfWork.UserRepository.GetRefreshToken(user); 
+            var user = UnitOfWork.UserRepository.GetByUsername(principal.Identity.Name);
+            var savedRefreshToken = UnitOfWork.UserRepository.GetRefreshToken(user);
             if (!savedRefreshToken.Any(rt => rt == refreshTokenVO.RefreshToken))
             {
                 Response.StatusCode = StatusCodes.Status401Unauthorized;
