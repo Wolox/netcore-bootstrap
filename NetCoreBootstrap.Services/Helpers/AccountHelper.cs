@@ -60,10 +60,7 @@ namespace NetCoreBootstrap.Services.Helpers
         }
 
         public string GetUsernameFromRequest(HttpRequest request)
-        {
-            var decodedToken = GetDecodedToken(request);
-            return decodedToken.Payload[_usernameKey].ToString();
-        }
+            => GetDecodedToken(request).Payload[_usernameKey].ToString();
 
         private JwtSecurityToken GetDecodedToken(HttpRequest request)
         {

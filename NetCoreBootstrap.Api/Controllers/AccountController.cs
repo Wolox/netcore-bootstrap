@@ -116,7 +116,7 @@ namespace NetCoreBootstrap.Api.Controllers
             }
         }
 
-        [HttpPost("ExternalSignUp")]
+        [HttpPost("ExternalSignIn")]
         public async Task<IActionResult> ExternalSignIn([FromBody] UserSignUpVO userVO)
         {
             object response;
