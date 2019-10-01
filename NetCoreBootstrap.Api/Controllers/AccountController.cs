@@ -59,7 +59,11 @@ namespace NetCoreBootstrap.Api.Controllers
                 if (result.Succeeded)
                 {
                     var token = await UserManager.GenerateEmailConfirmationTokenAsync(user);
-                    AccountHelper.SendConfirmationEmail(user.Id, user.Email, token, Url.Action("ConfirmEmail", "AccountApi", new { userId = user.Id }));
+                    AccountHelper.SendConfirmationEmail(user.Id,
+                                                        user.Email,
+                                                        token,
+                                                        Url.Action("ConfirmEmail", "AccountApi",
+                                                        new { userId = user.Id }));
                     Response.StatusCode = StatusCodes.Status200OK;
                     response = new { Message = Localizer["account_user_created"].Value };
                 }
@@ -89,11 +93,7 @@ namespace NetCoreBootstrap.Api.Controllers
                 {
                     var user = UserManager.Users.Single(r => r.Email == userVO.Email);
                     Response.StatusCode = StatusCodes.Status200OK;
-                    response = new UserVO
-                    {
-                        Token = $"Bearer {AccountHelper.GenerateJwtToken(user.Id, user.Email)}",
-                        Email = user.Email,
-                    };
+                    response = new UserVO(user.Email, $"Bearer {AccountHelper.GenerateJwtToken(user.Id, user.Email)}");
                 }
                 else if (result.IsNotAllowed)
                 {
@@ -101,9 +101,7 @@ namespace NetCoreBootstrap.Api.Controllers
                     response = new { Message = Localizer["account_login_confirm_email"].Value };
                 }
                 else
-                {
                     response = new { Message = Localizer["account_login_failed"].Value };
-                }
                 return Json(response);
             }
             catch (InvalidOperationException)
@@ -116,12 +114,6 @@ namespace NetCoreBootstrap.Api.Controllers
                 Response.StatusCode = StatusCodes.Status400BadRequest;
                 return Json(new { Message = e.Message });
             }
-        }
-
-        [HttpPost("ExternalSignIn")]
-        public IActionResult ExternalSignIn()
-        {
-            return Ok(new {});
         }
 
         [HttpGet("ConfirmEmail/{userId}/{token}")]
@@ -141,18 +133,6 @@ namespace NetCoreBootstrap.Api.Controllers
                 response = new { Message = Localizer["account_email_not_confirmed"].Value, Errors = result.Errors };
             }
             return Json(response);
-        }
-
-        [HttpPost("ForgotPassword")]
-        public IActionResult ForgotPassword()
-        {
-            return Ok(new {});
-        }
-
-        [HttpGet("ResetPassword/{userId}/{token}")]
-        public IActionResult ResetPassword(string userId, string token)
-        {
-            return Ok(new {});
         }
     }
 }
