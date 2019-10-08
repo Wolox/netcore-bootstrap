@@ -116,6 +116,54 @@ namespace NetCoreBootstrap.Api.Controllers
             }
         }
 
+        [HttpPost("ExternalSignIn")]
+        public async Task<IActionResult> ExternalSignIn([FromBody] UserSignUpVO userVO)
+        {
+            object response;
+            string provider = userVO.IsFacebook ? "Facebook" : "Google";
+            IdentityResult result = null;
+            User user = null;
+            if (!UserManager.Users.Any(u => u.Email == userVO.Email))
+            {
+                result = await UserManager.CreateAsync(new User
+                {
+                    Email = userVO.Email,
+                    UserName = userVO.Email,
+                    EmailConfirmed = true,
+                    IsExternal = true,
+                });
+                user = await UserManager.FindByEmailAsync(userVO.Email);
+                await UserManager.AddLoginAsync(user, new UserLoginInfo(provider, userVO.ExternalUserId, user.Email));
+            }
+            if (result == null || result.Succeeded)
+            {
+                if (user == null) user = await UserManager.FindByEmailAsync(userVO.Email);
+                var signInResult = await SignInManager.ExternalLoginSignInAsync(provider, userVO.ExternalUserId, false);
+                if (signInResult.Succeeded)
+                {
+                    Response.StatusCode = StatusCodes.Status200OK;
+                    response = new { Token = $"Bearer {AccountHelper.GenerateJwtToken(user.Id, user.Email)}" };
+                }
+                else
+                {
+                    string message = Localizer["account_external_login_failed"].Value;
+                    var logins = await UserManager.GetLoginsAsync(user);
+                    if (!logins.Any(login => login.LoginProvider == provider))
+                        message = Localizer["account_external_login_invalid_provider"].Value + $"{provider}";
+                    else if (!logins.Any(login => login.ProviderKey == userVO.ExternalUserId))
+                        message = Localizer["account_external_login_invalid_user_id"].Value;
+                    Response.StatusCode = StatusCodes.Status400BadRequest;
+                    response = new { Message = message, Errors = string.Join(";", signInResult.ToString()) };
+                }
+            }
+            else
+            {
+                Response.StatusCode = StatusCodes.Status400BadRequest;
+                response = new { Message = Localizer["account_external_login_failed"].Value, Errors = string.Join(";", result.Errors) };
+            }
+            return Json(response);
+        }
+
         [HttpGet("ConfirmEmail/{userId}/{token}")]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {

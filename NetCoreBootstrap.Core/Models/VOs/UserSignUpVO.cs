@@ -18,5 +18,8 @@ namespace NetCoreBootstrap.Core.Models.VOs
         [StringLength(255, MinimumLength = 5)]
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
+        public string ExternalUserId { get; set; }
+        public bool IsFacebook { get; set; }
+        public bool IsGoogle { get; set; }
     }
 }
