@@ -101,22 +101,6 @@ namespace NetCoreBootstrap.Services.Helpers
             return sequence[random.Next(minIndex, maxIndex)].ToString();
         }
 
-        public string GenerateRandomPassword(int length = 8)
-        {
-            if (length < 6) throw new ArgumentException();
-            string characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!$+<[%,=]>*+-/)(¡?¿·#¬|";
-            StringBuilder result = new StringBuilder();
-            result.Append(GetRandomValueFromSequence(characters, 0, characters.IndexOf("A") - 1));
-            result.Append(GetRandomValueFromSequence(characters, characters.IndexOf("A"), characters.IndexOf("0") - 1));
-            result.Append(GetRandomValueFromSequence(characters, characters.IndexOf("0"), characters.IndexOf("!") - 1));
-            result.Append(GetRandomValueFromSequence(characters, characters.IndexOf("!"), characters.Length));
-            while (result.Length < length)
-            {
-                result.Append(GetRandomValueFromSequence(characters, 0, characters.Length));
-            }
-            return result.ToString();
-        }
-
         public string GenerateRefreshToken()
         {
             var randomNumber = new byte[32];
@@ -145,12 +129,6 @@ namespace NetCoreBootstrap.Services.Helpers
             if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
                 throw new SecurityTokenException("Invalid token");
             return principal;
-        }
-
-        private string GetRandomValueFromSequence(string sequence, int minIndex, int maxIndex)
-        {
-            var random = new Random();
-            return sequence[random.Next(minIndex, maxIndex)].ToString();
         }
 
         private JwtSecurityToken GetDecodedToken(HttpRequest request)
