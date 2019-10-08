@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using NetCoreBootstrap.Core.Models.Database;
 using NetCoreBootstrap.Data.Repositories.Database;
 using NetCoreBootstrap.Data.Repositories.Interfaces;
 using NetCoreBootstrap.Services;
@@ -39,6 +40,10 @@ namespace NetCoreBootstrap.Api
             services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(Configuration["ConnectionString"]));
             services.AddScoped<DatabaseContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddSingleton<IMailer, Mailer>();
+            services.AddIdentity<User, IdentityRole>()
+                    .AddEntityFrameworkStores<DatabaseContext>()
+                    .AddDefaultTokenProviders();
             services.AddAuthentication()
                 .AddJwtBearer(options =>
                 {
