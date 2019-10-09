@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NetCoreBootstrap.Core.Models.Database;
 using NetCoreBootstrap.Data.Repositories.Database;
@@ -39,7 +43,7 @@ namespace NetCoreBootstrap.Api
             services.AddSingleton<IMailer, Mailer>();
             services.AddIdentity<User, IdentityRole>()
                     .AddEntityFrameworkStores<DatabaseContext>()
-                    .AddDefaultTokenProviders();;
+                    .AddDefaultTokenProviders();
             services.AddAuthentication()
                 .AddJwtBearer(options =>
                 {
