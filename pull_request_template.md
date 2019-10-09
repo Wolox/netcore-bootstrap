@@ -10,6 +10,6 @@ List any known issue for this feature.
 
 Only if you are implementing .cshtml views. Otherwise, skip this part.
 
-### Jira card
+### JIRA card
 
-Link to the associated Jira card.
+Link to the associated JIRA card.
