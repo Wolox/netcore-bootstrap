@@ -223,5 +223,34 @@ namespace NetCoreBootstrap.Api.Controllers
             }
             return Json(response);
         }
+
+        [HttpPost("RefreshToken")]
+        public IActionResult Refresh([FromBody] RefreshTokenVO refreshTokenVO)
+        {       
+            object response;            
+            var principal = AccountHelper.GetPrincipalFromExpiredToken(refreshTokenVO.Token);
+            var user = UnitOfWork.UserRepository.GetByUsername(principal.Identity.Name);
+            var savedRefreshToken = UnitOfWork.UserRepository.GetRefreshToken(user);
+            if (!savedRefreshToken.Any(rt => rt == refreshTokenVO.RefreshToken))
+            {
+                Response.StatusCode = StatusCodes.Status401Unauthorized;
+                response = new { Message = Localizer["AccountInvalidRefreshToken"].Value };
+            }
+            else
+            {
+                var newToken = AccountHelper.GenerateJwtToken(user.Id, user.Email);
+                var newRefreshToken = AccountHelper.GenerateRefreshToken();
+                UnitOfWork.UserRepository.DeleteRefreshToken(user, refreshTokenVO.RefreshToken);
+                UnitOfWork.UserRepository.SaveRefreshToken(user, newRefreshToken);
+                UnitOfWork.Complete();
+                response = new UserVO
+                {
+                    Token = $"Bearer {newToken}",
+                    RefreshToken = newRefreshToken,
+                    Email = user.Email,
+                };
+            }
+            return Json(response);
+        }
     }
 }
