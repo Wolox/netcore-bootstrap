@@ -1,13 +1,13 @@
-NetCoreBootstrap
+.NET Core Bootstrap
 ===============
 
-Info for [NetCore](https://www.microsoft.com/net/core) applications.
+Info for [.NET Core](https://www.microsoft.com/net/core) applications.
 
 ## First steps
 
-#### Installing NetCore
+#### Installing .NET Core
 
-Get the latest version of NetCore following the guide in the [official website](https://www.microsoft.com/net/core).
+Get the latest version of .NET Core following the guide in the [official website](https://www.microsoft.com/net/core).
 
 ### [Kickoff] Application Setup
 
@@ -40,7 +40,7 @@ Then, you should create an apppsettings.Development.json file in order to store 
 
 #### Debugging
 
-When developing a NetCore application in Linux or Mac you should use [Visual Studio Code](https://code.visualstudio.com/) IDE, which already has excellent built-in debugging functionalities.
+When developing a .NET Core application in Linux or Mac you should use [Visual Studio Code](https://code.visualstudio.com/) IDE, which already has excellent built-in debugging functionalities.
 To be able to debug, your launch.json file should look like [this](https://gist.github.com/gzamudio/1205e0fd4c962e6fbb8962b182cf735b). Your tasks.json file should look like [this](https://gist.github.com/gzamudio/d346a57608256c28c043c3112ea6760e).
 
 #### Code First & Migrations
@@ -61,6 +61,14 @@ Finally, to update your database with migrations that have not run yet, you can 
     dotnet ef database update
 ```
 
+Also, you can configure the project to automatically run migrations, by adding this lines on Configure method in Startup.cs:
+```bash
+using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+{
+    var context = serviceScope.ServiceProvider.GetService<DatabaseContext>();
+    context.Database.Migrate();
+}
+```
 #### Async Jobs
 
 To create asynchronous jobs implement [Hangfire](https://www.hangfire.io).
