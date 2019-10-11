@@ -14,15 +14,15 @@ using NetCoreBootstrap.Services.Intefaces;
 
 namespace NetCoreBootstrap.Services.Helpers
 {
-    public class AccountHelper
+    public class AccountHelper : IAccountHelper
     {
         private readonly string _authorizationKey = "Authorization";
-        private readonly string _usernameKey = "cognito:username";
+        private readonly string _usernameKey = "unique_name";
         private readonly IConfiguration _configuration;
-        private readonly IHtmlLocalizer _localizer;
+        private readonly IHtmlLocalizer<AccountHelper> _localizer;
         private readonly IMailer _mailer;
 
-        public AccountHelper(IConfiguration configuration, IHtmlLocalizer localizer, IMailer mailer)
+        public AccountHelper(IConfiguration configuration, IMailer mailer, IHtmlLocalizer<AccountHelper> localizer)
         {
             this._configuration = configuration;
             this._localizer = localizer;
@@ -30,15 +30,15 @@ namespace NetCoreBootstrap.Services.Helpers
         }
 
         public IConfiguration Configuration => _configuration;
-        public IHtmlLocalizer Localizer => _localizer;
+        public IHtmlLocalizer<AccountHelper> Localizer => _localizer;
         public IMailer Mailer => _mailer;
 
         public void SendConfirmationEmail(string userId, string userEmail, string token, string action)
         {
             var tokenHtml = HttpUtility.UrlEncode(token);
             var callbackUrl = $"{Configuration["AppUrl"]}{action}/{tokenHtml}";
-            var subject = Localizer["AccountEmailSubject"].Value;
-            var body = Localizer["AccountEmailBody"].Value + $" <a href='http://{callbackUrl}'>here.</a>";
+            var subject = Localizer["AccountEmailConfirmationSubject"].Value;
+            var body = Localizer["AccountEmailConfirmationBody"].Value + $" <a href='http://{callbackUrl}'>here.</a>";
             Mailer.SendMail(userEmail, subject, body);
         }
 
@@ -79,7 +79,7 @@ namespace NetCoreBootstrap.Services.Helpers
         public string GetUsernameFromRequest(HttpRequest request)
             => GetDecodedToken(request).Payload[_usernameKey].ToString();
 
-        public static string GenerateRandomPassword(int length = 8)
+        public string GenerateRandomPassword(int length = 8)
         {
             if (length < 6) throw new ArgumentException();
             string characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!$+<[%,=]>*+-/)(¡?¿·#¬|";

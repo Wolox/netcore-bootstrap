@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,7 +15,9 @@ using NetCoreBootstrap.Core.Models.Database;
 using NetCoreBootstrap.Data.Repositories.Database;
 using NetCoreBootstrap.Data.Repositories.Interfaces;
 using NetCoreBootstrap.Services;
+using NetCoreBootstrap.Services.Helpers;
 using NetCoreBootstrap.Services.Intefaces;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace NetCoreBootstrap.Api
 {
@@ -40,6 +44,7 @@ namespace NetCoreBootstrap.Api
             services.AddScoped<DatabaseContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSingleton<IMailer, Mailer>();
+            services.AddSingleton<IAccountHelper, AccountHelper>();
             services.AddIdentity<User, IdentityRole>()
                     .AddEntityFrameworkStores<DatabaseContext>()
                     .AddDefaultTokenProviders();
@@ -57,6 +62,15 @@ namespace NetCoreBootstrap.Api
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Jwt:Key"])),
                     };
                 });
+            if (CurrentEnvironment.IsEnvironment("Development") || CurrentEnvironment.IsEnvironment("Staging"))
+            {
+                services.AddSwaggerGen(options =>
+                {
+                    options.SwaggerDoc("v1", new Info { Title = ".NET Core Bootstrap API", Version = "v1" });
+                    options.AddSecurityDefinition("Bearer", new ApiKeyScheme { In = "header", Description = "Please enter JWT with Bearer into field", Name = "Authorization", Type = "apiKey" });
+                    options.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> { { "Bearer", Enumerable.Empty<string>() } });
+                });
+            }
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -70,6 +84,11 @@ namespace NetCoreBootstrap.Api
                 app.UseHsts();
             }
             app.UseAuthentication();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", ".NET Core Bootstrap API");
+            });
             app.UseMvc();
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
