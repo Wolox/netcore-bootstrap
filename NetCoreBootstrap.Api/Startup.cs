@@ -15,6 +15,7 @@ using NetCoreBootstrap.Core.Models.Database;
 using NetCoreBootstrap.Data.Repositories.Database;
 using NetCoreBootstrap.Data.Repositories.Interfaces;
 using NetCoreBootstrap.Services;
+using NetCoreBootstrap.Services.Helpers;
 using NetCoreBootstrap.Services.Intefaces;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -43,6 +44,7 @@ namespace NetCoreBootstrap.Api
             services.AddScoped<DatabaseContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSingleton<IMailer, Mailer>();
+            services.AddSingleton<IAccountHelper, AccountHelper>();
             services.AddIdentity<User, IdentityRole>()
                     .AddEntityFrameworkStores<DatabaseContext>()
                     .AddDefaultTokenProviders();
