@@ -6,6 +6,6 @@ namespace NetCoreBootstrap.Api.Controllers
     [ApiController]
     public class BaseApiController : ControllerBase
     {
-        public JsonResult Json(object value) => new JsonResult(value);
+        internal JsonResult Json(object value) => new JsonResult(value);
     }
 }
