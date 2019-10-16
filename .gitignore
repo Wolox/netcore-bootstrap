@@ -6,3 +6,4 @@ bin
 node_modules
 */node_modules
 */appsettings.Development.json
+*/appsettings.Testing.json
