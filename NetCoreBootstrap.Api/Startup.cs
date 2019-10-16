@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,7 +41,20 @@ namespace NetCoreBootstrap.Api
                 .AddViewLocalization();
             services.AddJsonLocalization(options => options.ResourcesPath = "Resources");
             CultureInfo.CurrentUICulture = new CultureInfo(Configuration["DefaultCulture"]);
-            services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(Configuration["ConnectionString"]));
+            if (CurrentEnvironment.IsEnvironment("Testing"))
+            {
+                // If Testing environment, set in memory database
+                var connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+                var connectionString = connectionStringBuilder.ToString();
+                var connection = new SqliteConnection(connectionString);
+                services.AddDbContext<DatabaseContext>(options => options.UseSqlite(connection));
+            }
+            else
+            {
+                var connectionString = Configuration["ConnectionString"];
+                // if not, set the postgres database
+                services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(Configuration["ConnectionString"]));
+            }
             services.AddScoped<DatabaseContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSingleton<IMailer, Mailer>();
