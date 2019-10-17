@@ -43,7 +43,6 @@ namespace NetCoreBootstrap.Api
             CultureInfo.CurrentUICulture = new CultureInfo(Configuration["DefaultCulture"]);
             if (CurrentEnvironment.IsEnvironment("Testing"))
             {
-                // If Testing environment, set in memory database
                 var connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
                 var connectionString = connectionStringBuilder.ToString();
                 var connection = new SqliteConnection(connectionString);
@@ -52,7 +51,6 @@ namespace NetCoreBootstrap.Api
             else
             {
                 var connectionString = Configuration["ConnectionString"];
-                // if not, set the postgres database
                 services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(Configuration["ConnectionString"]));
             }
             services.AddScoped<DatabaseContext>();
