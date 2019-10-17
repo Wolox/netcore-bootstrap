@@ -1,0 +1,21 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    name: Setup dotnet
+    runs-on: ubuntu-16.04
+    strategy:
+      matrix:
+        dotnet: [2.2.103]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v1
+      with:
+          dotnet-version: ${{ matrix.dotnet }}
+    - run: |
+        dotnet restore
+        dotnet build
+        dotnet test -c Release --no-build
