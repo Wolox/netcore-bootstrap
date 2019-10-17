@@ -366,6 +366,19 @@ In this bootstrap, we have provided some initial configuration on the ```Startup
 
 ## Code Coverage
 
+We use [Coverlet](https://github.com/tonerdo/coverlet) to get information about the code coverage of the projects, and [ReportGenerator](https://www.nuget.org/packages/dotnet-reportgenerator-globaltool/) as a reporting tool.
+
+First, to analyse the code coverage, you need to run the following command:
+
+`dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput='./TestResults/'`
+
+That will create a new file in the ./TestResults folder.
+
+Then, to transform that .xml file in a more visual report, run the following command:
+
+`reportgenerator "-reports:./TestResults/coverage.opencover.xml" "-targetdir:./TestResults/Coverage/Reports" "-reportTypes:htmlInline;Badges"`
+
+And that will create an .html file and the code coverage badges to add to your README.md.
 
 ## Contributing
 
