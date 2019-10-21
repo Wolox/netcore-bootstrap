@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -5,32 +6,32 @@ using Bogus;
 using Microsoft.AspNetCore.Http;
 using NetCoreBootstrap.Core.Models.VOs;
 using NetCoreBootstrap.Tests.Faker;
+using NetCoreBootstrap.Tests.Faker.Strategies;
 using Xunit;
 
 namespace NetCoreBootstrap.Tests.Controllers
 {
-    [Collection("Integration tests collection")]
+    [Collection("Integration Tests Collection")]
     public class AccountControllerTests : IntegrationTests
     {
-        private readonly HttpClient _secondaryClient;
-        private readonly FakerDefinitions _fakerDefinitions;
+        private readonly HttpClient _client;
 
         public AccountControllerTests(IntegrationTestsFixture fixture) : base(fixture)
         {
-            _secondaryClient = fixture.SecondaryClient;
-            _fakerDefinitions = new FakerDefinitions();
+            _client = fixture.Client;
         }
 
-        public HttpClient SecondaryClient => _secondaryClient;
-        public Faker<UserSignUpVO> FakerUserSignUpVO => _fakerDefinitions.UserSignUpFaker;
+        public HttpClient HttpClient => _client;
+        public static Faker<UserSignUpVO> FakerUserSignUpVO => FakerDefinitions.UserSignUpFaker;
+        public static IEnumerable<object[]> FakeUsers => new ModelList<UserSignUpVO>(FakerUserSignUpVO).GetModelList(1);
 
         [Theory]
-        [MemberData(nameof(FakerUserSignUpVO))]
+        [MemberData(nameof(FakeUsers))]
         public async Task ValidSignUp(UserSignUpVO userVO)
         {
-            SecondaryClient.DefaultRequestHeaders.Clear();
+            HttpClient.DefaultRequestHeaders.Clear();
             userVO.ConfirmPassword = userVO.Password;
-            var response = await SecondaryClient.PostAsJsonAsync($"/api/Account/SignUp", userVO);
+            var response = await Client.PostAsJsonAsync($"/api/Account/SignUp", userVO);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
     }

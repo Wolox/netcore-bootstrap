@@ -46,9 +46,6 @@ namespace NetCoreBootstrap.Tests.Controllers
             this._accountHelper = new AccountHelper(_configuration,
                                                     TestServer.Host.Services.GetService(typeof(IMailer)) as Mailer,
                                                     TestServer.Host.Services.GetService(typeof(IHtmlLocalizer<AccountHelper>)) as IHtmlLocalizer<AccountHelper>);
-            var adminUser = UserManager.FindByEmailAsync(Configuration["AdminCredentials:Email"]).Result;
-            var token = AccountHelper.GenerateJwtToken(adminUser.UserName, adminUser.Email);
-            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
         public HttpClient Client => _client;
