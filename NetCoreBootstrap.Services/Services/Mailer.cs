@@ -35,7 +35,7 @@ namespace NetCoreBootstrap.Services
         public string Email => _email;
         public MailboxAddress FromMailbox => _fromAddress;
 
-        public void SendMail(string toAddress, string subject, string body, bool isHtml = true)
+        public async void SendMail(string toAddress, string subject, string body, bool isHtml = true)
         {
             var message = new MimeMessage();
             message.From.Add(FromMailbox);
@@ -48,7 +48,7 @@ namespace NetCoreBootstrap.Services
             {
                 client.Connect(Host, HostPort, false);
                 client.Authenticate(Username, Password);
-                client.Send(message);
+                await client.SendAsync(message);
                 client.Disconnect(true);
             }
         }
