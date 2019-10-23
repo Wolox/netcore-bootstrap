@@ -16,7 +16,11 @@ jobs:
       with:
           dotnet-version: ${{ matrix.dotnet }}
     - name: Testing
-      with:
+      run: |
+        dotnet restore
+        dotnet build
+        dotnet test --no-build
+      env:
         Jwt__Key: ${{ secrets.Jwt__Key }}
         Jwt__Issuser: ${{ secrets.Jwt_Issuer }}
         Jwt__ExpireDays: ${{ secrets.Jwt_ExpireDays }}
@@ -28,7 +32,3 @@ jobs:
         Mailer__Name: ${{ secrets.Mailer__Name }}
         DefaultCulture: ${{ secrets.DefaultCulture }}
         EmailRegex: ${{ secrets.EmailRegex }}
-      run: |
-        dotnet restore
-        dotnet build
-        dotnet test --no-build
