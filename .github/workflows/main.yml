@@ -15,6 +15,19 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
           dotnet-version: ${{ matrix.dotnet }}
+      env:
+        Jwt__Key: ${{ secrets.Jwt__Key }}
+        Jwt__Issuser: ${{ secrets.Jwt_Issuer }}
+        Jwt__ExpireDays: ${{ secrets.Jwt_ExpireDays }}
+        Mailer__Host: ${{ secrets.Mailer__Host }}
+        Mailer__Email: ${{ secrets.Mailer__Email }}
+        Mailer__Username: ${{ secrets.Mailer__Username }}
+        Mailer__Password: ${{ secrets.Mailer__Password }}
+        Mailer__Port: ${{ secrets.Mailer__Port }}
+        Mailer__Name: ${{ secrets.Mailer__Name }}
+        DefaultCulture: en-US
+        EmailRegex: ^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$
+    - name: Testing
     - run: |
         dotnet restore
         dotnet build
