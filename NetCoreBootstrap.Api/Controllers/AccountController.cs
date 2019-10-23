@@ -94,6 +94,7 @@ namespace NetCoreBootstrap.Api.Controllers
                 if (result.Succeeded)
                 {
                     var user = UserManager.Users.Single(r => r.Email == userVO.Email);
+                    Response.StatusCode = StatusCodes.Status200OK;
                     response = new JsonResult(new UserVO(user.Email, $"Bearer {AccountHelper.GenerateJwtToken(user.Id, user.Email)}"));
                 }
                 else if (result.IsNotAllowed)
