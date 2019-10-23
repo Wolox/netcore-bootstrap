@@ -33,6 +33,7 @@ namespace NetCoreBootstrap.Tests.Controllers
             _configuration = new ConfigurationBuilder()
                     .SetBasePath(Path.GetFullPath(@"../../../../NetCoreBootstrap.Tests"))
                     .AddJsonFile(@"appsettings.Testing.json", optional: true)
+                    .AddEnvironmentVariables()
                     .Build();
             var builder = new WebHostBuilder()
                     .UseEnvironment("Testing")
