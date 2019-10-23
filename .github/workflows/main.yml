@@ -16,7 +16,7 @@ jobs:
       with:
           dotnet-version: ${{ matrix.dotnet }}
     - name: Testing
-      env:
+      with:
         Jwt__Key: ${{ secrets.Jwt__Key }}
         Jwt__Issuser: ${{ secrets.Jwt_Issuer }}
         Jwt__ExpireDays: ${{ secrets.Jwt_ExpireDays }}
@@ -26,8 +26,8 @@ jobs:
         Mailer__Password: ${{ secrets.Mailer__Password }}
         Mailer__Port: ${{ secrets.Mailer__Port }}
         Mailer__Name: ${{ secrets.Mailer__Name }}
-        DefaultCulture: en-US
-        EmailRegex: ^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$
+        DefaultCulture: ${{ secrets.DefaultCulture }}
+        EmailRegex: ${{ secrets.EmailRegex }}
       run: |
         dotnet restore
         dotnet build
