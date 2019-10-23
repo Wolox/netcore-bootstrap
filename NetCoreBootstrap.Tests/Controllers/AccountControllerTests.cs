@@ -25,7 +25,7 @@ namespace NetCoreBootstrap.Tests.Controllers
 
         public HttpClient HttpClient => _client;
         public static Faker<UserSignUpVO> FakerUserSignUpVO => FakerDefinitions.UserSignUpFaker;
-        public static IEnumerable<object[]> FakeUsers => new ModelList<UserSignUpVO>(FakerUserSignUpVO).GetModelList(5);
+        public static IEnumerable<object[]> FakeUsers => new ModelList<UserSignUpVO>(FakerUserSignUpVO).GetModelList(1);
 
         [Theory]
         [MemberData(nameof(FakeUsers))]
