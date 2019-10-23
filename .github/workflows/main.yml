@@ -28,7 +28,7 @@ jobs:
         DefaultCulture: en-US
         EmailRegex: ^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$
     - name: Testing
-    - run: |
+      run: |
         dotnet restore
         dotnet build
         dotnet test --no-build
