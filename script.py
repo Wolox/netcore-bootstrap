@@ -69,6 +69,8 @@ def __folder_must_be_ignored(folder_name):
 def __trim_project_name(path):
     name = str(path).replace('<ProjectReference Include=".', '')
     name = name.replace(' />', '')
+    name = name.replace('"', '')
+    name = name.split('.').pop(3)
     return name
     
 ################### Metrics ###################
@@ -150,9 +152,11 @@ def run():
               Fonts.OKGREEN + str(calculate_complexity()))
     print(Fonts.ENDC + Fonts.BOLD + 'Direct dependencies:' + Fonts.ENDC)
     for dep in direct_dependencies:
-        print('\tProject: ' + str(dep.project_name))
+        print('\t- Project: ' + str(dep.project_name))
         for d in dep.direct_dependencies:
-            print('\t\tDepends on: ' + str(d).strip())
+            print('\t\t- Depends on: ' + str(d).strip())
+        if not dep.direct_dependencies:
+            print('\t\tNo dependencies')
     if coverage < 75:
         print(Fonts.BOLD + 'Line coverage: ' + Fonts.FAIL + str(coverage) + '%' + Fonts.ENDC)
     else:
