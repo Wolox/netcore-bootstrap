@@ -1,0 +1,120 @@
+<RuleSet Name="Custom Ruleset" Description="Custom Ruleset" ToolsVersion="16.0">
+    <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+        <Rule Id="SA1000" Action="Warning"/> <!--SA1000: The spacing around a C# keyword is incorrect.-->
+        <Rule Id="SA1001" Action="Warning"/> <!--SA1001: The spacing around a comma is incorrect, within a C# code file.-->
+        <Rule Id="SA1002" Action="Warning"/> <!--SA1002: The spacing around a semicolon is incorrect, within a C# code file.-->
+        <Rule Id="SA1003" Action="Warning"/> <!--SA1003: The spacing around an operator symbol is incorrect, within a C# code file.-->
+        <Rule Id="SA1004" Action="Warning"/> <!--SA1004: A line within a documentation header above a C# element does not begin with a single space.-->
+        <Rule Id="SA1005" Action="Warning"/> <!--SA1005: A single-line comment within a C# code file does not begin with a single space.-->
+        <Rule Id="SA1006" Action="Warning"/> <!--SA1006: A C# preprocessor-type keyword is preceded by space.-->
+        <Rule Id="SA1007" Action="Warning"/> <!--SA1007: The operator keyword within a C# operator overload method is not followed by any whitespace.-->
+        <Rule Id="SA1008" Action="Warning"/> <!--SA1008: An opening parenthesis within a C# statement is not spaced correctly.-->
+        <Rule Id="SA1009" Action="Warning"/> <!--SA1009: A closing parenthesis within a C# statement is not spaced correctly.-->
+        <Rule Id="SA1010" Action="Warning"/> <!--SA1010: An opening square bracket within a C# statement is not spaced correctly.-->
+        <Rule Id="SA1011" Action="Warning"/> <!--SA1011: A closing square bracket within a C# statement is not spaced correctly.-->
+        <Rule Id="SA1012" Action="Warning"/> <!--SA1012: An opening curly bracket within a C# element is not spaced correctly.-->
+        <Rule Id="SA1013" Action="Warning"/> <!--SA1013: A closing curly bracket within a C# element is not spaced correctly.-->
+        <Rule Id="SA1014" Action="Warning"/> <!--SA1014: An opening generic bracket within a C# element is not spaced correctly.-->
+        <Rule Id="SA1015" Action="Warning"/> <!--SA1015: A closing generic bracket within a C# element is not spaced correctly.-->
+        <Rule Id="SA1016" Action="Warning"/> <!--SA1016: An opening attribute bracket within a C# element is not spaced correctly.-->
+        <Rule Id="SA1017" Action="Warning"/> <!--SA1017: A closing attribute bracket within a C# element is not spaced correctly.-->
+        <Rule Id="SA1018" Action="Warning"/> <!--SA1018: A nullable type symbol within a C# element is not spaced correctly.-->
+        <Rule Id="SA1019" Action="Warning"/> <!--SA1019: The spacing around a member access symbol is incorrect, within a C# code file.-->
+        <Rule Id="SA1020" Action="Warning"/> <!--SA1020: An increment or decrement symbol within a C# element is not spaced correctly.-->
+        <Rule Id="SA1021" Action="Warning"/> <!--SA1021: A negative sign within a C# element is not spaced correctly.-->
+        <Rule Id="SA1022" Action="Warning"/> <!--SA1022: A positive sign within a C# element is not spaced correctly.-->
+        <Rule Id="SA1023" Action="Warning"/> <!--SA1023: A dereference symbol or an access-of symbol within a C# element is not spaced correctly.-->
+        <Rule Id="SA1024" Action="Warning"/> <!--SA1024: A colon within a C# element is not spaced correctly.-->
+        <Rule Id="SA1025" Action="Warning"/> <!--SA1025: The code contains multiple whitespace characters in a row.-->
+        <Rule Id="SA1026" Action="Warning"/> <!--SA1026: An implicitly typed new array allocation within a C# code file is not spaced correctly.-->
+        <Rule Id="SA1027" Action="None"/> <!--SA1027: The C# code contains a tab character.-->
+        <Rule Id="SA1100" Action="Warning"/> <!--SA1100: A call to a member from an inherited class begins with ‘base.’, and the local class does not contain an override-->
+        <Rule Id="SA1101" Action="None"/> <!--SA1101: A call to an instance member of the local class or a base class is not prefixed with ‘this.’, within a C# code file-->
+        <Rule Id="SA1102" Action="Warning"/> <!--SA1102: A C# query clause does not begin on the same line as the previous clause, or on the next line. -->
+        <Rule Id="SA1103" Action="Warning"/> <!--SA1103: The clauses within a C# query expression are not all placed on the same line, and each clause is not placed on its own line.-->
+        <Rule Id="SA1104" Action="Warning"/> <!--SA1104: A clause within a C# query expression begins on the same line as the previous clause, when the previous clause spans across multiple lines.-->
+        <Rule Id="SA1105" Action="Warning"/> <!--SA1105: A clause within a C# query expression spans across multiple lines, and does not begin on its own line. -->
+        <Rule Id="SA1106" Action="Error"/> <!--SA1106: The C# code contains an extra semicolon. -->
+        <Rule Id="SA1107" Action="Warning"/> <!--SA1107: The C# code contains more than one statement on a single line. -->
+        <Rule Id="SA1108" Action="Warning"/> <!--SA1108: A C# statement contains a comment between the declaration of the statement and the opening curly bracket of the statement-->
+        <Rule Id="SA1109" Action="Warning"/> <!--SA1109: A C# statement contains a region tag between the declaration of the statement and the opening curly bracket of the statement-->
+        <Rule Id="SA1110" Action="Warning"/> <!--SA1110: The opening parenthesis or bracket in a call to a C# method or indexer, or the declaration of a method or indexer, is not placed on the same line as the method or indexer name.-->
+        <Rule Id="SA1111" Action="Warning"/> <!--SA1111: The closing parenthesis or bracket in a call to a C# method or indexer, or the declaration of a method or indexer, is not placed on the same line as the last parameter.-->
+        <Rule Id="SA1112" Action="Warning"/> <!--SA1112: The closing parenthesis or bracket in a call to a C# method or indexer, or the declaration of a method or indexer, is not placed on the same line as the opening bracket when the element does not take any parameters.-->
+        <Rule Id="SA1113" Action="Warning"/> <!--SA1113: A comma between two parameters in a call to a C# method or indexer, or in the declaration of a method or indexer, is not placed on the same line as the previous parameter.-->
+        <Rule Id="SA1114" Action="Warning"/> <!--SA1114: The start of the parameter list for a method or indexer call or declaration does not begin on the same line as the opening bracket, or on the line after the opening bracket.-->
+        <Rule Id="SA1115" Action="Warning"/> <!--SA1115: A parameter within a C# method or indexer call or declaration does not begin on the same line as the previous parameter, or on the next line.-->
+        <Rule Id="SA1116" Action="None"/> <!--SA1116: The parameters to a C# method or indexer call or declaration span across multiple lines, but the first parameter does not start on the line after the opening bracket.-->
+        <Rule Id="SA1117" Action="None"/> <!--SA1117: The parameters to a C# method or indexer call or declaration are not all on the same line or each on a separate line-->
+        <Rule Id="SA1118" Action="Warning"/> <!--SA1118: A parameter to a C# method or indexer, other than the first parameter, spans across multiple lines. -->
+        <Rule Id="SA1119" Action="Warning"/> <!--SA1119: A C# statement contains parenthesis which are unnecessary and should be removed. -->
+        <Rule Id="SA1120" Action="Warning"/> <!--SA1120: The C# comment does not contain any comment text. -->
+        <Rule Id="SA1121" Action="Warning"/> <!--SA1121: The code uses one of the basic C# types, but does not use the built-in alias for the type. -->
+        <Rule Id="SA1122" Action="Warning"/> <!--SA1122: The C# code includes an empty string, written as “”. -->
+        <Rule Id="SA1123" Action="Warning"/> <!--SA1123: The C# code contains a region within the body of a code element. -->
+        <Rule Id="SA1124" Action="None"/> <!--SA1124: The C# code contains a region. -->
+        <Rule Id="SA1125" Action="Warning"/> <!--SA1125: The Nullable type has been defined not using the C# shorthand. For example, Nullable<DateTime> has been used instead of the preferred DateTime?-->
+        <Rule Id="SA1200" Action="None"/> <!--SA1200: A C# using directive is placed outside of a namespace element.-->
+        <Rule Id="SA1201" Action="Warning"/> <!--SA1201: An element within a C# code file is out of order in relation to the other elements in the code.-->
+        <Rule Id="SA1202" Action="Warning"/> <!--SA1202: An element within a C# code file is out of order within regard to access level, in relation to other elements in the code.-->
+        <Rule Id="SA1203" Action="Warning"/> <!--SA1203: A const field is placed beneath a non-const field.-->
+        <Rule Id="SA1204" Action="Warning"/> <!--SA1204: A static element is positioned beneath an instance element of the same type.-->
+        <Rule Id="SA1205" Action="None"/> <!--SA1205: The partial element does not have an access modifier defined. StyleCop may not be able to determine the correct placement of the elements in the file. Please declare an access modifier for all partial elements.-->
+        <Rule Id="SA1206" Action="Warning"/> <!--SA1206: The keywords within the declaration of an element do not follow a standard ordering scheme.-->
+        <Rule Id="SA1207" Action="Warning"/> <!--SA1207: The keyword protected is positioned after the keyword internal within the declaration of a protected internal C# element.-->
+        <Rule Id="SA1208" Action="Warning"/> <!--SA1208: A using directive which declares a member of the System namespace appears after a using directive which declares a member of a different namespace, within a C# code file.-->
+        <Rule Id="SA1209" Action="Warning"/> <!--SA1209: A using-alias directive is positioned before a regular using directive.-->
+        <Rule Id="SA1210" Action="Warning"/> <!--SA1210: The using directives within a C# code file are not sorted alphabetically by namespace.-->
+        <Rule Id="SA1211" Action="Warning"/> <!--SA1211: The using-alias directives within a C# code file are not sorted alphabetically by alias name.-->
+        <Rule Id="SA1212" Action="Warning"/> <!--SA1212: A get accessor appears after a set accessor within a property or indexer.-->
+        <Rule Id="SA1213" Action="Warning"/> <!--SA1213: An add accessor appears after a remove accessor within an event.-->
+        <Rule Id="SA1300" Action="Warning"/> <!--SA1300: The name of a C# element does not begin with an upper-case letter.-->
+        <Rule Id="SA1301" Action="Warning"/> <!--SA1301: There are currently no situations in which this rule will fire.-->
+        <Rule Id="SA1302" Action="Warning"/> <!--SA1302: The name of a C# interface does not begin with the capital letter I.-->
+        <Rule Id="SA1303" Action="Warning"/> <!--SA1303: The name of a constant C# field must begin with an upper-case letter.-->
+        <Rule Id="SA1304" Action="None"/> <!--SA1304: The name of a non-private readonly C# field must being with an upper-case letter.-->
+        <Rule Id="SA1305" Action="Warning"/> <!--SA1305: The name of a field or variable in C# uses Hungarian notation.-->
+        <Rule Id="SA1306" Action="Warning"/> <!--SA1306: The name of a field or variable in C# does not begin with a lower-case letter.-->
+        <Rule Id="SA1307" Action="Warning"/> <!--SA1307: The name of a public or internal field in C# does not begin with an upper-case letter.-->
+        <Rule Id="SA1308" Action="Warning"/> <!--SA1308: A field name in C# is prefixed with m_ or s_.-->
+        <Rule Id="SA1309" Action="None"/> <!--SA1309: A field name in C# begins with an underscore.-->
+        <Rule Id="SA1310" Action="Warning"/> <!--SA1310: A field name in C# contains an underscore.-->
+        <Rule Id="SA1400" Action="Warning"/> <!--SA1400: The access modifier for a C# element has not been explicitly defined. -->
+        <Rule Id="SA1401" Action="Warning"/> <!--SA1401: A field within a C# class has an access modifier other than private. -->
+        <Rule Id="SA1402" Action="Error"/> <!--SA1402: A C# code file contains more than one unique class. -->
+        <Rule Id="SA1403" Action="Error"/> <!--SA1403: A C# code file contains more than one namespace. -->
+        <Rule Id="SA1404" Action="None"/> <!--SA1404: A Code Analysis SuppressMessage attribute does not include a justification. -->
+        <Rule Id="SA1405" Action="None"/> <!--SA1405: A call to Debug.Assert in C# code does not include a descriptive message. -->
+        <Rule Id="SA1406" Action="None"/> <!--SA1406: A call to Debug.Fail in C# code does not include a descriptive message. -->
+        <Rule Id="SA1407" Action="Warning"/> <!--SA1407: A C# statement contains a complex arithmetic expression which omits parenthesis around operators. -->
+        <Rule Id="SA1408" Action="Warning"/> <!--SA1408: A C# statement contains a complex conditional expression which omits parenthesis around operators. -->
+        <Rule Id="SA1409" Action="Warning"/> <!--SA1409: A C# file contains code which is unnecessary and can be removed without changing the overall logic of the code. -->
+        <Rule Id="SA1410" Action="Warning"/> <!--SA1410: A call to a C# anonymous method does not contain any method parameters, yet the statement still includes parenthe-->
+        <Rule Id="SA1500" Action="Warning"/> <!--SA1500: The opening or closing curly bracket within a C# statement, element, or expression is not placed on its own line.-->
+        <Rule Id="SA1501" Action="None"/> <!--SA1501: A C# statement containing opening and closing curly brackets is written completely on a single line.-->
+        <Rule Id="SA1502" Action="None"/> <!--SA1502: A C# element containing opening and closing curly brackets is written completely on a single line. -->
+        <Rule Id="SA1503" Action="None"/> <!--SA1503: The opening and closing curly brackets for a C# statement have been omitted. -->
+        <Rule Id="SA1504" Action="Warning"/> <!--SA1504: Within a C# property, indexer or event, at least one of the child accessors is written on a single line, and at l-->
+        <Rule Id="SA1505" Action="Warning"/> <!--SA1505: An opening curly bracket within a C# element, statement, or expression is followed by a blank line. -->
+        <Rule Id="SA1506" Action="Warning"/> <!--SA1506: An element documentation header above a C# element is followed by a blank line. -->
+        <Rule Id="SA1507" Action="Warning"/> <!--SA1507: The C# code contains multiple blank lines in a row. -->
+        <Rule Id="SA1508" Action="Warning"/> <!--SA1508: A closing curly bracket within a C# element, statement, or expression is preceded by a blank line. -->
+        <Rule Id="SA1509" Action="Warning"/> <!--SA1509: An opening curly bracket within a C# element, statement, or expression is preceded by a blank line. -->
+        <Rule Id="SA1510" Action="Warning"/> <!--SA1510: Chained C# statements are separated by a blank line. -->
+        <Rule Id="SA1511" Action="Warning"/> <!--SA1511: The while footer at the bottom of a do-while statement is separated from the statement by a blank line. -->
+        <Rule Id="SA1512" Action="Warning"/> <!--SA1512: A single-line comment within C# code is followed by a blank line. -->
+        <Rule Id="SA1513" Action="None"/> <!--SA1513: A closing curly bracket within a C# element, statement, or expression is not followed by a blank line. -->
+        <Rule Id="SA1514" Action="Warning"/> <!--SA1514: An element documentation header above a C# element is not preceded by a blank line. -->
+        <Rule Id="SA1515" Action="None"/> <!--SA1515: A single-line comment within C# code is not preceded by a blank line. -->
+        <Rule Id="SA1516" Action="None"/> <!--SA1516: Adjacent C# elements are not separated by a blank line. -->
+        <Rule Id="SA1517" Action="Warning"/> <!--SA1517: The code file has blank lines at the start. -->
+        <Rule Id="SA1518" Action="None"/> <!--SA1518: The code file has blank lines at the end. -->
+        <Rule Id="SA1520" Action="None"/>
+        <Rule Id="SA1633" Action="None"/> 
+        <Rule Id="SA1137" Action="None"/>
+        <Rule Id="SA1127" Action="None"/>
+        <Rule Id="SA1128" Action="None"/>
+        <Rule Id="SA1132" Action="None"/>
+        <Rule Id="SA0001" Action="None"/>
+    </Rules>
+</RuleSet>
