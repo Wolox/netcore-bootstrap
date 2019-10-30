@@ -46,6 +46,7 @@ namespace NetCoreBootstrap.Api
                 var connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
                 var connectionString = connectionStringBuilder.ToString();
                 var connection = new SqliteConnection(connectionString);
+                connection.Open();
                 services.AddDbContext<DatabaseContext>(options => options.UseSqlite(connection));
             }
             else
@@ -88,25 +89,27 @@ namespace NetCoreBootstrap.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
             else
-            {
                 app.UseHsts();
-            }
             app.UseAuthentication();
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", ".NET Core Bootstrap API");
-            });
-            app.UseMvc();
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<DatabaseContext>();
-                context.Database.Migrate();
+                if (!CurrentEnvironment.IsEnvironment("Testing"))
+                    context.Database.Migrate();
+                else
+                    context.Database.EnsureCreated();
             }
+            if (CurrentEnvironment.IsEnvironment("Development") || CurrentEnvironment.IsEnvironment("Staging"))
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", ".NET Core Bootstrap API");
+                });
+            }
+            app.UseMvc();
         }
     }
 }

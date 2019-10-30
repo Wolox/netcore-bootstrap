@@ -16,6 +16,7 @@ using NetCoreBootstrap.Services.Intefaces;
 
 namespace NetCoreBootstrap.Api.Controllers
 {
+    [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
         private readonly SignInManager<User> _signInManager;
@@ -56,19 +57,24 @@ namespace NetCoreBootstrap.Api.Controllers
             IActionResult response;
             try
             {
-                var result = await UserManager.CreateAsync(user, userVO.Password);
-                if (result.Succeeded)
+                if (userVO.Password == userVO.ConfirmPassword)
                 {
-                    var token = await UserManager.GenerateEmailConfirmationTokenAsync(user);
-                    AccountHelper.SendConfirmationEmail(user.Id,
-                                                        user.Email,
-                                                        token,
-                                                        Url.Action("ConfirmEmail", "AccountApi",
-                                                        new { userId = user.Id }));
-                    response = Ok(Localizer["AccountUserCreated"].Value);
+                    var result = await UserManager.CreateAsync(user, userVO.Password);
+                    if (result.Succeeded)
+                    {
+                        var token = await UserManager.GenerateEmailConfirmationTokenAsync(user);
+                        AccountHelper.SendConfirmationEmail(user.Id,
+                                                            user.Email,
+                                                            token,
+                                                            Url.Action("ConfirmEmail", "AccountApi",
+                                                            new { userId = user.Id }));
+                        response = Ok(Localizer["AccountUserCreated"].Value);
+                    }
+                    else
+                        response = BadRequest($"{Localizer["AccountUserNotCreated"].Value}{result.Errors.Select(e => e.Description).Last()}" );
                 }
                 else
-                    response = BadRequest($"{Localizer["AccountUserNotCreated"].Value}{result.Errors.Select(e => e.Description).Last()}" );
+                    response = BadRequest(Localizer["AccountUserNotCreatedPasswordDidNotMatch"]);
             }
             catch (ArgumentNullException e)
             {
@@ -88,6 +94,7 @@ namespace NetCoreBootstrap.Api.Controllers
                 if (result.Succeeded)
                 {
                     var user = UserManager.Users.Single(r => r.Email == userVO.Email);
+                    Response.StatusCode = StatusCodes.Status200OK;
                     response = new JsonResult(new UserVO(user.Email, $"Bearer {AccountHelper.GenerateJwtToken(user.Id, user.Email)}"));
                 }
                 else if (result.IsNotAllowed)

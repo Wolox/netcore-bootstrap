@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
+using NetCoreBootstrap.Api;
 using NetCoreBootstrap.Core.Models.Database;
 using NetCoreBootstrap.Data.Repositories.Database;
 using NetCoreBootstrap.Services;
@@ -30,12 +31,13 @@ namespace NetCoreBootstrap.Tests.Controllers
         public IntegrationTestsFixture()
         {
             _configuration = new ConfigurationBuilder()
-                    .SetBasePath(Path.GetFullPath(@"../../NetCoreBootstrap.Tests"))
-                    .AddJsonFile("../../NetCoreBootstrap.Tests/appsettings.Testing.json", optional: false)
+                    .SetBasePath(Path.GetFullPath(@"../../../../NetCoreBootstrap.Tests"))
+                    .AddJsonFile(@"appsettings.Testing.json", optional: true)
+                    .AddEnvironmentVariables()
                     .Build();
             var builder = new WebHostBuilder()
                     .UseEnvironment("Testing")
-                    .UseStartup("../../NetCoreBootstrap.Api/Startup.cs")
+                    .UseStartup<Startup>()
                     .UseConfiguration(_configuration);
             this._server = new TestServer(builder);
             this._userManager = TestServer.Host.Services.GetService(typeof(UserManager<User>)) as UserManager<User>;
@@ -46,9 +48,6 @@ namespace NetCoreBootstrap.Tests.Controllers
             this._accountHelper = new AccountHelper(_configuration,
                                                     TestServer.Host.Services.GetService(typeof(IMailer)) as Mailer,
                                                     TestServer.Host.Services.GetService(typeof(IHtmlLocalizer<AccountHelper>)) as IHtmlLocalizer<AccountHelper>);
-            var adminUser = UserManager.FindByEmailAsync(Configuration["AdminCredentials:Email"]).Result;
-            var token = AccountHelper.GenerateJwtToken(adminUser.UserName, adminUser.Email);
-            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
         public HttpClient Client => _client;
