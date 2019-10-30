@@ -25,30 +25,25 @@ while_word = "while ("
 
 ################### Helpers ###################
 
-
 class Fonts:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    ENDC = '\033[0m'
+    BLUE = '\033[94m'
+    NOFONT = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
-    OKGREEN = '\033[1m\033[92m'
-    WARNING = '\033[1m\033[93m'
-    FAIL = '\033[1m\033[91m'
-
+    GREEN = '\033[1m\033[92m'
+    YELLOW = '\033[1m\033[93m'
+    RED = '\033[1m\033[91m'
 
 class Module:
     def __init__(self, project_name, direct_dependencies):
         self.project_name = project_name
         self.direct_dependencies = direct_dependencies
 
-
 class Build:
     def __init__(self, time_elapsed, build_errors, warnings):
         self.warnings = warnings
         self.build_errors = build_errors
         self.time_elapsed = time_elapsed
-
 
 def __get_files():
     files = []
@@ -58,7 +53,6 @@ def __get_files():
                 files.append(os.path.join(root, filename))
     return files
 
-
 def __get_csproj_files():
     files = []
     for root, directories, filenames in os.walk(os.curdir):
@@ -67,13 +61,11 @@ def __get_csproj_files():
                 files.append(os.path.join(root, filename))
     return files
 
-
 def __folder_must_be_ignored(folder_name):
     for folder in ignored_folders:
         if folder in folder_name:
             return True
     return False
-
 
 def __trim_project_name(path):
     name = str(path).replace('<ProjectReference Include=".', '')
@@ -158,14 +150,14 @@ def run():
     coverage = float(code_coverage().strip().split(
         ' ').pop(2).replace('%', ''))
     data = build_data()
-    print(Fonts.BOLD + Fonts.OKBLUE + 'Results:' + Fonts.ENDC)
+    print(Fonts.BOLD + Fonts.BLUE + 'Results:' + Fonts.NOFONT)
     if complexity > 50:
-        print(Fonts.BOLD + 'Cyclomatic complexity: ' + Fonts.WARNING +
+        print(Fonts.BOLD + 'Cyclomatic complexity: ' + Fonts.YELLOW +
               str(calculate_complexity()) + ' ---> High complexity')
     else:
         print(Fonts.BOLD + 'Cyclomatic complexity: ' +
-              Fonts.OKGREEN + str(calculate_complexity()))
-    print(Fonts.ENDC + Fonts.BOLD + 'Direct dependencies:' + Fonts.ENDC)
+              Fonts.GREEN + str(calculate_complexity()))
+    print(Fonts.NOFONT + Fonts.BOLD + 'Direct dependencies:' + Fonts.NOFONT)
     for dep in direct_dependencies:
         print('\t- Module: ' + str(dep.project_name))
         for d in dep.direct_dependencies:
@@ -174,11 +166,11 @@ def run():
             print('\t\tNo dependencies')
     if coverage < 75:
         print(Fonts.BOLD + 'Line coverage: ' +
-              Fonts.FAIL + str(coverage) + '%' + Fonts.ENDC)
+              Fonts.RED + str(coverage) + '%' + Fonts.NOFONT)
     else:
         print(Fonts.BOLD + 'Line coverage: ' +
-              Fonts.OKGREEN + str(coverage) + '%' + Fonts.ENDC)
-    print(Fonts.BOLD + 'Build data:' + Fonts.ENDC)
+              Fonts.GREEN + str(coverage) + '%' + Fonts.NOFONT)
+    print(Fonts.BOLD + 'Build data:' + Fonts.NOFONT)
     print('\t' + data.warnings)
     print('\t' + data.build_errors)
     print('\t' + data.time_elapsed)
