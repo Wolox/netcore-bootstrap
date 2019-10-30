@@ -17,6 +17,5 @@ namespace NetCoreBootstrap.Tests.Faker.Strategies
                                                         .Generate(amount)
                                                         .Select(x => new object[] { x })
                                                         .ToList();
-
     }
 }
