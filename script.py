@@ -21,8 +21,11 @@ else_word = "else"
 else_if_word = "else if ("
 foreach_word = "foreach ("
 case_word = "case"
+while_word = "while ("
 
 ################### Helpers ###################
+
+
 class Fonts:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -33,16 +36,19 @@ class Fonts:
     WARNING = '\033[1m\033[93m'
     FAIL = '\033[1m\033[91m'
 
+
 class Module:
     def __init__(self, project_name, direct_dependencies):
         self.project_name = project_name
         self.direct_dependencies = direct_dependencies
+
 
 class Build:
     def __init__(self, time_elapsed, build_errors, warnings):
         self.warnings = warnings
         self.build_errors = build_errors
         self.time_elapsed = time_elapsed
+
 
 def __get_files():
     files = []
@@ -52,6 +58,7 @@ def __get_files():
                 files.append(os.path.join(root, filename))
     return files
 
+
 def __get_csproj_files():
     files = []
     for root, directories, filenames in os.walk(os.curdir):
@@ -60,11 +67,13 @@ def __get_csproj_files():
                 files.append(os.path.join(root, filename))
     return files
 
+
 def __folder_must_be_ignored(folder_name):
     for folder in ignored_folders:
         if folder in folder_name:
             return True
     return False
+
 
 def __trim_project_name(path):
     name = str(path).replace('<ProjectReference Include=".', '')
@@ -72,7 +81,7 @@ def __trim_project_name(path):
     name = name.replace('"', '')
     name = name.split('.').pop(3)
     return name
-    
+
 ################### Metrics ###################
 
 # Cyclomatic complexity
@@ -90,6 +99,7 @@ def calculate_complexity():
             complexity += content.count(else_word)
             complexity += content.count(foreach_word)
             complexity += content.count(case_word)
+            complexity += content.count(while_word)
         file.close()
     return complexity
 
@@ -104,10 +114,10 @@ def get_direct_dependencies():
         for line in content:
             if (bootstrap_name in line):
                 direct_dependencies.append(__trim_project_name(line))
-        modules.append(Module(__trim_project_name(file_name), direct_dependencies))
+        modules.append(Module(__trim_project_name(
+            file_name), direct_dependencies))
         file.close()
     return modules
-
 
 # Code coverage
 def code_coverage():
@@ -121,8 +131,10 @@ def code_coverage():
     coverage = os.popen(grep).read()
     os.chdir(parent_folder)
     print('Removing files')
-    os.remove(os.curdir + "/" + bootstrap_name + ".Tests/TestResults/coverage.opencover.xml")
-    os.remove(os.curdir + "/" + bootstrap_name + ".Tests/TestResults/Coverage/Reports/Summary.txt")
+    os.remove(os.curdir + "/" + bootstrap_name +
+              ".Tests/TestResults/coverage.opencover.xml")
+    os.remove(os.curdir + "/" + bootstrap_name +
+              ".Tests/TestResults/Coverage/Reports/Summary.txt")
     print('Finished')
     return coverage
 
@@ -133,15 +145,18 @@ def build_data():
     warnings = '| grep -e "Warning(s)" '
     errors = '-e "Error(s)" '
     time = '-e "Time Elapsed"'
-    result = os.popen(clean_command + build_command + warnings + errors + time).readlines()
-    data = Build(result.pop().strip(), result.pop().strip(), result.pop().strip())
+    result = os.popen(clean_command + build_command +
+                      warnings + errors + time).readlines()
+    data = Build(result.pop().strip(),
+                 result.pop().strip(), result.pop().strip())
     return data
 
 # Main function
 def run():
     complexity = calculate_complexity()
     direct_dependencies = get_direct_dependencies()
-    coverage = float(code_coverage().strip().split(' ').pop(2).replace('%', ''))
+    coverage = float(code_coverage().strip().split(
+        ' ').pop(2).replace('%', ''))
     data = build_data()
     print(Fonts.BOLD + Fonts.OKBLUE + 'Results:' + Fonts.ENDC)
     if complexity > 50:
@@ -152,15 +167,17 @@ def run():
               Fonts.OKGREEN + str(calculate_complexity()))
     print(Fonts.ENDC + Fonts.BOLD + 'Direct dependencies:' + Fonts.ENDC)
     for dep in direct_dependencies:
-        print('\t- Project: ' + str(dep.project_name))
+        print('\t- Module: ' + str(dep.project_name))
         for d in dep.direct_dependencies:
             print('\t\t- Depends on: ' + str(d).strip())
         if not dep.direct_dependencies:
             print('\t\tNo dependencies')
     if coverage < 75:
-        print(Fonts.BOLD + 'Line coverage: ' + Fonts.FAIL + str(coverage) + '%' + Fonts.ENDC)
+        print(Fonts.BOLD + 'Line coverage: ' +
+              Fonts.FAIL + str(coverage) + '%' + Fonts.ENDC)
     else:
-        print(Fonts.BOLD + 'Line coverage: ' + Fonts.OKGREEN + str(coverage) + '%' + Fonts.ENDC)
+        print(Fonts.BOLD + 'Line coverage: ' +
+              Fonts.OKGREEN + str(coverage) + '%' + Fonts.ENDC)
     print(Fonts.BOLD + 'Build data:' + Fonts.ENDC)
     print('\t' + data.warnings)
     print('\t' + data.build_errors)
