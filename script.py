@@ -12,6 +12,9 @@ bootstrap_name = "NetCoreBootstrap"
 folder_list = ["Api", "Core", "Data", "Services", "Tests"]
 parent_folder = ".."
 ignored_folders = [".git", "bin", "obj"]
+ignored_csproj_lines = ["<ItemGroup>", "<Project Sdk", "<PropertyGroup>", "<CodeAnalysisRuleSet>", 
+        "<DebugType>", "</ItemGroup>", "</Project>", "</PropertyGroup>", "<IncludeAssets>",
+        "<PrivateAssets>", "</PackageReference>", "<TargetFramework>", "<IsPackable>", "<AspNetCoreHostingModel>"]
 empty_string = ""
 end_of_line = "\r\n"
 if_word = "if ("
@@ -35,9 +38,10 @@ class Fonts:
     RED = '\033[1m\033[91m'
 
 class Module:
-    def __init__(self, project_name, direct_dependencies):
+    def __init__(self, project_name, direct_dependencies, nuget_packages):
         self.project_name = project_name
         self.direct_dependencies = direct_dependencies
+        self.nuget_packages = nuget_packages
 
 class Build:
     def __init__(self, time_elapsed, build_errors, warnings):
@@ -74,6 +78,13 @@ def __trim_project_name(path):
     name = name.split('.').pop(3)
     return name
 
+def __trim_nuget_name(path):
+    name = str(path).replace('<PackageReference Include="', '')
+    name = name.replace('/>', '')
+    name = name.replace('>', '')
+    name = name.replace('"', '')
+    return name
+
 ################### Metrics ###################
 
 # Cyclomatic complexity
@@ -101,13 +112,16 @@ def get_direct_dependencies():
     modules = []
     for file_name in csproj_files:
         direct_dependencies = []
+        nuget_packages = []
         file = open(file_name, 'r')
         content = file.readlines()
         for line in content:
             if (bootstrap_name in line):
                 direct_dependencies.append(__trim_project_name(line))
+            elif not any(line.strip().startswith(s) for s in ignored_csproj_lines):
+                nuget_packages.append(__trim_nuget_name(line))
         modules.append(Module(__trim_project_name(
-            file_name), direct_dependencies))
+            file_name), direct_dependencies, nuget_packages))
         file.close()
     return modules
 
@@ -159,11 +173,13 @@ def run():
               Fonts.GREEN + str(calculate_complexity()))
     print(Fonts.NOFONT + Fonts.BOLD + 'Direct dependencies:' + Fonts.NOFONT)
     for dep in direct_dependencies:
-        print('\t- Module: ' + str(dep.project_name))
+        print('\t- Module: ' + str(dep.project_name.upper()))
         for d in dep.direct_dependencies:
             print('\t\t- Depends on: ' + str(d).strip())
         if not dep.direct_dependencies:
-            print('\t\tNo dependencies')
+            print('\t\tNo direct dependencies')
+        for nuget in dep.nuget_packages:
+            print('\t\t- Has nuget package: ' + str(nuget).strip())
     if coverage < 75:
         print(Fonts.BOLD + 'Line coverage: ' +
               Fonts.RED + str(coverage) + '%' + Fonts.NOFONT)
