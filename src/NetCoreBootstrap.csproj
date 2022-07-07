@@ -7,7 +7,7 @@
     <PackageReference Include="Hangfire" Version="1.6.17"/>
     <PackageReference Include="Hangfire.PostgreSql" Version="1.4.8.1"/>
     <PackageReference Include="LocalizationCultureCore" Version="1.1.2"/>
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1"/>
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.15"/>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="2.1.1"/>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="2.1.1"/>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.1"/>
